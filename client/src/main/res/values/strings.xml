@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Poshtar</string>
+
+    <string name="add_tracking">New tracking</string>
+    <string name="save_tracking">Save tracking</string>
+
+</resources>
