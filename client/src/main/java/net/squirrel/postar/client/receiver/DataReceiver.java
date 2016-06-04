@@ -1,5 +1,6 @@
 package net.squirrel.postar.client.receiver;
 
+import net.squirrel.postar.client.ConfigManager;
 import net.squirrel.postar.client.entity.Request;
 import net.squirrel.postar.client.http_client.HttpClient;
 import org.simpleframework.xml.core.Persister;
@@ -8,17 +9,17 @@ import java.io.StringWriter;
 import java.io.Writer;
 
 public abstract class DataReceiver {
-    protected static final String BASE_URL = "";
-    protected String url, urlSuffix;
-
+    protected ConfigManager config;
+    protected String baseUrl, url, urlSuffix;
 
     public DataReceiver() {
-
+        config = new ConfigManager();
+        baseUrl = config.getBaseUrl();
     }
 
     public Object receiveData(Request request) {
         setUrlSuffix();
-        url = BASE_URL + urlSuffix;
+        url = baseUrl + urlSuffix;
 
         String requestString = serialization(request);
         String responseString = HttpClient.post(this.url, requestString);
@@ -40,7 +41,6 @@ public abstract class DataReceiver {
 
     //Override this method for set  valid url suffix
     protected abstract void setUrlSuffix();
-
     protected abstract Object deserialization(String xml);
 
 }
