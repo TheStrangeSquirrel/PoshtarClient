@@ -2,12 +2,16 @@ package net.squirrel.postar.client.receiver;
 
 import net.squirrel.postar.client.ConfigManager;
 import net.squirrel.postar.client.entity.Request;
+import net.squirrel.postar.client.exception.AppException;
 import net.squirrel.postar.client.http_client.HttpClient;
 import org.simpleframework.xml.core.Persister;
 
 import java.io.StringWriter;
 import java.io.Writer;
 
+/*
+The class responsible for conversion requests/
+ */
 public abstract class DataReceiver {
     protected ConfigManager config;
     protected String baseUrl, url, urlSuffix;
@@ -33,7 +37,7 @@ public abstract class DataReceiver {
         try {
             serializer.write(objects, writer);
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new AppException("Error during serialization", e);
         }
         result = writer.toString();
         return result;

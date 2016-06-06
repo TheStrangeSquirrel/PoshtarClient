@@ -1,6 +1,6 @@
 package net.squirrel.postar.client.receiver;
 
-import net.squirrel.postar.client.entity.ListProvider;
+import net.squirrel.postar.client.entity.Response;
 import net.squirrel.postar.client.exception.AppException;
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
@@ -8,9 +8,7 @@ import org.simpleframework.xml.core.Persister;
 import java.io.Reader;
 import java.io.StringReader;
 
-public class ProvidersReceiver extends DataReceiver {
-
-
+public class TrackReceiver extends DataReceiver {
     @Override
     protected void setUrlSuffix() {
         urlSuffix = config.getProvidersUrl();
@@ -22,9 +20,9 @@ public class ProvidersReceiver extends DataReceiver {
         Serializer serializer = new Persister();
         Object result = null;
         try {
-            result = serializer.read(ListProvider.class, xml);
+            result = serializer.read(Response.class, xml);
         } catch (Exception e) {
-            throw new AppException("Error during deserialization providers", e);
+            throw new AppException("Error during deserialization response", e);
         }
         return result;
     }
