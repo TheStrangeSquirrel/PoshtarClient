@@ -1,6 +1,8 @@
 package net.squirrel.postar.client.receiver;
 
 import net.squirrel.postar.client.entity.ListProvider;
+import net.squirrel.postar.client.exception.AppException;
+import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
 
 import java.io.Reader;
@@ -17,12 +19,12 @@ public class ProvidersReceiver extends DataReceiver {
     @Override
     protected Object deserialization(String xml) {
         Reader reader = new StringReader(xml);
-        Persister serializer = new Persister();
+        Serializer serializer = new Persister();
         Object result = null;
         try {
-            result = serializer.read(ListProvider.class, xml);//TODO: Разобраться куда девать исключение
+            result = serializer.read(ListProvider.class, xml);
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new AppException("Error during serialization", e);
         }
         return result;
     }
