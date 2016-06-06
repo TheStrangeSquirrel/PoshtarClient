@@ -16,7 +16,7 @@ public abstract class DataReceiver {
     protected ConfigManager config;
     protected String baseUrl, url, urlSuffix;
 
-    public DataReceiver() {
+    DataReceiver() {
         config = new ConfigManager();
         baseUrl = config.getBaseUrl();
     }
@@ -25,7 +25,7 @@ public abstract class DataReceiver {
     @param request If you want to get a list parameter must be null.
     @result Deserialization response
      */
-    public Object receiveData(Request request) {
+    Object receiveData(Request request) {
         setUrlSuffix();
         url = baseUrl + urlSuffix;
 
