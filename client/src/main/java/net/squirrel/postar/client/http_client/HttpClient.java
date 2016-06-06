@@ -1,6 +1,10 @@
 package net.squirrel.postar.client.http_client;
 
+import net.squirrel.postar.client.exception.AppException;
+
 import java.io.BufferedOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -9,6 +13,8 @@ import java.nio.charset.Charset;
 public class HttpClient {
     public static String post(String url, String massage) {
         String response = null;
+        InputStream inputStream = null;
+        BufferedOutputStream outputStream = null;
         try {
             HttpURLConnection connection = (HttpURLConnection) new URI(url).toURL().openConnection();
             connection.setRequestMethod("POST");
@@ -19,18 +25,28 @@ public class HttpClient {
             connection.setConnectTimeout(1000000);
             connection.setReadTimeout(1000000);
             connection.connect();
-            BufferedOutputStream outputStream = new BufferedOutputStream(connection.getOutputStream());
+            outputStream = new BufferedOutputStream(connection.getOutputStream());
             outputStream.write(massage.getBytes(Charset.forName("UTF-8")));
             outputStream.flush();
-
-            System.out.println(connection.getResponseCode());
             byte[] arr = null;
-            connection.getInputStream().read(arr);
+            inputStream = connection.getInputStream();
+            inputStream.read(arr);
             response = new String(arr);
         } catch (java.io.IOException e) {
-            e.printStackTrace();
+            throw new AppException("IO error HttpClient", e);
         } catch (URISyntaxException e) {
-            e.printStackTrace();
+            throw new AppException("An error occurred trying to connect to the URL:" + url, e);
+        } finally {
+            try {
+                if (outputStream != null) {
+                    outputStream.close();
+                }
+                if (inputStream != null) {
+                    inputStream.close();
+                }
+            } catch (IOException e) {
+                //NOP
+            }
         }
         return response;
     }
