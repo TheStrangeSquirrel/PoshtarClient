@@ -21,13 +21,17 @@ public abstract class DataReceiver {
         baseUrl = config.getBaseUrl();
     }
 
+    /*
+    @param request If you want to get a list parameter must be null.
+    @result Deserialization response
+     */
     public Object receiveData(Request request) {
         setUrlSuffix();
         url = baseUrl + urlSuffix;
 
         String requestString = serialization(request);
         String responseString = HttpClient.post(this.url, requestString);
-        return deserialization(requestString);
+        return deserialization(responseString);
     }
 
     protected String serialization(Object objects) {
