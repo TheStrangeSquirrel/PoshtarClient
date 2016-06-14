@@ -3,5 +3,9 @@
 
     <string name="add_tracking">New tracking</string>
     <string name="save_tracking">Save tracking</string>
+    <string name="dialog_message">Loading list of providers...</string>
+    <string name="cancel">Cancel</string>
+    <string name="internet_status_online">Internet connected</string>
+    <string name="internet_status_ofline">Internet not connecting</string>
 
 </resources>
