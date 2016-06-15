@@ -3,8 +3,9 @@
     <string name="app_name">Poshtar</string>
     <string name="add_tracking">Нове відстеження</string>
     <string name="save_tracking">Збереженне відстеження</string>
-    <string name="dialog_message">Завантаження переліку постачальніків...</string>
+    <string name="dialog_message">Завантаження переліку постачальніків</string>
     <string name="cancel">Cкасувати</string>
     <string name="internet_status_online">Інтернет увімкнено</string>
     <string name="internet_status_ofline">Немає доступу до мережі інтернет</string>
+    <string name="failed">Не вдалося виконати, спробуйте пізніше.</string>
 </resources>
