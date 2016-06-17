@@ -1,4 +1,4 @@
-package net.squirrel.postar.client;
+package net.squirrel.postar.client.activity;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -7,6 +7,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.ListView;
 import android.widget.Toast;
+import net.squirrel.postar.client.ProviderAdapter;
+import net.squirrel.postar.client.R;
 import net.squirrel.postar.client.entity.ListProvider;
 import net.squirrel.postar.client.entity.Provider;
 import net.squirrel.postar.client.exception.AppException;
@@ -19,25 +21,34 @@ public class ProvidersActivity extends Activity {
     private ProgressDialog progressDialog;
     private LoadProvidersTask loadProvidersTask;
 
+    public Object onRetainNonConfigurationInstance() {
+        loadProvidersTask.unLinkActivity();
+        return loadProvidersTask;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        taskInit();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_post);
         progressDialogCreate();
 
+        listView = (ListView) findViewById(R.id.list_post);
+    }
+
+    private void taskInit() {
         loadProvidersTask = (LoadProvidersTask) getLastNonConfigurationInstance();
-        if (loadProvidersTask == null) {
+        if (loadProvidersTask == null) {//TODO :
             loadProvidersTask = new LoadProvidersTask();
             loadProvidersTask.linkActivity(this);
             loadProvidersTask.execute();
         }
         loadProvidersTask.linkActivity(this);
-        listView = (ListView) findViewById(R.id.list_post);
-    }
-
-    public Object onRetainNonConfigurationInstance() {
-        loadProvidersTask.unLinkActivity();
-        return loadProvidersTask;
     }
 
     private void progressDialogCreate() {
@@ -49,7 +60,7 @@ public class ProvidersActivity extends Activity {
 
 
     public static class LoadProvidersTask extends AsyncTask<Void, Void, List<Provider>> {
-        private ProvidersActivity activity;
+        protected ProvidersActivity activity;
 
         public void linkActivity(ProvidersActivity activity) {
             this.activity = activity;
@@ -58,7 +69,6 @@ public class ProvidersActivity extends Activity {
         public void unLinkActivity() {
             this.activity = null;
         }
-
         @Override
         protected List<Provider> doInBackground(Void... params) {
             List<Provider> listProvider = null;
