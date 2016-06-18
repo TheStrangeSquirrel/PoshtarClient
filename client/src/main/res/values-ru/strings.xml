@@ -8,4 +8,6 @@
     <string name="internet_status_online">Подключение к сети: активно</string>
     <string name="internet_status_ofline">Подключение к сети: не активно</string>
     <string name="failed">Не удалось выполнить, попробуйте позднее</string>
+    <string name="enter_track_number">Введите трек номер</string>
+    <string name="track">Отследить</string>
 </resources>

@@ -21,6 +21,7 @@ public class HelloActivity extends Activity implements View.OnClickListener {
     private TextView txtInternetStatus;
     private StatusInternetTask statusInternetTask;
 
+
     public Object onRetainNonConfigurationInstance() {
         statusInternetTask.unLinkActivity();
         return statusInternetTask;
@@ -83,7 +84,7 @@ public class HelloActivity extends Activity implements View.OnClickListener {
     public static class StatusInternetTask extends AsyncTask<Void, Boolean, Void> {
         protected HelloActivity activity;
         private NetworkInfo netInfo;
-
+        private boolean isConnect;
         public void linkActivity(HelloActivity activity) {
             this.activity = activity;
         }
@@ -116,6 +117,9 @@ public class HelloActivity extends Activity implements View.OnClickListener {
 
         @Override
         protected void onProgressUpdate(Boolean... values) {
+            if (isConnect == values[0]) {
+                return;
+            }
             if (values[0]) {
                 activity.imgInternetStatus.setImageResource(R.drawable.internet_connected);
                 activity.txtInternetStatus.setText(R.string.internet_status_online);
@@ -125,7 +129,7 @@ public class HelloActivity extends Activity implements View.OnClickListener {
                 activity.txtInternetStatus.setText(R.string.internet_status_ofline);
                 activity.btnNewTrack.setEnabled(false);
             }
-
+            isConnect = values[0];
         }
     }
 }

@@ -1,0 +1,33 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_height="match_parent" android:layout_width="match_parent">
+
+    <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/editRequest" android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" android:layout_toLeftOf="@+id/bTrack"
+            android:layout_toStartOf="@+id/bTrack" android:hint="@string/enter_track_number"
+            android:textColorHint="#ff7c89"/>
+    <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/track"
+            android:id="@+id/bTrack"
+            android:layout_alignTop="@+id/editRequest" android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"/>
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/scrollView" android:layout_below="@+id/bTrack" android:layout_centerHorizontal="true"
+            android:background="@drawable/frame" android:layout_alignParentTop="false"
+            android:layout_alignParentLeft="false" android:layout_alignParentRight="false"
+            android:layout_alignParentBottom="false" android:layout_alignWithParentIfMissing="false">
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/textResponse"/>
+    </ScrollView>
+</RelativeLayout>
+
+

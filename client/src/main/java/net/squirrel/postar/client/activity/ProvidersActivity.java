@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
 import net.squirrel.postar.client.ProviderAdapter;
@@ -16,7 +17,7 @@ import net.squirrel.postar.client.receiver.DataManager;
 
 import java.util.List;
 
-public class ProvidersActivity extends Activity {
+public class ProvidersActivity extends Activity implements View.OnClickListener {
     private ListView listView;
     private ProgressDialog progressDialog;
     private LoadProvidersTask loadProvidersTask;
@@ -39,6 +40,7 @@ public class ProvidersActivity extends Activity {
         progressDialogCreate();
 
         listView = (ListView) findViewById(R.id.list_post);
+        listView.setOnClickListener(this);
     }
 
     private void taskInit() {
@@ -56,6 +58,12 @@ public class ProvidersActivity extends Activity {
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setMessage(getString(R.string.dialog_message));
         progressDialog.setIndeterminate(true);
+    }
+
+    @Override
+    public void onClick(View v) {
+
+
     }
 
 

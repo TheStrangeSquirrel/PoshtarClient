@@ -8,5 +8,7 @@
     <string name="internet_status_online">Internet connected</string>
     <string name="internet_status_ofline">Internet not connecting</string>
     <string name="failed">Failed, try again later</string>
+    <string name="enter_track_number">Enter the track number</string>
+    <string name="track">Track</string>
 
 </resources>

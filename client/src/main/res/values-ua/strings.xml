@@ -8,4 +8,6 @@
     <string name="internet_status_online">Інтернет увімкнено</string>
     <string name="internet_status_ofline">Немає доступу до мережі інтернет</string>
     <string name="failed">Не вдалося виконати, спробуйте пізніше.</string>
+    <string name="enter_track_number">Введіть трек номер</string>
+    <string name="track">Відстежити</string>
 </resources>
