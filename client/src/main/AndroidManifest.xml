@@ -19,8 +19,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.ProvidersActivity">
-
         </activity>
+        <activity android:name=".activity.TrackingActivity"/>
     </application>
 
 </manifest>
