@@ -1,7 +1,7 @@
 package net.squirrel.postar.client.receiver;
 
 import net.squirrel.postar.client.ConfigManager;
-import net.squirrel.postar.client.entity.Request;
+import net.squirrel.postar.client.dto.Request;
 import net.squirrel.postar.client.exception.AppException;
 import net.squirrel.postar.client.http_client.HttpClient;
 import org.simpleframework.xml.core.Persister;

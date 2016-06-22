@@ -1,5 +1,6 @@
-package net.squirrel.postar.client.entity;
+package net.squirrel.postar.client.dto;
 
+import net.squirrel.postar.client.entity.Provider;
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 

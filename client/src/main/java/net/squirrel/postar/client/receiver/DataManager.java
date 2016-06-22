@@ -1,7 +1,7 @@
 package net.squirrel.postar.client.receiver;
 
-import net.squirrel.postar.client.entity.ListProvider;
-import net.squirrel.postar.client.entity.Request;
+import net.squirrel.postar.client.dto.ListProvider;
+import net.squirrel.postar.client.dto.Request;
 import net.squirrel.postar.client.entity.Response;
 import net.squirrel.postar.client.exception.AppException;
 

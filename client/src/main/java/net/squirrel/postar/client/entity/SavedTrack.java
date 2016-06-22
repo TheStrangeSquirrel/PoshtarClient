@@ -2,24 +2,24 @@ package net.squirrel.postar.client.entity;
 
 import org.simpleframework.xml.Attribute;
 
-public class Request {
+public class SavedTrack {
     private Provider provider;
-    private int codePost;
+    private String codePost;
     private String description;
 
-    public Request(Provider provider, String description) {
+    public SavedTrack(Provider provider, String codePost, String description) {
         this.provider = provider;
-        this.codePost = provider.getId();
+        this.codePost = codePost;
         this.description = description;
     }
 
     @Attribute
-    public int getCodePost() {
+    public String getCodePost() {
         return codePost;
     }
 
     @Attribute
-    public void setCodePost(int codePost) {
+    public void setCodePost(String codePost) {
         this.codePost = codePost;
     }
 

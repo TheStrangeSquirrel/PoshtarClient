@@ -10,7 +10,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 import net.squirrel.postar.client.ProviderAdapter;
 import net.squirrel.postar.client.R;
-import net.squirrel.postar.client.entity.ListProvider;
+import net.squirrel.postar.client.dto.ListProvider;
 import net.squirrel.postar.client.entity.Provider;
 import net.squirrel.postar.client.exception.AppException;
 import net.squirrel.postar.client.receiver.DataManager;
