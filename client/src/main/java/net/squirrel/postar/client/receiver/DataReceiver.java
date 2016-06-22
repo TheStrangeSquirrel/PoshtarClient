@@ -25,7 +25,7 @@ public abstract class DataReceiver {
     @param request If you want to get a list parameter must be null.
     @result Deserialization response
      */
-    Object receiveData(Request request) {
+    Object receiveData(Request request) throws AppException {
         setUrlSuffix();
         url = baseUrl + urlSuffix;
 
@@ -34,7 +34,7 @@ public abstract class DataReceiver {
         return deserialization(responseString);
     }
 
-    protected String serialization(Object objects) {
+    protected String serialization(Object objects) throws AppException {
         String result;
         Writer writer = new StringWriter();
         org.simpleframework.xml.Serializer serializer = new Persister();
@@ -49,6 +49,7 @@ public abstract class DataReceiver {
 
     //Override this method for set  valid url suffix
     protected abstract void setUrlSuffix();
-    protected abstract Object deserialization(String xml);
+
+    protected abstract Object deserialization(String xml) throws AppException;
 
 }

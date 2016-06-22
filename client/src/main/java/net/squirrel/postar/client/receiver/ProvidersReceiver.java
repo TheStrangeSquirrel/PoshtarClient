@@ -17,7 +17,7 @@ public class ProvidersReceiver extends DataReceiver {
     }
 
     @Override
-    protected Object deserialization(String xml) {
+    protected Object deserialization(String xml) throws AppException {
         Reader reader = new StringReader(xml);
         Serializer serializer = new Persister();
         Object result = null;

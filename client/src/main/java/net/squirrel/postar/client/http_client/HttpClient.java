@@ -11,7 +11,7 @@ import java.net.URISyntaxException;
 import java.nio.charset.Charset;
 
 public class HttpClient {
-    public static String post(String url, String massage) {
+    public static String post(String url, String massage) throws AppException {
         String response = null;
         InputStream inputStream = null;
         BufferedOutputStream outputStream = null;
@@ -19,7 +19,7 @@ public class HttpClient {
             HttpURLConnection connection = (HttpURLConnection) new URI(url).toURL().openConnection();
             connection.setRequestMethod("POST");
             connection.setRequestProperty("User-Agent", "Mozilla/5.0");
-            connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+            connection.setRequestProperty("Content-Type", "application/soap+xml");
             connection.setRequestProperty("Content-Length", String.valueOf(massage.length()));
             connection.setDoOutput(true);
             connection.setConnectTimeout(1000000);

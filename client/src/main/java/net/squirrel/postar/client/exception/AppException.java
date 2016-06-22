@@ -1,6 +1,6 @@
 package net.squirrel.postar.client.exception;
 
-public class AppException extends RuntimeException {
+public class AppException extends Exception {
     public AppException(String cause) {
         super(cause);
     }
