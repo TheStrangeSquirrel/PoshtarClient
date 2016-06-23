@@ -10,9 +10,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 import net.squirrel.postar.client.ProviderAdapter;
 import net.squirrel.postar.client.R;
-import net.squirrel.postar.client.dto.ListProvider;
 import net.squirrel.postar.client.entity.Provider;
-import net.squirrel.postar.client.exception.AppException;
 import net.squirrel.postar.client.receiver.DataManager;
 
 import java.util.List;
@@ -40,7 +38,7 @@ public class ProvidersActivity extends Activity implements View.OnClickListener 
         progressDialogCreate();
 
         listView = (ListView) findViewById(R.id.list_post);
-        listView.setOnClickListener(this);
+//        listView.setOnClickListener(this);// TODO: Обрабатывать нажатия
     }
 
     private void taskInit() {
@@ -62,7 +60,7 @@ public class ProvidersActivity extends Activity implements View.OnClickListener 
 
     @Override
     public void onClick(View v) {
-
+        //// TODO: 22.06.2016
 
     }
 
@@ -70,24 +68,24 @@ public class ProvidersActivity extends Activity implements View.OnClickListener 
     public static class LoadProvidersTask extends AsyncTask<Void, Void, List<Provider>> {
         protected ProvidersActivity activity;
 
-        public void linkActivity(ProvidersActivity activity) {
+        public synchronized void linkActivity(ProvidersActivity activity) {
             this.activity = activity;
         }
 
-        public void unLinkActivity() {
+        public synchronized void unLinkActivity() {
             this.activity = null;
         }
+
         @Override
         protected List<Provider> doInBackground(Void... params) {
-            List<Provider> listProvider = null;
-            try {
-                ListProvider providers = DataManager.receiveProviders();
-                listProvider = providers.getProviders();
-            } catch (AppException e) {
-                //NOP
-            }
+            List<Provider> listProvider = DataManager.receiveProviders();
+
             while (activity == null) {
-                //NOP
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    //NOP
+                }
             }
             return listProvider;
         }

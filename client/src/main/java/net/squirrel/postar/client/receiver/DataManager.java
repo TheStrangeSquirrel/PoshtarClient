@@ -2,8 +2,11 @@ package net.squirrel.postar.client.receiver;
 
 import net.squirrel.postar.client.dto.ListProvider;
 import net.squirrel.postar.client.dto.Request;
+import net.squirrel.postar.client.entity.Provider;
 import net.squirrel.postar.client.entity.Response;
 import net.squirrel.postar.client.exception.AppException;
+
+import java.util.List;
 
 /*
 Receiver data facade
@@ -12,11 +15,11 @@ public class DataManager {
     /*
     @return In the case of internal exclusion gives null
      */
-    public static ListProvider receiveProviders() {
-        ListProvider listProvider = null;
+    public static List<Provider> receiveProviders() {
+        List<Provider> listProvider = null;
         DataReceiver providersReceiver = new ProvidersReceiver();
         try {
-            listProvider = (ListProvider) providersReceiver.receiveData(null);
+            listProvider = ((ListProvider) providersReceiver.receiveData(null)).getProviders();
         } catch (AppException e) {
             e.printStackTrace();//TODO: Nid Log
         }
