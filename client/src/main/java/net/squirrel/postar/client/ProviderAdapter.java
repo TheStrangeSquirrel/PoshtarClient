@@ -13,29 +13,29 @@ import java.util.List;
 
 
 public class ProviderAdapter extends BaseAdapter {
-    private List<Provider> objects;
+    private List<Provider> providers;//TODO : Make as saving and loading of providers from a DB
     private Context context;
     private LayoutInflater inflater;
 
-    public ProviderAdapter(List<Provider> objects, Context context) {
-        this.objects = objects;
+    public ProviderAdapter(List<Provider> providers, Context context) {
+        this.providers = providers;
         this.context = context;
         inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
     public int getCount() {
-        return objects.size();
+        return providers.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return objects.get(position);
+        return providers.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return position;
+        return providers.get(position).getId();
     }
 
     @Override
@@ -44,7 +44,7 @@ public class ProviderAdapter extends BaseAdapter {
         if (view == null) {
             view = inflater.inflate(R.layout.item, parent, false);
         }
-        Provider p = objects.get(position);
+        Provider p = providers.get(position);
 
         ((TextView) view.findViewById(R.id.textView)).setText(p.getName());
         ((ImageView) view.findViewById(R.id.imageView)).setImageBitmap(p.getBitmap());

@@ -5,8 +5,10 @@ import android.graphics.BitmapFactory;
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Root;
 
+import java.io.Serializable;
+
 @Root
-public class Provider {
+public class Provider implements Serializable {
     @Attribute
     private int id;
     @Attribute
@@ -14,6 +16,12 @@ public class Provider {
     @Attribute
     private byte[] bitmapBytes;
 
+
+    public Provider(int id, String name, byte[] bitmap) {
+        this.id = id;
+        this.name = name;
+        this.bitmapBytes = bitmap;
+    }
 
     public int getId() {
         return id;
@@ -29,11 +37,5 @@ public class Provider {
 
     public Bitmap getBitmap() {
         return BitmapFactory.decodeByteArray(bitmapBytes, 0, bitmapBytes.length);
-    }
-
-    public Provider(int id, String name, byte[] bitmap) {
-        this.id = id;
-        this.name = name;
-        this.bitmapBytes = bitmap;
     }
 }

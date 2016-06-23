@@ -1,4 +1,4 @@
-package net.squirrel.postar.client.dto;
+package net.squirrel.postar.client.receiver.dto;
 
 import net.squirrel.postar.client.entity.Provider;
 import org.simpleframework.xml.ElementList;

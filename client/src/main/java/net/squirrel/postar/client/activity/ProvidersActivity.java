@@ -16,7 +16,7 @@ import net.squirrel.postar.client.receiver.DataManager;
 import java.util.List;
 
 public class ProvidersActivity extends Activity implements View.OnClickListener {
-    public static final String PARAM_ID = "id";
+    public static final String PARAM_PROVIDER = "provider";
     private ListView listView;
     private ProgressDialog progressDialog;
     private LoadProvidersTask loadProvidersTask;
@@ -25,6 +25,7 @@ public class ProvidersActivity extends Activity implements View.OnClickListener 
         loadProvidersTask.unLinkActivity();
         return loadProvidersTask;
     }
+
 
     @Override
     protected void onResume() {
@@ -61,8 +62,10 @@ public class ProvidersActivity extends Activity implements View.OnClickListener 
     @Override
     public void onClick(View v) {
         int id = v.getId();
+        ProviderAdapter adapter = (ProviderAdapter) (((ListView) v).getAdapter());
+        Provider provider = (Provider) adapter.getItem(id);
         Intent intent = new Intent(this, TrackingActivity.class);
-        intent.putExtra(PARAM_ID, id);
+        intent.putExtra(PARAM_PROVIDER, provider);
         startActivity(intent);
     }
 
