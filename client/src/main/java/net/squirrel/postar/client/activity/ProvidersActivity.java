@@ -16,6 +16,7 @@ import net.squirrel.postar.client.receiver.DataManager;
 import java.util.List;
 
 public class ProvidersActivity extends Activity implements View.OnClickListener {
+    public static final String PARAM_ID = "id";
     private ListView listView;
     private ProgressDialog progressDialog;
     private LoadProvidersTask loadProvidersTask;
@@ -38,7 +39,6 @@ public class ProvidersActivity extends Activity implements View.OnClickListener 
         progressDialogCreate();
 
         listView = (ListView) findViewById(R.id.list_post);
-//        listView.setOnClickListener(this);// TODO: Обрабатывать нажатия
     }
 
     private void taskInit() {
@@ -60,8 +60,10 @@ public class ProvidersActivity extends Activity implements View.OnClickListener 
 
     @Override
     public void onClick(View v) {
-        //// TODO: 22.06.2016
-
+        int id = v.getId();
+        Intent intent = new Intent(this, TrackingActivity.class);
+        intent.putExtra(PARAM_ID, id);
+        startActivity(intent);
     }
 
 
@@ -95,6 +97,7 @@ public class ProvidersActivity extends Activity implements View.OnClickListener 
             if (providers != null) {
                 activity.progressDialog.dismiss();
                 activity.listView.setAdapter(new ProviderAdapter(providers, activity));
+                activity.listView.setOnClickListener(activity);
             } else {
                 Toast.makeText(activity, activity.getText(R.string.failed), Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(activity, HelloActivity.class);
