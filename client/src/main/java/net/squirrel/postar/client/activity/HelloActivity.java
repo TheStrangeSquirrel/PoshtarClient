@@ -12,31 +12,25 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import net.squirrel.postar.client.R;
+import net.squirrel.postar.client.receiver.BaseAsyncTaskIncludingActivity;
+import net.squirrel.postar.client.receiver.TiedToActivityTask;
 
 //TODO: РЕализовать статус соединения; блок кнопки newTrack
-public class HelloActivity extends Activity implements View.OnClickListener {
+public class HelloActivity extends BaseAsyncTaskIncludingActivity implements View.OnClickListener {
     private Intent intent;
     private Button btnNewTrack, btnSavedTrack;
     private ImageView imgInternetStatus;
     private TextView txtInternetStatus;
-    private StatusInternetTask statusInternetTask;
-
-
-    public Object onRetainNonConfigurationInstance() {
-        statusInternetTask.unLinkActivity();
-        return statusInternetTask;
-    }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        taskInit();
+    protected TiedToActivityTask createConcreteTask() {
+        return new StatusInternetTask();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        statusInternetTask.cancel(false);
+        task.cancel(false);
     }
 
     @Override
@@ -46,17 +40,6 @@ public class HelloActivity extends Activity implements View.OnClickListener {
         findViews();
         setListeners();
     }
-
-    private void taskInit() {
-        statusInternetTask = (StatusInternetTask) getLastNonConfigurationInstance();
-        if (statusInternetTask == null) {
-            statusInternetTask = new StatusInternetTask();
-            statusInternetTask.linkActivity(this);
-            statusInternetTask.execute();
-        }
-        statusInternetTask.linkActivity(this);
-    }
-
     private void findViews() {
         btnNewTrack = (Button) findViewById(R.id.savedTrack);
         btnSavedTrack = (Button) findViewById(R.id.newTrack);
@@ -81,16 +64,22 @@ public class HelloActivity extends Activity implements View.OnClickListener {
         }
     }
 
-    public static class StatusInternetTask extends AsyncTask<Void, Boolean, Void> {
+    public static class StatusInternetTask extends AsyncTask<Void, Boolean, Void> implements TiedToActivityTask {
         protected HelloActivity activity;
         private NetworkInfo netInfo;
         private boolean isConnect;
-        public void linkActivity(HelloActivity activity) {
-            this.activity = activity;
+
+        public void linkActivity(Activity activity) {
+            this.activity = (HelloActivity) activity;
         }
 
         public void unLinkActivity() {
             this.activity = null;
+        }
+
+        @Override
+        public void execute() {
+            super.execute();
         }
 
         @Override

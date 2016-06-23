@@ -11,27 +11,16 @@ import android.widget.Toast;
 import net.squirrel.postar.client.ProviderAdapter;
 import net.squirrel.postar.client.R;
 import net.squirrel.postar.client.entity.Provider;
+import net.squirrel.postar.client.receiver.BaseAsyncTaskIncludingActivity;
 import net.squirrel.postar.client.receiver.DataManager;
+import net.squirrel.postar.client.receiver.TiedToActivityTask;
 
 import java.util.List;
 
-public class ProvidersActivity extends Activity implements View.OnClickListener {
+public class ProvidersActivity extends BaseAsyncTaskIncludingActivity implements View.OnClickListener {
     public static final String PARAM_PROVIDER = "provider";
     private ListView listView;
     private ProgressDialog progressDialog;
-    private LoadProvidersTask loadProvidersTask;
-
-    public Object onRetainNonConfigurationInstance() {
-        loadProvidersTask.unLinkActivity();
-        return loadProvidersTask;
-    }
-
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        taskInit();
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,16 +29,6 @@ public class ProvidersActivity extends Activity implements View.OnClickListener 
         progressDialogCreate();
 
         listView = (ListView) findViewById(R.id.list_post);
-    }
-
-    private void taskInit() {
-        loadProvidersTask = (LoadProvidersTask) getLastNonConfigurationInstance();
-        if (loadProvidersTask == null) {//TODO :
-            loadProvidersTask = new LoadProvidersTask();
-            loadProvidersTask.linkActivity(this);
-            loadProvidersTask.execute();
-        }
-        loadProvidersTask.linkActivity(this);
     }
 
     private void progressDialogCreate() {
@@ -69,16 +48,25 @@ public class ProvidersActivity extends Activity implements View.OnClickListener 
         startActivity(intent);
     }
 
+    @Override
+    protected TiedToActivityTask createConcreteTask() {
+        return new LoadProvidersTask();
+    }
 
-    public static class LoadProvidersTask extends AsyncTask<Void, Void, List<Provider>> {
+
+    public static class LoadProvidersTask extends AsyncTask<Void, Void, List<Provider>> implements TiedToActivityTask {
         protected ProvidersActivity activity;
 
-        public synchronized void linkActivity(ProvidersActivity activity) {
-            this.activity = activity;
+        public void linkActivity(Activity activity) {
+            this.activity = (ProvidersActivity) activity;
         }
-
         public synchronized void unLinkActivity() {
             this.activity = null;
+        }
+
+        @Override
+        public void execute() {
+            super.execute();
         }
 
         @Override

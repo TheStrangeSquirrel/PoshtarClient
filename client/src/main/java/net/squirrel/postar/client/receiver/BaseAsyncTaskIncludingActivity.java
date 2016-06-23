@@ -3,7 +3,7 @@ package net.squirrel.postar.client.receiver;
 import android.app.Activity;
 
 public abstract class BaseAsyncTaskIncludingActivity extends Activity {
-    private TiedToActivityTask task;
+    protected TiedToActivityTask task;
 
     public Object onRetainNonConfigurationInstance() {
         task.unLinkActivity();
