@@ -2,6 +2,7 @@ package net.squirrel.postar.client.receiver;
 
 import net.squirrel.postar.client.receiver.dto.ListProvider;
 import net.squirrel.postar.client.exception.AppException;
+import net.squirrel.postar.client.utils.LogUtil;
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
 
@@ -24,6 +25,7 @@ public class ProvidersReceiver extends DataReceiver {
         try {
             result = serializer.read(ListProvider.class, xml);
         } catch (Exception e) {
+            LogUtil.d("Error during deserialization providers");
             throw new AppException("Error during deserialization providers", e);
         }
         return result;

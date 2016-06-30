@@ -2,6 +2,7 @@ package net.squirrel.postar.client.receiver;
 
 import net.squirrel.postar.client.entity.Response;
 import net.squirrel.postar.client.exception.AppException;
+import net.squirrel.postar.client.utils.LogUtil;
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
 
@@ -22,6 +23,7 @@ public class TrackReceiver extends DataReceiver {
         try {
             result = serializer.read(Response.class, xml);
         } catch (Exception e) {
+            LogUtil.d("Error during deserialization response");
             throw new AppException("Error during deserialization response", e);
         }
         return result;

@@ -4,6 +4,7 @@ import net.squirrel.postar.client.ConfigManager;
 import net.squirrel.postar.client.receiver.dto.Request;
 import net.squirrel.postar.client.exception.AppException;
 import net.squirrel.postar.client.http_client.HttpClient;
+import net.squirrel.postar.client.utils.LogUtil;
 import org.simpleframework.xml.core.Persister;
 
 import java.io.StringWriter;
@@ -41,6 +42,7 @@ public abstract class DataReceiver {
         try {
             serializer.write(objects, writer);
         } catch (Exception e) {
+            LogUtil.d("Error during serialization");
             throw new AppException("Error during serialization", e);
         }
         result = writer.toString();

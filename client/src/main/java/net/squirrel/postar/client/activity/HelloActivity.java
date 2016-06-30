@@ -15,7 +15,6 @@ import net.squirrel.postar.client.R;
 import net.squirrel.postar.client.receiver.BaseAsyncTaskIncludingActivity;
 import net.squirrel.postar.client.receiver.TiedToActivityTask;
 
-//TODO: РЕализовать статус соединения; блок кнопки newTrack
 public class HelloActivity extends BaseAsyncTaskIncludingActivity implements View.OnClickListener {
     private Intent intent;
     private Button btnNewTrack, btnSavedTrack;

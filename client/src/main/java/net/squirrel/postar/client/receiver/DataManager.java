@@ -5,6 +5,7 @@ import net.squirrel.postar.client.receiver.dto.Request;
 import net.squirrel.postar.client.entity.Provider;
 import net.squirrel.postar.client.entity.Response;
 import net.squirrel.postar.client.exception.AppException;
+import net.squirrel.postar.client.utils.LogUtil;
 
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class DataManager {
         try {
             listProvider = ((ListProvider) providersReceiver.receiveData(null)).getProviders();
         } catch (AppException e) {
-            e.printStackTrace();//TODO: Nid Log
+            LogUtil.w("Providers list is not received", e);
         }
         return listProvider;
     }
@@ -35,7 +36,7 @@ public class DataManager {
         try {
             response = (Response) trackReceiver.receiveData(request);
         } catch (AppException e) {
-            e.printStackTrace();//TODO: Nid Log
+            LogUtil.w("Failed track", e);
         }
         return response;
     }

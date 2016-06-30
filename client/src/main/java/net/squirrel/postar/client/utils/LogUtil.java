@@ -15,11 +15,11 @@ public class LogUtil {
 
 
     private static String getTag() {
-        return TAG_SUFFIX + "From class:" + getContextClass();
+        return TAG_SUFFIX + "From class: " + getContextClass();
     }
 
     private static String getContextClass() {
-        return new RuntimeException().getStackTrace()[0].getClassName();
+        return new RuntimeException().getStackTrace()[1].getClassName();
     }
 
     public static void e(String msg, Throwable tr) {
@@ -64,7 +64,7 @@ public class LogUtil {
         }
     }
 
-    static void d(String msg) {
+    public static void d(String msg) {
         if (DEBUG_ENABLED && !DISABLE_ALL_LOG) {
             Log.d(getTag(), msg);
         }
