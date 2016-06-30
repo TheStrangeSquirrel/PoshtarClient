@@ -9,8 +9,8 @@ import org.simpleframework.xml.core.Persister;
 import java.io.StringWriter;
 import java.io.Writer;
 
-/*
-The class responsible for conversion requests/
+/**
+ *The class responsible for conversion requests/
  */
 public abstract class DataReceiver {
     protected ConfigManager config;
@@ -21,9 +21,9 @@ public abstract class DataReceiver {
         baseUrl = config.getBaseUrl();
     }
 
-    /*
-    @param request If you want to get a list parameter must be null.
-    @result Deserialization response
+    /**
+     *@param request If you want to get a list parameter must be null.
+     *@result Deserialization response
      */
     Object receiveData(Request request) throws AppException {
         setUrlSuffix();

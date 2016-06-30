@@ -5,8 +5,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
-/*
-Load properties from "/config.properties file".
+/**
+ *Load properties from "/config.properties file".
  */
 public class ConfigManager {
     private Properties property;

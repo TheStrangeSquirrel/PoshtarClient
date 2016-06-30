@@ -12,7 +12,7 @@ import java.util.List;
  *Receiver data facade
  */
 public class DataManager {
-    /*
+    /**
      *@return In the case of internal exclusion gives null
      */
     public static List<Provider> receiveProviders() {
@@ -26,7 +26,7 @@ public class DataManager {
         return listProvider;
     }
 
-    /*
+    /**
     *@return In the case of internal exclusion gives null
     */
     public static Response track(Request request) {
