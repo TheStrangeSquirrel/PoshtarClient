@@ -9,13 +9,9 @@ import java.io.Serializable;
 
 @Root
 public class Provider implements Serializable {
-    @Attribute
     private int id;
-    @Attribute
     private String name;
-    @Attribute
     private byte[] bitmapBytes;
-
 
     public Provider(int id, String name, byte[] bitmap) {
         this.id = id;
@@ -23,16 +19,34 @@ public class Provider implements Serializable {
         this.bitmapBytes = bitmap;
     }
 
+    @Attribute
     public int getId() {
         return id;
     }
 
+    @Attribute
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    @Attribute
     public String getName() {
         return name;
     }
 
+    @Attribute
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Attribute
     public byte[] getBitmapBytes() {
         return bitmapBytes;
+    }
+
+    @Attribute
+    public void setBitmapBytes(byte[] bitmapBytes) {
+        this.bitmapBytes = bitmapBytes;
     }
 
     public Bitmap getBitmap() {
