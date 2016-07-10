@@ -12,8 +12,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import net.squirrel.postar.client.R;
-import net.squirrel.postar.client.receiver.BaseAsyncTaskIncludingActivity;
-import net.squirrel.postar.client.receiver.TiedToActivityTask;
 
 public class HelloActivity extends BaseAsyncTaskIncludingActivity implements View.OnClickListener {
     private Intent intent;

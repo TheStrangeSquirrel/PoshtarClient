@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import net.squirrel.postar.client.entity.Provider;
+import net.squirrel.postar.client.entity.dto.Provider;
 
 import java.util.List;
 

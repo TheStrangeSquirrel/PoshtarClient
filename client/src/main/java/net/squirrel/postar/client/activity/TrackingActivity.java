@@ -11,11 +11,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import net.squirrel.postar.client.R;
-import net.squirrel.postar.client.receiver.BaseAsyncTaskIncludingActivity;
-import net.squirrel.postar.client.receiver.TiedToActivityTask;
-import net.squirrel.postar.client.receiver.dto.Request;
-import net.squirrel.postar.client.entity.Provider;
-import net.squirrel.postar.client.entity.Response;
+import net.squirrel.postar.client.entity.dto.Request;
+import net.squirrel.postar.client.entity.dto.Provider;
+import net.squirrel.postar.client.entity.dto.Response;
 import net.squirrel.postar.client.receiver.DataManager;
 
 public class TrackingActivity extends BaseAsyncTaskIncludingActivity implements View.OnClickListener {

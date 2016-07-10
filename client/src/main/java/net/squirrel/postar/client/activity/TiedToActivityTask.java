@@ -1,4 +1,4 @@
-package net.squirrel.postar.client.receiver;
+package net.squirrel.postar.client.activity;
 
 import android.app.Activity;
 

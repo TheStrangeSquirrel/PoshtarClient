@@ -1,4 +1,4 @@
-package net.squirrel.postar.client.entity;
+package net.squirrel.postar.client.receiver;
 
 import org.simpleframework.xml.core.Persister;
 

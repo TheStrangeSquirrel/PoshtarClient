@@ -1,6 +1,6 @@
 package net.squirrel.postar.client.receiver;
 
-import net.squirrel.postar.client.receiver.dto.ListProvider;
+import net.squirrel.postar.client.entity.dto.ListProvider;
 import net.squirrel.postar.client.exception.AppException;
 import net.squirrel.postar.client.utils.LogUtil;
 import org.simpleframework.xml.Serializer;
