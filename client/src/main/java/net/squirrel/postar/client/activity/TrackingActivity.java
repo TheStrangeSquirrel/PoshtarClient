@@ -53,7 +53,8 @@ public class TrackingActivity extends BaseAsyncTaskIncludingActivity implements 
         }
         codePost = editable.toString();
         request = new Request(codePost, provider);
-
+        ReceiverTask task = new ReceiverTask();
+        task.execute(request);
     }
 
     @Override

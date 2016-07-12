@@ -5,20 +5,20 @@ import org.simpleframework.xml.Attribute;
 
 public class Request {
     private String codePost;
-    private String providerId;
+    private int providerId;
 
     public Request(String codePost, Provider provider) {
         this.codePost = codePost;
-        this.providerId = "" + provider.getId();
+        this.providerId = provider.getId();
     }
 
     @Attribute
-    public String getProviderId() {
+    public int getProviderId() {
         return providerId;
     }
 
     @Attribute
-    public void setProviderId(String providerId) {
+    public void setProviderId(int providerId) {
         this.providerId = providerId;
     }
 
