@@ -17,8 +17,6 @@ import net.squirrel.poshtar.dto.Request;
 import net.squirrel.poshtar.dto.Response;
 import net.squirrel.postar.client.R;
 
-import java.util.Locale;
-
 public class TrackingActivity extends BaseAsyncTaskIncludingActivity implements View.OnClickListener {
     private Button track;
     private EditText editText;
@@ -51,12 +49,12 @@ public class TrackingActivity extends BaseAsyncTaskIncludingActivity implements 
     public void onClick(View v) {
         Editable editable = editText.getText();
         if (editable.toString().isEmpty()) {
-            Toast.makeText(this, R.string.enter_track_number, Toast.LENGTH_SHORT);
+            Toast.makeText(this, R.string.enter_track_number, Toast.LENGTH_SHORT).show();
             return;
         }
         codePost = editable.toString();
-        Locale locale = Resources.getSystem().getConfiguration().locale;
-        request = new Request(codePost, provider, locale);
+        String language = Resources.getSystem().getConfiguration().locale.getLanguage();
+        request = new Request(codePost, provider, language);
         ReceiverTask task = new ReceiverTask();
         task.execute(request);
     }

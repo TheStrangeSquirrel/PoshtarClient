@@ -2,16 +2,13 @@ package net.squirrel.poshtar.dto;
 
 import org.simpleframework.xml.Attribute;
 
-import java.util.Locale;
-
 
 public class Request {
     private String codePost;
     private int providerId;
+    private String language;
 
-    private Locale language;
-
-    public Request(String codePost, Provider provider, Locale language) {
+    public Request(String codePost, Provider provider, String language) {
         this.codePost = codePost;
         this.providerId = provider.getId();
         this.language = language;
@@ -38,12 +35,12 @@ public class Request {
     }
 
     @Attribute
-    public Locale getLanguage() {
+    public String getLanguage() {
         return language;
     }
 
     @Attribute
-    public void setLanguage(Locale language) {
+    public void setLanguage(String language) {
         this.language = language;
     }
 
