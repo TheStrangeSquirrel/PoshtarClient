@@ -1,8 +1,8 @@
-package net.squirrel.postar.client.receiver;
+package net.squirrel.poshtar.client.receiver;
 
-import net.squirrel.postar.client.entity.dto.ListProvider;
-import net.squirrel.postar.client.exception.AppException;
-import net.squirrel.postar.client.utils.LogUtil;
+import net.squirrel.poshtar.dto.ListProvider;
+import net.squirrel.poshtar.client.exception.AppException;
+import net.squirrel.poshtar.client.utils.LogUtil;
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
 
@@ -18,10 +18,10 @@ public class ProvidersReceiver extends DataReceiver {
     }
 
     @Override
-    protected Object deserialization(String xml) throws AppException {
+    protected ListProvider deserialization(String xml) throws AppException {
         Reader reader = new StringReader(xml);
         Serializer serializer = new Persister();
-        Object result = null;
+        ListProvider result = null;
         try {
             result = serializer.read(ListProvider.class, xml);
         } catch (Exception e) {

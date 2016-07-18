@@ -1,6 +1,6 @@
-package net.squirrel.postar.client.http_client;
+package net.squirrel.poshtar.client.http_client;
 
-import net.squirrel.postar.client.exception.AppException;
+import net.squirrel.poshtar.client.exception.AppException;
 
 import java.io.BufferedOutputStream;
 import java.io.IOException;
@@ -18,12 +18,9 @@ public class HttpClient {
         try {
             HttpURLConnection connection = (HttpURLConnection) new URI(url).toURL().openConnection();
             connection.setRequestMethod("POST");
-            connection.setRequestProperty("User-Agent", "Mozilla/5.0");
             connection.setRequestProperty("Content-Type", "application/soap+xml");
             connection.setRequestProperty("Content-Length", String.valueOf(massage.length()));
             connection.setDoOutput(true);
-            connection.setConnectTimeout(1000000);
-            connection.setReadTimeout(1000000);
             connection.connect();
             outputStream = new BufferedOutputStream(connection.getOutputStream());
             outputStream.write(massage.getBytes(Charset.forName("UTF-8")));

@@ -1,4 +1,4 @@
-package net.squirrel.postar.client;
+package net.squirrel.poshtar.client;
 
 import java.io.File;
 import java.io.FileInputStream;

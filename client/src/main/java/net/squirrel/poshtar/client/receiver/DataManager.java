@@ -1,11 +1,11 @@
-package net.squirrel.postar.client.receiver;
+package net.squirrel.poshtar.client.receiver;
 
-import net.squirrel.postar.client.entity.dto.ListProvider;
-import net.squirrel.postar.client.entity.dto.Request;
-import net.squirrel.postar.client.entity.dto.Provider;
-import net.squirrel.postar.client.entity.dto.Response;
-import net.squirrel.postar.client.exception.AppException;
-import net.squirrel.postar.client.utils.LogUtil;
+import net.squirrel.poshtar.client.exception.AppException;
+import net.squirrel.poshtar.client.utils.LogUtil;
+import net.squirrel.poshtar.dto.ListProvider;
+import net.squirrel.poshtar.dto.Request;
+import net.squirrel.poshtar.dto.Provider;
+import net.squirrel.poshtar.dto.Response;
 
 import java.util.List;
 

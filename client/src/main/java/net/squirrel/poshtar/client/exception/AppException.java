@@ -1,4 +1,4 @@
-package net.squirrel.postar.client.exception;
+package net.squirrel.poshtar.client.exception;
 
 public class AppException extends Exception {
     public AppException(String cause) {

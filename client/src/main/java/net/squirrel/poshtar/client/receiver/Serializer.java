@@ -1,4 +1,4 @@
-package net.squirrel.postar.client.receiver;
+package net.squirrel.poshtar.client.receiver;
 
 import org.simpleframework.xml.core.Persister;
 

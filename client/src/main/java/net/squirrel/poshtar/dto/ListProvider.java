@@ -1,4 +1,4 @@
-package net.squirrel.postar.client.entity.dto;
+package net.squirrel.poshtar.dto;
 
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
@@ -9,6 +9,10 @@ import java.util.List;
 public class ListProvider {
 
     private List<Provider> providers;
+
+    public ListProvider(List<Provider> providers) {
+        this.providers = providers;
+    }
 
     @ElementList(inline = true)
     public List<Provider> getProviders() {

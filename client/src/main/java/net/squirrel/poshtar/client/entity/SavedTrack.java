@@ -1,6 +1,6 @@
-package net.squirrel.postar.client.entity;
+package net.squirrel.poshtar.client.entity;
 
-import net.squirrel.postar.client.entity.dto.Provider;
+import net.squirrel.poshtar.dto.Provider;
 import org.simpleframework.xml.Attribute;
 
 public class SavedTrack {

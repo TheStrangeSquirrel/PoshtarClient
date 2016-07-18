@@ -1,4 +1,4 @@
-package net.squirrel.postar.client;
+package net.squirrel.poshtar.client;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,7 +7,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import net.squirrel.postar.client.entity.dto.Provider;
+import net.squirrel.postar.client.R;
+import net.squirrel.poshtar.dto.Provider;
 
 import java.util.List;
 

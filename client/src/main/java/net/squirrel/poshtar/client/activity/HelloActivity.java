@@ -1,7 +1,6 @@
-package net.squirrel.postar.client.activity;
+package net.squirrel.poshtar.client.activity;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -81,7 +80,7 @@ public class HelloActivity extends BaseAsyncTaskIncludingActivity implements Vie
 
         @Override
         protected void onPreExecute() {
-            ConnectivityManager connectivityManager = (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE);
+            ConnectivityManager connectivityManager = (ConnectivityManager) activity.getSystemService(CONNECTIVITY_SERVICE);
             netInfo = connectivityManager.getActiveNetworkInfo();
         }
 

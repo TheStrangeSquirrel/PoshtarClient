@@ -1,4 +1,4 @@
-package net.squirrel.postar.client.activity;
+package net.squirrel.poshtar.client.activity;
 
 import android.app.Activity;
 

@@ -1,4 +1,4 @@
-package net.squirrel.postar.client.entity.dto;
+package net.squirrel.poshtar.dto;
 
 import org.simpleframework.xml.Attribute;
 

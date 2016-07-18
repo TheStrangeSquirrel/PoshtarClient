@@ -1,4 +1,4 @@
-package net.squirrel.postar.client.entity.dto;
+package net.squirrel.poshtar.dto;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

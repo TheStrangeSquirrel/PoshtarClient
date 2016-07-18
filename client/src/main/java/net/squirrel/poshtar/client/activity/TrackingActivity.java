@@ -1,7 +1,8 @@
-package net.squirrel.postar.client.activity;
+package net.squirrel.poshtar.client.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
@@ -10,11 +11,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import net.squirrel.poshtar.client.receiver.DataManager;
+import net.squirrel.poshtar.dto.Provider;
+import net.squirrel.poshtar.dto.Request;
+import net.squirrel.poshtar.dto.Response;
 import net.squirrel.postar.client.R;
-import net.squirrel.postar.client.entity.dto.Request;
-import net.squirrel.postar.client.entity.dto.Provider;
-import net.squirrel.postar.client.entity.dto.Response;
-import net.squirrel.postar.client.receiver.DataManager;
+
+import java.util.Locale;
 
 public class TrackingActivity extends BaseAsyncTaskIncludingActivity implements View.OnClickListener {
     private Button track;
@@ -52,7 +55,8 @@ public class TrackingActivity extends BaseAsyncTaskIncludingActivity implements 
             return;
         }
         codePost = editable.toString();
-        request = new Request(codePost, provider);
+        Locale locale = Resources.getSystem().getConfiguration().locale;
+        request = new Request(codePost, provider, locale);
         ReceiverTask task = new ReceiverTask();
         task.execute(request);
     }

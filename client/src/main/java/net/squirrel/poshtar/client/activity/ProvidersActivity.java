@@ -1,4 +1,4 @@
-package net.squirrel.postar.client.activity;
+package net.squirrel.poshtar.client.activity;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -8,10 +8,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
-import net.squirrel.postar.client.ProviderAdapter;
+import net.squirrel.poshtar.client.ProviderAdapter;
+import net.squirrel.poshtar.client.receiver.DataManager;
 import net.squirrel.postar.client.R;
-import net.squirrel.postar.client.entity.dto.Provider;
-import net.squirrel.postar.client.receiver.DataManager;
+import net.squirrel.poshtar.dto.Provider;
 
 import java.util.List;
 

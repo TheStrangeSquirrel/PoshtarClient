@@ -1,10 +1,10 @@
-package net.squirrel.postar.client.receiver;
+package net.squirrel.poshtar.client.receiver;
 
-import net.squirrel.postar.client.ConfigManager;
-import net.squirrel.postar.client.entity.dto.Request;
-import net.squirrel.postar.client.exception.AppException;
-import net.squirrel.postar.client.http_client.HttpClient;
-import net.squirrel.postar.client.utils.LogUtil;
+import net.squirrel.poshtar.client.ConfigManager;
+import net.squirrel.poshtar.client.exception.AppException;
+import net.squirrel.poshtar.client.http_client.HttpClient;
+import net.squirrel.poshtar.client.utils.LogUtil;
+import net.squirrel.poshtar.dto.Request;
 import org.simpleframework.xml.core.Persister;
 
 import java.io.StringWriter;
@@ -24,7 +24,7 @@ public abstract class DataReceiver {
 
     /**
      *@param request If you want to get a list parameter must be null.
-     *@result Deserialization response
+     *@return Deserialization response
      */
     Object receiveData(Request request) throws AppException {
         setUrlSuffix();
@@ -52,6 +52,6 @@ public abstract class DataReceiver {
     //Override this method for set  valid url suffix
     protected abstract void setUrlSuffix();
 
-    protected abstract Object deserialization(String xml) throws AppException;
+    protected abstract <T> T deserialization(String xml) throws AppException;
 
 }

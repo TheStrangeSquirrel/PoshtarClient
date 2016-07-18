@@ -1,4 +1,4 @@
-package net.squirrel.postar.client.utils;
+package net.squirrel.poshtar.client.utils;
 
 import android.util.Log;
 
