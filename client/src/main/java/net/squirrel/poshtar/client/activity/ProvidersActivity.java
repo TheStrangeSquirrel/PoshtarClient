@@ -10,8 +10,8 @@ import android.widget.ListView;
 import android.widget.Toast;
 import net.squirrel.poshtar.client.ProviderAdapter;
 import net.squirrel.poshtar.client.receiver.DataManager;
-import net.squirrel.postar.client.R;
 import net.squirrel.poshtar.dto.Provider;
+import net.squirrel.postar.client.R;
 
 import java.util.List;
 
@@ -20,12 +20,12 @@ public class ProvidersActivity extends BaseAsyncTaskIncludingActivity implements
     private ListView listView;
     private ProgressDialog progressDialog;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_post);
         progressDialogCreate();
-
         listView = (ListView) findViewById(R.id.list_post);
     }
 

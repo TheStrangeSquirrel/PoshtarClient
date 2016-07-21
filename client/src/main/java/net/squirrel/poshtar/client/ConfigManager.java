@@ -1,12 +1,12 @@
 package net.squirrel.poshtar.client;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
+import net.squirrel.poshtar.client.activity.HelloActivity;
+import net.squirrel.poshtar.client.utils.LogUtil;
+
 import java.util.Properties;
 
 /**
- *Load properties from "/config.properties file".
+ * Load properties from "/config.properties file".
  */
 public class ConfigManager {
     private Properties property;
@@ -17,10 +17,10 @@ public class ConfigManager {
     public ConfigManager() {
         this.property = new Properties();
         try {
-            property.load(new FileInputStream(new File("/config.properties")));
+            property.load(HelloActivity.getAssetManager().open("config.properties"));
             loadFields();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            LogUtil.e("Error read properties file", e);
         }
     }
 

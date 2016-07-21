@@ -11,7 +11,7 @@ public class LogUtil {
     public final static boolean DEBUG_ENABLED = true;
 
 
-    public final static String TAG_SUFFIX = "POSHTAR ";
+    public final static String TAG_SUFFIX = "   - POSHTAR -  ";
 
 
     private static String getTag() {
@@ -19,7 +19,7 @@ public class LogUtil {
     }
 
     private static String getContextClass() {
-        return new RuntimeException().getStackTrace()[1].getClassName();
+        return Thread.currentThread().getStackTrace()[5].getClassName();
     }
 
     public static void e(String msg, Throwable tr) {

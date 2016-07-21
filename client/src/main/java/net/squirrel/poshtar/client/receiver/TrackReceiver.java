@@ -12,7 +12,7 @@ import java.io.StringReader;
 public class TrackReceiver extends DataReceiver {
     @Override
     protected void setUrlSuffix() {
-        urlSuffix = config.getProvidersUrl();
+        urlSuffix = config.getTrackingUrl();
     }
 
     @Override

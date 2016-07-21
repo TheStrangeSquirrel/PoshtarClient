@@ -2,6 +2,7 @@ package net.squirrel.poshtar.client.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.AssetManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -13,10 +14,15 @@ import android.widget.TextView;
 import net.squirrel.postar.client.R;
 
 public class HelloActivity extends BaseAsyncTaskIncludingActivity implements View.OnClickListener {
+    private static AssetManager assetManager;//TODO: Remake, if there is a better way
     private Intent intent;
     private Button btnNewTrack, btnSavedTrack;
     private ImageView imgInternetStatus;
     private TextView txtInternetStatus;
+
+    public static AssetManager getAssetManager() {
+        return assetManager;
+    }
 
     @Override
     protected TiedToActivityTask createConcreteTask() {
@@ -33,6 +39,9 @@ public class HelloActivity extends BaseAsyncTaskIncludingActivity implements Vie
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hello);
+
+        assetManager = this.getAssets();
+
         findViews();
         setListeners();
     }

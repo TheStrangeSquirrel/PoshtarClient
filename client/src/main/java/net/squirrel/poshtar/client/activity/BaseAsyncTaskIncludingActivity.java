@@ -18,6 +18,7 @@ public abstract class BaseAsyncTaskIncludingActivity extends Activity {
             task.execute();
         }
         task.linkActivity(this);
+
     }
 
     @Override

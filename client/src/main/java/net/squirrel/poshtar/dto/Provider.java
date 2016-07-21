@@ -13,10 +13,10 @@ public class Provider implements Serializable {
     private String name;
     private byte[] bitmapBytes;
 
-    public Provider(int id, String name, byte[] bitmap) {
+    public Provider(int id, String name, byte[] bitmapBytes) {
         this.id = id;
         this.name = name;
-        this.bitmapBytes = bitmap;
+        this.bitmapBytes = bitmapBytes;
     }
 
     @Attribute
