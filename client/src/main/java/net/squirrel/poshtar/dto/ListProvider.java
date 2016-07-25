@@ -10,6 +10,9 @@ public class ListProvider {
 
     private List<Provider> providers;
 
+    public ListProvider() {
+    }
+
     public ListProvider(List<Provider> providers) {
         this.providers = providers;
     }

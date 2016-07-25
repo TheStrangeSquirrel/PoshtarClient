@@ -11,10 +11,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import net.squirrel.poshtar.client.receiver.DataManager;
 import net.squirrel.poshtar.dto.Provider;
 import net.squirrel.poshtar.dto.Request;
 import net.squirrel.poshtar.dto.Response;
+import net.squirrel.poshtar.client.receiver.DataManager;
+
 import net.squirrel.postar.client.R;
 
 public class TrackingActivity extends BaseAsyncTaskIncludingActivity implements View.OnClickListener {

@@ -6,16 +6,18 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 import net.squirrel.poshtar.client.ProviderAdapter;
-import net.squirrel.poshtar.client.receiver.DataManager;
 import net.squirrel.poshtar.dto.Provider;
+import net.squirrel.poshtar.client.receiver.DataManager;
+
 import net.squirrel.postar.client.R;
 
 import java.util.List;
 
-public class ProvidersActivity extends BaseAsyncTaskIncludingActivity implements View.OnClickListener {
+public class ProvidersActivity extends BaseAsyncTaskIncludingActivity implements AdapterView.OnItemClickListener {
     public static final String PARAM_PROVIDER = "provider";
     private ListView listView;
     private ProgressDialog progressDialog;
@@ -37,18 +39,17 @@ public class ProvidersActivity extends BaseAsyncTaskIncludingActivity implements
     }
 
     @Override
-    public void onClick(View v) {
-        int id = v.getId();
-        ProviderAdapter adapter = (ProviderAdapter) (((ListView) v).getAdapter());
-        Provider provider = (Provider) adapter.getItem(id);
-        Intent intent = new Intent(this, TrackingActivity.class);
-        intent.putExtra(PARAM_PROVIDER, provider);
-        startActivity(intent);
+    protected TiedToActivityTask createConcreteTask() {
+        return new LoadProvidersTask();
     }
 
     @Override
-    protected TiedToActivityTask createConcreteTask() {
-        return new LoadProvidersTask();
+    public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+        ProviderAdapter adapter = (ProviderAdapter) (((ListView) parent).getAdapter());
+        Provider provider = (Provider) adapter.getItem(position);
+        Intent intent = new Intent(this, TrackingActivity.class);
+        intent.putExtra(PARAM_PROVIDER, provider);
+        startActivity(intent);
     }
 
 
@@ -86,7 +87,7 @@ public class ProvidersActivity extends BaseAsyncTaskIncludingActivity implements
             if (providers != null) {
                 activity.progressDialog.dismiss();
                 activity.listView.setAdapter(new ProviderAdapter(providers, activity));
-                activity.listView.setOnClickListener(activity);
+                activity.listView.setOnItemClickListener(activity);//TODO:
             } else {
                 Toast.makeText(activity, activity.getText(R.string.failed), Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(activity, HelloActivity.class);

@@ -27,10 +27,12 @@ public abstract class DataReceiver {
      *@return Deserialization response
      */
     Object receiveData(Request request) throws AppException {
+        String requestString = null;
         setUrlSuffix();
         url = baseUrl + urlSuffix;
-
-        String requestString = serialization(request);
+        if (request != null) {
+            requestString = serialization(request);
+        }
         String responseString = HttpClient.post(this.url, requestString);
         return deserialization(responseString);
     }

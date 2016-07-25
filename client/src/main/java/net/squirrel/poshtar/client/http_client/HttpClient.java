@@ -1,10 +1,9 @@
 package net.squirrel.poshtar.client.http_client;
 
 import net.squirrel.poshtar.client.exception.AppException;
+import net.squirrel.poshtar.client.utils.IOUtils;
 
-import java.io.BufferedOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -18,18 +17,18 @@ public class HttpClient {
         try {
             HttpURLConnection connection = (HttpURLConnection) new URI(url).toURL().openConnection();
             connection.setRequestMethod("POST");
-            connection.setRequestProperty("Content-Type", "application/soap+xml");
-            connection.setRequestProperty("Content-Length", String.valueOf(massage.length()));
+            connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded,text/xml,text/html");
             connection.setDoOutput(true);
             connection.connect();
             outputStream = new BufferedOutputStream(connection.getOutputStream());
-            outputStream.write(massage.getBytes(Charset.forName("UTF-8")));
+            if (massage != null) {
+                outputStream.write(massage.getBytes(Charset.forName("UTF-8")));
+            }
             outputStream.flush();
-            byte[] arr = null;
             inputStream = connection.getInputStream();
-            inputStream.read(arr);
-            response = new String(arr);
-        } catch (java.io.IOException e) {
+            response = IOUtils.toString(inputStream);
+
+        } catch (IOException e) {
             throw new AppException("IO error HttpClient", e);
         } catch (URISyntaxException e) {
             throw new AppException("An error occurred trying to connect to the URL:" + url, e);
@@ -45,6 +44,6 @@ public class HttpClient {
                 //NOP
             }
         }
-        return response;
+        return response.toString();
     }
 }
