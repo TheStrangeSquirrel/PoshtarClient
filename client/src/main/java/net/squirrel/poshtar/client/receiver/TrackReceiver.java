@@ -5,6 +5,7 @@ import net.squirrel.poshtar.client.utils.LogUtil;
 import net.squirrel.poshtar.dto.Response;
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
+import org.simpleframework.xml.stream.Format;
 
 import java.io.Reader;
 import java.io.StringReader;
@@ -17,8 +18,7 @@ public class TrackReceiver extends DataReceiver {
 
     @Override
     protected Object deserialization(String xml) throws AppException {
-        Reader reader = new StringReader(xml);
-        Serializer serializer = new Persister();
+        Serializer serializer = new Persister(new Format("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"));
         Object result = null;
         try {
             result = serializer.read(Response.class, xml);

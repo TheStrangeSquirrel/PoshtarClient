@@ -1,11 +1,10 @@
 package net.squirrel.poshtar.client.utils;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
+import java.nio.CharBuffer;
 
 public class IOUtils {
-    public static final int DEFAULT_BUFFER_SIZE = 1024 * 10;
+    public static final int DEFAULT_BUFFER_SIZE = 1024 * 8;// 8Kb
 
     public static String toString(InputStream inputStream, String charsetName, int bufferSizeInByte) throws IOException {
 
@@ -23,6 +22,20 @@ public class IOUtils {
     }
 
     public static String toString(InputStream inputStream) throws IOException {
-        return toString(inputStream, "UTF-8", DEFAULT_BUFFER_SIZE);
+        return toString(inputStream, DEFAULT_BUFFER_SIZE);
+    }
+
+    public static String toString(Reader reader, int bufferSizeInByte) throws IOException {
+        char[] arr = new char[bufferSizeInByte];
+        StringBuffer buf = new StringBuffer();
+        int numChars;
+        while ((numChars = reader.read(arr, 0, arr.length)) > 0) {
+            buf.append(arr, 0, numChars);
+        }
+        return buf.toString();
+    }
+
+    public static String toString(Reader reader) throws IOException {
+        return toString(reader, DEFAULT_BUFFER_SIZE);
     }
 }

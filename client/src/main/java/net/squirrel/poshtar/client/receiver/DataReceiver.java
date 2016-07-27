@@ -6,6 +6,8 @@ import net.squirrel.poshtar.client.http_client.HttpClient;
 import net.squirrel.poshtar.client.utils.LogUtil;
 import net.squirrel.poshtar.dto.Request;
 import org.simpleframework.xml.core.Persister;
+import org.simpleframework.xml.stream.Format;
+import org.simpleframework.xml.Serializer;
 
 import java.io.StringWriter;
 import java.io.Writer;
@@ -40,7 +42,8 @@ public abstract class DataReceiver {
     protected String serialization(Object objects) throws AppException {
         String result;
         Writer writer = new StringWriter();
-        org.simpleframework.xml.Serializer serializer = new Persister();
+
+        Serializer serializer = new Persister(new Format("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"));
         try {
             serializer.write(objects, writer);
         } catch (Exception e) {

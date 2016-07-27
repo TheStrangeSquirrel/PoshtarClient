@@ -18,21 +18,28 @@ import net.squirrel.poshtar.client.receiver.DataManager;
 
 import net.squirrel.postar.client.R;
 
-public class TrackingActivity extends BaseAsyncTaskIncludingActivity implements View.OnClickListener {
-    private Button track;
+public class TrackingActivity extends Activity implements View.OnClickListener {
+    ReceiverTask task;
+    private Button bTrack;
     private EditText editText;
     private TextView textResponse;
     private String codePost;
     private Request request;
     private Provider provider;
 
+    public Object onRetainNonConfigurationInstance() {
+        task.unLinkActivity();
+        return task;
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        findViews();
-        setProvider();
         setContentView(R.layout.activity_tracking);
+        setProvider();
+        findViews();
+        bTrack.setOnClickListener(this);
     }
 
     private void setProvider() {
@@ -41,7 +48,7 @@ public class TrackingActivity extends BaseAsyncTaskIncludingActivity implements 
     }
 
     private void findViews() {
-        track = (Button) findViewById(R.id.bTrack);
+        bTrack = (Button) findViewById(R.id.bTrack);
         editText = (EditText) findViewById(R.id.editRequest);
         textResponse = (TextView) findViewById(R.id.textResponse);
     }
@@ -56,26 +63,39 @@ public class TrackingActivity extends BaseAsyncTaskIncludingActivity implements 
         codePost = editable.toString();
         String language = Resources.getSystem().getConfiguration().locale.getLanguage();
         request = new Request(codePost, provider, language);
-        ReceiverTask task = new ReceiverTask();
-        task.execute(request);
+        executeOrResumeTask(request);
     }
 
-    @Override
-    protected TiedToActivityTask createConcreteTask() {
-        return new ReceiverTask();
+    public void executeOrResumeTask(Request request) {
+        task = (ReceiverTask) getLastNonConfigurationInstance();
+
+        if (task == null) {
+            //NOP
+        } else {
+            if (task.getStatus() != AsyncTask.Status.RUNNING) {
+                task.linkActivity(this);
+                return;
+            }
+        }
+        task = new ReceiverTask();
+        task.linkActivity(this);
+        task.execute(request);//TODO Передалать возможно
     }
 
-    static class ReceiverTask extends AsyncTask<Request, Void, Response> implements TiedToActivityTask {
+    static class ReceiverTask extends AsyncTask<Request, Void, Response> {
         private TrackingActivity activity;
 
         @Override
-        protected void onPreExecute() {
-
-        }
-
-        @Override
         protected Response doInBackground(Request... params) {
-            return DataManager.track(params[0]);
+            Response response = DataManager.track(params[0]);
+            while (activity == null) {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    //NOP
+                }
+            }
+            return response;
         }
 
         @Override
@@ -87,19 +107,15 @@ public class TrackingActivity extends BaseAsyncTaskIncludingActivity implements 
             activity.textResponse.setText(response.getStatus());
         }
 
-        @Override
+
         public void linkActivity(Activity activity) {
             this.activity = (TrackingActivity) activity;
         }
 
-        @Override
         public void unLinkActivity() {
             this.activity = null;
         }
 
-        @Override
-        public void execute() {
-            super.execute();
-        }
+
     }
 }

@@ -7,6 +7,13 @@ import org.simpleframework.xml.Root;
 public class Response {
     String status;
 
+    public Response() {
+    }
+
+    public Response(String status) {
+        this.status = status;
+    }
+
     @Attribute
     public String getStatus() {
         return status;

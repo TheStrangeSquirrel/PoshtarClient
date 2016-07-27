@@ -8,16 +8,15 @@ import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.charset.Charset;
-
 public class HttpClient {
     public static String post(String url, String massage) throws AppException {
         String response = null;
-        InputStream inputStream = null;
+        InputStreamReader streamReader = null;
         BufferedOutputStream outputStream = null;
         try {
             HttpURLConnection connection = (HttpURLConnection) new URI(url).toURL().openConnection();
             connection.setRequestMethod("POST");
-            connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded,text/xml,text/html");
+            connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded,text/xml,text/html; charset=UTF-8");
             connection.setDoOutput(true);
             connection.connect();
             outputStream = new BufferedOutputStream(connection.getOutputStream());
@@ -25,8 +24,8 @@ public class HttpClient {
                 outputStream.write(massage.getBytes(Charset.forName("UTF-8")));
             }
             outputStream.flush();
-            inputStream = connection.getInputStream();
-            response = IOUtils.toString(inputStream);
+            streamReader = new InputStreamReader(connection.getInputStream(), "UTF-8");
+            response = IOUtils.toString(streamReader);
 
         } catch (IOException e) {
             throw new AppException("IO error HttpClient", e);
@@ -37,8 +36,8 @@ public class HttpClient {
                 if (outputStream != null) {
                     outputStream.close();
                 }
-                if (inputStream != null) {
-                    inputStream.close();
+                if (streamReader != null) {
+                    streamReader.close();
                 }
             } catch (IOException e) {
                 //NOP

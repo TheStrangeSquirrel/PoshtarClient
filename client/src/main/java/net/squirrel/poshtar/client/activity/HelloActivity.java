@@ -30,6 +30,12 @@ public class HelloActivity extends BaseAsyncTaskIncludingActivity implements Vie
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        taskInitAndExecute();
+    }
+
+    @Override
     protected void onPause() {
         super.onPause();
         task.cancel(false);
@@ -111,6 +117,7 @@ public class HelloActivity extends BaseAsyncTaskIncludingActivity implements Vie
 
         @Override
         protected void onProgressUpdate(Boolean... values) {
+
             if (isConnect == values[0]) {
                 return;
             }

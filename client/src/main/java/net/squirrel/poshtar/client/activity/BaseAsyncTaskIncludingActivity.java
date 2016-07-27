@@ -10,7 +10,10 @@ public abstract class BaseAsyncTaskIncludingActivity extends Activity {
         return task;
     }
 
-    private void taskInit() {
+    /**
+     * It creates and executes the task if the task is what keeps activity to task.
+     */
+    protected void taskInitAndExecute() {
         task = (TiedToActivityTask) getLastNonConfigurationInstance();
         if (task == null) {
             task = createConcreteTask();
@@ -20,12 +23,5 @@ public abstract class BaseAsyncTaskIncludingActivity extends Activity {
         task.linkActivity(this);
 
     }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        taskInit();
-    }
-
     protected abstract TiedToActivityTask createConcreteTask();
 }

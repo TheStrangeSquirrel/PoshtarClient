@@ -22,6 +22,12 @@ public class ProvidersActivity extends BaseAsyncTaskIncludingActivity implements
     private ListView listView;
     private ProgressDialog progressDialog;
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        taskInitAndExecute();
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +51,8 @@ public class ProvidersActivity extends BaseAsyncTaskIncludingActivity implements
 
     @Override
     public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-        ProviderAdapter adapter = (ProviderAdapter) (((ListView) parent).getAdapter());
+        ListView lv = (ListView) parent;
+        ProviderAdapter adapter = (ProviderAdapter) lv.getAdapter();
         Provider provider = (Provider) adapter.getItem(position);
         Intent intent = new Intent(this, TrackingActivity.class);
         intent.putExtra(PARAM_PROVIDER, provider);
@@ -70,8 +77,11 @@ public class ProvidersActivity extends BaseAsyncTaskIncludingActivity implements
 
         @Override
         protected List<Provider> doInBackground(Void... params) {
-            List<Provider> listProvider = DataManager.receiveProviders();
+            return DataManager.receiveProviders();
+        }
 
+        @Override
+        protected void onPostExecute(List<Provider> providers) {
             while (activity == null) {
                 try {
                     Thread.sleep(1000);
@@ -79,15 +89,10 @@ public class ProvidersActivity extends BaseAsyncTaskIncludingActivity implements
                     //NOP
                 }
             }
-            return listProvider;
-        }
-
-        @Override
-        protected void onPostExecute(List<Provider> providers) {
             if (providers != null) {
                 activity.progressDialog.dismiss();
                 activity.listView.setAdapter(new ProviderAdapter(providers, activity));
-                activity.listView.setOnItemClickListener(activity);//TODO:
+                activity.listView.setOnItemClickListener(activity);
             } else {
                 Toast.makeText(activity, activity.getText(R.string.failed), Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(activity, HelloActivity.class);
