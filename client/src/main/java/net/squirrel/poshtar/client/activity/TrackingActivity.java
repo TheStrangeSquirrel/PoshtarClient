@@ -104,7 +104,8 @@ public class TrackingActivity extends Activity implements View.OnClickListener {
                 Toast.makeText(activity, R.string.failed, Toast.LENGTH_SHORT).show();
                 return;
             }
-            activity.textResponse.setText(response.getStatus());
+            String status = response.getStatus().replaceAll("№ewLine#", "\n");
+            activity.textResponse.setText(status);
         }
 
 
