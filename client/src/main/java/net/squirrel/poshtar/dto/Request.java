@@ -5,13 +5,13 @@ import org.simpleframework.xml.Root;
 
 @Root
 public class Request {
-    private String codePost;
     private int providerId;
+    private String trackNumber;
     private String language;
 
-    public Request(String codePost, Provider provider, String language) {
-        this.codePost = codePost;
-        this.providerId = provider.getId();
+    public Request(Integer providerId, String trackNumber, String language) {
+        this.trackNumber = trackNumber;
+        this.providerId = providerId;
         this.language = language;
     }
 
@@ -26,13 +26,13 @@ public class Request {
     }
 
     @Attribute
-    public String getCodePost() {
-        return codePost;
+    public String getTrackNumber() {
+        return trackNumber;
     }
 
     @Attribute
-    public void setCodePost(String codePost) {
-        this.codePost = codePost;
+    public void setTrackNumber(String trackNumber) {
+        this.trackNumber = trackNumber;
     }
 
     @Attribute

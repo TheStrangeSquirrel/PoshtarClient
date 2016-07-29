@@ -11,11 +11,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import net.squirrel.poshtar.dto.Provider;
+import net.squirrel.poshtar.client.receiver.DataManager;
 import net.squirrel.poshtar.dto.Request;
 import net.squirrel.poshtar.dto.Response;
-import net.squirrel.poshtar.client.receiver.DataManager;
-
 import net.squirrel.postar.client.R;
 
 public class TrackingActivity extends Activity implements View.OnClickListener {
@@ -23,10 +21,11 @@ public class TrackingActivity extends Activity implements View.OnClickListener {
     private Button bTrack;
     private EditText editText;
     private TextView textResponse;
-    private String codePost;
+    private String trackNumber;
     private Request request;
-    private Provider provider;
+    private int providerId;
 
+    @Override
     public Object onRetainNonConfigurationInstance() {
         task.unLinkActivity();
         return task;
@@ -44,7 +43,7 @@ public class TrackingActivity extends Activity implements View.OnClickListener {
 
     private void setProvider() {
         Intent intent = getIntent();
-        provider = (Provider) intent.getSerializableExtra(ProvidersActivity.PARAM_PROVIDER);
+        providerId = intent.getIntExtra(ProvidersActivity.PARAM_PROVIDER_ID, 42);
     }
 
     private void findViews() {
@@ -60,9 +59,9 @@ public class TrackingActivity extends Activity implements View.OnClickListener {
             Toast.makeText(this, R.string.enter_track_number, Toast.LENGTH_SHORT).show();
             return;
         }
-        codePost = editable.toString();
+        trackNumber = editable.toString();
         String language = Resources.getSystem().getConfiguration().locale.getLanguage();
-        request = new Request(codePost, provider, language);
+        request = new Request(providerId, trackNumber, language);
         executeOrResumeTask(request);
     }
 
@@ -79,7 +78,7 @@ public class TrackingActivity extends Activity implements View.OnClickListener {
         }
         task = new ReceiverTask();
         task.linkActivity(this);
-        task.execute(request);//TODO Передалать возможно
+        task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, request);//TODO Передалать возможно
     }
 
     static class ReceiverTask extends AsyncTask<Request, Void, Response> {

@@ -10,15 +10,14 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 import net.squirrel.poshtar.client.ProviderAdapter;
-import net.squirrel.poshtar.dto.Provider;
 import net.squirrel.poshtar.client.receiver.DataManager;
-
+import net.squirrel.poshtar.dto.Provider;
 import net.squirrel.postar.client.R;
 
 import java.util.List;
 
-public class ProvidersActivity extends BaseAsyncTaskIncludingActivity implements AdapterView.OnItemClickListener {
-    public static final String PARAM_PROVIDER = "provider";
+public class ProvidersActivity extends BaseActivityIncludingAsyncTask implements AdapterView.OnItemClickListener {
+    public static final String PARAM_PROVIDER_ID = "providerId";
     private ListView listView;
     private ProgressDialog progressDialog;
 
@@ -53,9 +52,9 @@ public class ProvidersActivity extends BaseAsyncTaskIncludingActivity implements
     public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
         ListView lv = (ListView) parent;
         ProviderAdapter adapter = (ProviderAdapter) lv.getAdapter();
-        Provider provider = (Provider) adapter.getItem(position);
+        int providerId = (int) adapter.getItemId(position);
         Intent intent = new Intent(this, TrackingActivity.class);
-        intent.putExtra(PARAM_PROVIDER, provider);
+        intent.putExtra(PARAM_PROVIDER_ID, providerId);
         startActivity(intent);
     }
 
@@ -63,16 +62,20 @@ public class ProvidersActivity extends BaseAsyncTaskIncludingActivity implements
     public static class LoadProvidersTask extends AsyncTask<Void, Void, List<Provider>> implements TiedToActivityTask {
         protected ProvidersActivity activity;
 
+        @Override
         public void linkActivity(Activity activity) {
             this.activity = (ProvidersActivity) activity;
         }
+
+        @Override
         public synchronized void unLinkActivity() {
             this.activity = null;
         }
 
         @Override
         public void execute() {
-            super.execute();
+            super.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            ;
         }
 
         @Override

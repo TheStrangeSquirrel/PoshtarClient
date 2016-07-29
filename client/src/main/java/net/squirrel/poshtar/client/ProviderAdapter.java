@@ -7,14 +7,14 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import net.squirrel.postar.client.R;
 import net.squirrel.poshtar.dto.Provider;
+import net.squirrel.postar.client.R;
 
 import java.util.List;
 
 
 public class ProviderAdapter extends BaseAdapter {
-    private List<Provider> providers;//TODO : Make as saving and loading of providers from a DB
+    private List<Provider> providers;
     private Context context;
     private LayoutInflater inflater;
 
