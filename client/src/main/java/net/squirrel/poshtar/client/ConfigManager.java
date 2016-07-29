@@ -1,6 +1,5 @@
 package net.squirrel.poshtar.client;
 
-import net.squirrel.poshtar.client.activity.HelloActivity;
 import net.squirrel.poshtar.client.utils.LogUtil;
 
 import java.util.Properties;
@@ -17,7 +16,7 @@ public class ConfigManager {
     public ConfigManager() {
         this.property = new Properties();
         try {
-            property.load(HelloActivity.getAssetManager().open("config.properties"));
+            property.load(PoshtarApp.getAssetManager().open("config.properties"));
             loadFields();
         } catch (Exception e) {
             LogUtil.e("Error read properties file", e);

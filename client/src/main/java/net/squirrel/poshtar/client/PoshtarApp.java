@@ -1,17 +1,24 @@
 package net.squirrel.poshtar.client;
 
 import android.app.Application;
+import android.content.res.AssetManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 
 public class PoshtarApp extends Application {
+    private static AssetManager assetManager;
     private boolean wifiStatus;
     private boolean mInternetStatus;
+
+    public static AssetManager getAssetManager() {
+        return assetManager;
+    }
 
     @Override
     public void onCreate() {
         super.onCreate();
+        assetManager = this.getAssets();
         StatusInternetTask internetTask = new StatusInternetTask();
         internetTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 

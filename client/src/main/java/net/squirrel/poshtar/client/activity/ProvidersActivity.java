@@ -75,7 +75,6 @@ public class ProvidersActivity extends BaseActivityIncludingAsyncTask implements
         @Override
         public void execute() {
             super.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            ;
         }
 
         @Override
