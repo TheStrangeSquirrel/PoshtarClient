@@ -1,41 +1,50 @@
 package net.squirrel.poshtar.client.entity;
 
-import net.squirrel.poshtar.dto.Provider;
-import org.simpleframework.xml.Attribute;
-
 public class SavedTrack {
-    private Provider provider;
-    private String codePost;
+    private int providerID;
+    private String trackNumber;
+    private String trackResult;
     private String description;
 
-    public SavedTrack(Provider provider, String codePost, String description) {
-        this.provider = provider;
-        this.codePost = codePost;
+    public SavedTrack() {
+    }
+
+    public SavedTrack(int providerID, String trackNumber, String trackResult, String description) {
+        this.providerID = providerID;
+        this.trackNumber = trackNumber;
+        this.trackResult = trackResult;
         this.description = description;
     }
 
-    @Attribute
-    public String getCodePost() {
-        return codePost;
+    public int getProviderID() {
+        return providerID;
     }
 
-    @Attribute
-    public void setCodePost(String codePost) {
-        this.codePost = codePost;
+    public void setProviderID(int providerID) {
+        this.providerID = providerID;
     }
 
-    @Attribute
+    public String getTrackNumber() {
+        return trackNumber;
+    }
+
+    public void setTrackNumber(String trackNumber) {
+        this.trackNumber = trackNumber;
+    }
+
+    public String getTrackResult() {
+        return trackResult;
+    }
+
+    public void setTrackResult(String trackResult) {
+        this.trackResult = trackResult;
+    }
+
     public String getDescription() {
         return description;
     }
 
-    @Attribute
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    @Override
-    public String toString() {
-        return super.toString();
     }
 }
