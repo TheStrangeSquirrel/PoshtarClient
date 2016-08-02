@@ -2,12 +2,13 @@ package net.squirrel.poshtar.client.DAO;
 
 import net.squirrel.poshtar.dto.Provider;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface ProvidersDAO {
-    public List<Provider> loadProviders();
+    List<Provider> loadProviders() throws Exception;
 
-    public void saveProviders(List<Provider> providers);
+    void saveProviders(String providersXML) throws IOException;
 
-    public int getTimeLastUpdateProviders();
+    long getTimeLastUpdateProviders();
 }

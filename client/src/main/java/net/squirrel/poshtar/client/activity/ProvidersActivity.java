@@ -9,8 +9,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
+import net.squirrel.poshtar.client.AppPoshtar;
 import net.squirrel.poshtar.client.ProviderAdapter;
-import net.squirrel.poshtar.client.receiver.DataManager;
 import net.squirrel.poshtar.dto.Provider;
 import net.squirrel.postar.client.R;
 
@@ -22,18 +22,12 @@ public class ProvidersActivity extends BaseActivityIncludingAsyncTask implements
     private ProgressDialog progressDialog;
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        taskInitAndExecute();
-    }
-
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_all_post);
+        setContentView(R.layout.activity_all_providers);
+        listView = (ListView) findViewById(R.id.list_providers);
         progressDialogCreate();
-        listView = (ListView) findViewById(R.id.list_post);
+        taskInitAndExecute();
     }
 
     private void progressDialogCreate() {
@@ -41,6 +35,7 @@ public class ProvidersActivity extends BaseActivityIncludingAsyncTask implements
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setMessage(getString(R.string.dialog_message));
         progressDialog.setIndeterminate(true);
+        progressDialog.show();
     }
 
     @Override
@@ -59,8 +54,8 @@ public class ProvidersActivity extends BaseActivityIncludingAsyncTask implements
     }
 
 
-    public static class LoadProvidersTask extends AsyncTask<Void, Void, List<Provider>> implements TiedToActivityTask {
-        protected ProvidersActivity activity;
+    private static class LoadProvidersTask extends AsyncTask<Void, Void, List<Provider>> implements TiedToActivityTask {
+        ProvidersActivity activity;
 
         @Override
         public void linkActivity(Activity activity) {
@@ -79,11 +74,7 @@ public class ProvidersActivity extends BaseActivityIncludingAsyncTask implements
 
         @Override
         protected List<Provider> doInBackground(Void... params) {
-            return DataManager.receiveProviders();
-        }
-
-        @Override
-        protected void onPostExecute(List<Provider> providers) {
+            List<Provider> providers = AppPoshtar.getProviders();
             while (activity == null) {
                 try {
                     Thread.sleep(1000);
@@ -91,6 +82,11 @@ public class ProvidersActivity extends BaseActivityIncludingAsyncTask implements
                     //NOP
                 }
             }
+            return providers;
+        }
+
+        @Override
+        protected void onPostExecute(List<Provider> providers) {
             if (providers != null) {
                 activity.progressDialog.dismiss();
                 activity.listView.setAdapter(new ProviderAdapter(providers, activity));

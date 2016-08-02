@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import net.squirrel.poshtar.client.PoshtarApp;
+import net.squirrel.poshtar.client.AppPoshtar;
 import net.squirrel.postar.client.R;
 
 public class HelloActivity extends BaseActivityIncludingAsyncTask implements View.OnClickListener {
@@ -68,10 +68,9 @@ public class HelloActivity extends BaseActivityIncludingAsyncTask implements Vie
         }
     }
 
-    public static class StatusInternetTask extends AsyncTask<Void, Void, Void> implements TiedToActivityTask {
-        protected HelloActivity activity;
+    private static class StatusInternetTask extends AsyncTask<Void, Void, Void> implements TiedToActivityTask {
+        HelloActivity activity;
         private boolean oldInternetStatus = false;
-        private PoshtarApp app;
 
         @Override
         public void linkActivity(Activity activity) {
@@ -86,11 +85,6 @@ public class HelloActivity extends BaseActivityIncludingAsyncTask implements Vie
         @Override
         public void execute() {
             super.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        }
-
-        @Override
-        protected void onPreExecute() {
-            app = (PoshtarApp) activity.getApplication();
         }
 
         @Override
@@ -110,7 +104,7 @@ public class HelloActivity extends BaseActivityIncludingAsyncTask implements Vie
 
         @Override
         protected void onProgressUpdate(Void... values) {
-            boolean isInternetConnect = app.isWifiStatus() || app.isMInternetStatus();
+            boolean isInternetConnect = AppPoshtar.getConnectManager().isInternetStatus();
 
             if (oldInternetStatus == isInternetConnect) {
                 return;
@@ -124,7 +118,7 @@ public class HelloActivity extends BaseActivityIncludingAsyncTask implements Vie
                 activity.txtInternetStatus.setText(R.string.internet_status_ofline);
                 activity.btnNewTrack.setEnabled(false);
             }
-            oldInternetStatus = app.isMInternetStatus();
+            oldInternetStatus = isInternetConnect;
         }
     }
 }

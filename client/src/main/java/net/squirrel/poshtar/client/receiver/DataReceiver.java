@@ -3,60 +3,35 @@ package net.squirrel.poshtar.client.receiver;
 import net.squirrel.poshtar.client.ConfigManager;
 import net.squirrel.poshtar.client.exception.AppException;
 import net.squirrel.poshtar.client.http_client.HttpClient;
-import net.squirrel.poshtar.client.utils.LogUtil;
+import net.squirrel.poshtar.client.utils.XmlTransforming;
+import net.squirrel.poshtar.dto.ListProvider;
+import net.squirrel.poshtar.dto.Provider;
 import net.squirrel.poshtar.dto.Request;
-import org.simpleframework.xml.core.Persister;
-import org.simpleframework.xml.stream.Format;
-import org.simpleframework.xml.Serializer;
+import net.squirrel.poshtar.dto.Response;
 
-import java.io.StringWriter;
-import java.io.Writer;
+import java.util.List;
 
-/**
- *The class responsible for conversion requests/
- */
-public abstract class DataReceiver {
-    protected ConfigManager config;
-    protected String baseUrl, url, urlSuffix;
+public class DataReceiver {
+    private ConfigManager config;
 
-    DataReceiver() {
+    public DataReceiver() {
         config = new ConfigManager();
-        baseUrl = config.getBaseUrl();
     }
 
-    /**
-     *@param request If you want to get a list parameter must be null.
-     *@return Deserialization response
-     */
-    Object receiveData(Request request) throws AppException {
-        String requestString = null;
-        setUrlSuffix();
-        url = baseUrl + urlSuffix;
-        if (request != null) {
-            requestString = serialization(request);
-        }
-        String responseString = HttpClient.post(this.url, requestString);
-        return deserialization(responseString);
+    public String receiveProvidersXML() throws AppException {
+        String url = config.getBaseUrl() + config.getProvidersUrl();
+        return HttpClient.post(url, null);
     }
 
-    protected String serialization(Object objects) throws AppException {
-        String result;
-        Writer writer = new StringWriter();
-
-        Serializer serializer = new Persister(new Format("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"));
-        try {
-            serializer.write(objects, writer);
-        } catch (Exception e) {
-            LogUtil.d("Error during serialization");
-            throw new AppException("Error during serialization", e);
-        }
-        result = writer.toString();
-        return result;
+    public List<Provider> getProviderListFromXML(String xml) throws Exception {
+        ListProvider unmarshalling = XmlTransforming.unmarshalling(xml, ListProvider.class);
+        return unmarshalling.getProviders();
     }
 
-    //Override this method for set  valid url suffix
-    protected abstract void setUrlSuffix();
-
-    protected abstract <T> T deserialization(String xml) throws AppException;
-
+    public Response track(Request request) throws Exception {
+        String url = config.getBaseUrl() + config.getTrackingUrl();
+        String marshalling = XmlTransforming.marshalling(request);
+        String response = HttpClient.post(url, marshalling);
+        return XmlTransforming.unmarshalling(response, Response.class);
+    }
 }

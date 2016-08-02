@@ -1,27 +1,20 @@
 package net.squirrel.poshtar.client;
 
-import android.app.Application;
-import android.content.res.AssetManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import net.squirrel.poshtar.client.utils.LogUtil;
 
-public class PoshtarApp extends Application {
-    private static AssetManager assetManager;
+import static android.content.Context.CONNECTIVITY_SERVICE;
+import static net.squirrel.poshtar.client.AppPoshtar.getContext;
+
+public class ConnectManager {
     private boolean wifiStatus;
     private boolean mInternetStatus;
 
-    public static AssetManager getAssetManager() {
-        return assetManager;
-    }
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        assetManager = this.getAssets();
+    public ConnectManager() {
         StatusInternetTask internetTask = new StatusInternetTask();
         internetTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-
     }
 
     public boolean isWifiStatus() {
@@ -32,13 +25,17 @@ public class PoshtarApp extends Application {
         return mInternetStatus;
     }
 
-    public class StatusInternetTask extends AsyncTask<Void, Boolean, Void> {
+    public boolean isInternetStatus() {
+        return mInternetStatus || wifiStatus;
+    }
+
+
+    private class StatusInternetTask extends AsyncTask<Void, Boolean, Void> {
         private ConnectivityManager connManager;
 
         @Override
         protected void onPreExecute() {
-            connManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
-            NetworkInfo netInfo = connManager.getActiveNetworkInfo();
+            connManager = (ConnectivityManager) getContext().getSystemService(CONNECTIVITY_SERVICE);
         }
 
         @Override
@@ -48,7 +45,7 @@ public class PoshtarApp extends Application {
                 try {
                     Thread.sleep(2000);
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    LogUtil.w("Sleep error", e);
                 }
             }
         }
@@ -69,4 +66,5 @@ public class PoshtarApp extends Application {
         }
 
     }
+
 }

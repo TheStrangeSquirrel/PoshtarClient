@@ -11,13 +11,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import net.squirrel.poshtar.client.receiver.DataManager;
+import net.squirrel.poshtar.client.receiver.DataReceiver;
+import net.squirrel.poshtar.client.utils.LogUtil;
 import net.squirrel.poshtar.dto.Request;
 import net.squirrel.poshtar.dto.Response;
 import net.squirrel.postar.client.R;
 
 public class TrackingActivity extends Activity implements View.OnClickListener {
-    ReceiverTask task;
+    private ReceiverTask task;
     private Button bTrack;
     private EditText editText;
     private TextView textResponse;
@@ -65,12 +66,10 @@ public class TrackingActivity extends Activity implements View.OnClickListener {
         executeOrResumeTask(request);
     }
 
-    public void executeOrResumeTask(Request request) {
+    private void executeOrResumeTask(Request request) {
         task = (ReceiverTask) getLastNonConfigurationInstance();
 
-        if (task == null) {
-            //NOP
-        } else {
+        if (task != null) {
             if (task.getStatus() != AsyncTask.Status.RUNNING) {
                 task.linkActivity(this);
                 return;
@@ -83,10 +82,20 @@ public class TrackingActivity extends Activity implements View.OnClickListener {
 
     static class ReceiverTask extends AsyncTask<Request, Void, Response> {
         private TrackingActivity activity;
+        private DataReceiver dataReceiver;
+
+        {
+            dataReceiver = new DataReceiver();
+        }
 
         @Override
         protected Response doInBackground(Request... params) {
-            Response response = DataManager.track(params[0]);
+            Response response = null;
+            try {
+                response = dataReceiver.track(params[0]);
+            } catch (Exception e) {
+                LogUtil.w("Unable to trace the package", e);
+            }
             while (activity == null) {
                 try {
                     Thread.sleep(1000);

@@ -16,7 +16,7 @@ public class ConfigManager {
     public ConfigManager() {
         this.property = new Properties();
         try {
-            property.load(PoshtarApp.getAssetManager().open("config.properties"));
+            property.load(AppPoshtar.getContext().getAssets().open("config.properties"));
             loadFields();
         } catch (Exception e) {
             LogUtil.e("Error read properties file", e);
