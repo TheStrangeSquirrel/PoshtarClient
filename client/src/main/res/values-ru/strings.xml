@@ -10,4 +10,7 @@
     <string name="failed">Не удалось выполнить, попробуйте позднее</string>
     <string name="enter_track_number">Введите трек номер</string>
     <string name="track">Отследить</string>
+    <string name="header_providers">Доступные провайдеры</string>
+    <string name="save_track">Cохранить отслеживание</string>
+    <string name="stop_track">Перестать отслеживать</string>
 </resources>

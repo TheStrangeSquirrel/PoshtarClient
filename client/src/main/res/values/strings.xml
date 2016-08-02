@@ -10,5 +10,9 @@
     <string name="failed">Failed, try again later</string>
     <string name="enter_track_number">Enter the track number</string>
     <string name="track">Track</string>
+    <string name="header_providers">Available providers</string>
+    <string name="save_track">Save track</string>
+    <string name="stop_track">Stop track</string>
+
 
 </resources>

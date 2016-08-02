@@ -28,6 +28,14 @@
                 android:layout_height="match_parent"
                 android:id="@+id/textResponse"/>
     </ScrollView>
+
+    <Button
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:text="@string/save_track"
+            android:id="@+id/bSaveTr"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"/>
 </RelativeLayout>
 
 
