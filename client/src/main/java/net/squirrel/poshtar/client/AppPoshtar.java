@@ -2,15 +2,14 @@ package net.squirrel.poshtar.client;
 
 import android.app.Application;
 import android.content.Context;
-import net.squirrel.poshtar.dto.Provider;
-
-import java.util.List;
+import android.content.res.Resources;
 
 public class AppPoshtar extends Application {
     private static Context context;
     private static ConnectManager connectManager;
     private static ProviderManager providerManager;
-    private static List<Provider> providers;
+    private static String language;
+
 
     public static Context getContext() {
         return context;
@@ -20,11 +19,8 @@ public class AppPoshtar extends Application {
         return connectManager;
     }
 
-    public static List<Provider> getProviders() {//TODO Обработать ситуацию когда провайдыры не получены?
-        if (providers == null) {
-            providers = providerManager.getProviders();
-        }
-        return providers;
+    public static String getLanguage() {
+        return language;
     }
 
     @Override
@@ -32,8 +28,7 @@ public class AppPoshtar extends Application {
         super.onCreate();
         context = (Context) this;
         connectManager = new ConnectManager();
-        providerManager = new ProviderManager();
-        providers = providerManager.getProviders();
+        providerManager = ProviderManager.getInstance();
+        language = Resources.getSystem().getConfiguration().locale.getLanguage();
     }
-
 }

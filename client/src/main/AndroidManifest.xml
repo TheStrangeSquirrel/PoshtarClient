@@ -21,7 +21,7 @@
         </activity>
         <activity android:name="net.squirrel.poshtar.client.activity.ProvidersActivity">
         </activity>
-        <activity android:name="net.squirrel.poshtar.client.activity.TrackingActivity"/>
+        <activity android:name="net.squirrel.poshtar.client.activity.NewTrackingActivity"/>
     </application>
 
 </manifest>

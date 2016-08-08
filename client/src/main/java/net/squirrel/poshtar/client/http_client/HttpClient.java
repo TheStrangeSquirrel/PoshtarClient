@@ -2,19 +2,22 @@ package net.squirrel.poshtar.client.http_client;
 
 import net.squirrel.poshtar.client.exception.AppException;
 import net.squirrel.poshtar.client.utils.IOUtils;
+import net.squirrel.poshtar.client.utils.LogUtil;
 
-import java.io.*;
+import java.io.BufferedOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.HttpURLConnection;
-import java.net.URI;
-import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.charset.Charset;
+
 public class HttpClient {
     public static String post(String url, String massage) throws AppException {
         String response = null;
-        InputStreamReader streamReader = null;
+        InputStream inputStream = null;
         BufferedOutputStream outputStream = null;
         try {
-            HttpURLConnection connection = (HttpURLConnection) new URI(url).toURL().openConnection();
+            HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded,text/xml,text/html; charset=UTF-8");
             connection.setDoOutput(true);
@@ -24,25 +27,23 @@ public class HttpClient {
                 outputStream.write(massage.getBytes(Charset.forName("UTF-8")));
             }
             outputStream.flush();
-            streamReader = new InputStreamReader(connection.getInputStream(), "UTF-8");
-            response = IOUtils.toString(streamReader);
-
+            inputStream = connection.getInputStream();
+            response = IOUtils.toString(inputStream);
         } catch (IOException e) {
-            throw new AppException("IO error HttpClient", e);
-        } catch (URISyntaxException e) {
-            throw new AppException("An error occurred trying to connect to the URL:" + url, e);
+            LogUtil.w("IO error HttpClient", e);
+
         } finally {
             try {
                 if (outputStream != null) {
                     outputStream.close();
                 }
-                if (streamReader != null) {
-                    streamReader.close();
+                if (inputStream != null) {
+                    inputStream.close();
                 }
             } catch (IOException e) {
                 //NOP
             }
         }
-        return response.toString();
+        return response;
     }
 }

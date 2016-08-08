@@ -7,47 +7,58 @@ import net.squirrel.poshtar.client.receiver.DataReceiver;
 import net.squirrel.poshtar.client.utils.LogUtil;
 import net.squirrel.poshtar.dto.Provider;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static net.squirrel.poshtar.client.AppPoshtar.getConnectManager;
 
+/**
+ * Singleton and Observer
+ */
 public class ProviderManager {
     static final long TIME_VALID_PROVIDERS_WIFI = 86400000;  //1 Day
     static final long TIME_VALID_PROVIDERS_M_INTERNET = 86400000 * 3; //3 Days
+    private static ProviderManager instance;
     private ProvidersDAO providersDAO;
     private DataReceiver dataReceiver;
     private List<Provider> providers;
+    private List<SetProvidersListener> listeners;
     private long timeLastUpdateProviders;
     private AsyncTask task;
 
-    public ProviderManager() {
+    private ProviderManager() {
+        listeners = new ArrayList<SetProvidersListener>();
         providersDAO = new XMLProviderDAO();
         dataReceiver = new DataReceiver();
         updateProviders();
     }
 
-    public synchronized List<Provider> getProviders() {
-        if (this.providers == null && task != null) {
-            if (task.getStatus() == AsyncTask.Status.FINISHED) {
-                updateProviders();
-            }
+    public static synchronized ProviderManager getInstance() {
+        if (instance == null) {
+            instance = new ProviderManager();
         }
+        return instance;
+    }
+
+    public synchronized List<Provider> getProviders() {
         return providers;
     }
 
-    private void setProviders(List<Provider> providers) {
-        this.providers = providers;
+    public void addListeners(SetProvidersListener listener) {
+        listeners.add(listener);
     }
 
-    private void updateProviders() {
+
+    public void updateProviders() {
         boolean internetStatus = getConnectManager().isInternetStatus();
+        boolean isNeedUpdateFile = isNeedUpdateFile();
         timeLastUpdateProviders = providersDAO.getTimeLastUpdateProviders();
 
-        if (internetStatus && isNeedUpdateFile()) {
-            new DownloadProvidersTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        if (internetStatus && isNeedUpdateFile) {
+            task = new DownloadProvidersTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
-        if (!isNeedUpdateFile() || (!internetStatus && isFileExists())) {
-            new LoadProvidersTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        if (!isNeedUpdateFile || (!internetStatus && isFileExists())) {
+            task = new LoadProvidersTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         } else {
             LogUtil.i("The list of providers is not available");
         }
@@ -78,6 +89,10 @@ public class ProviderManager {
         return true;
     }
 
+    public interface SetProvidersListener {
+        public void setProviders(List<Provider> providers);
+    }
+
     private class DownloadProvidersTask extends AsyncTask<Void, Void, List<Provider>> {
 
         @Override
@@ -95,7 +110,13 @@ public class ProviderManager {
 
         @Override
         protected void onPostExecute(List<Provider> prov) {
-            setProviders(prov);
+            if (prov == null) {
+                return;
+            }
+            providers = prov;
+            for (SetProvidersListener listener : listeners) {
+                listener.setProviders(prov);
+            }
         }
     }
 
@@ -114,7 +135,13 @@ public class ProviderManager {
 
         @Override
         protected void onPostExecute(List<Provider> prov) {
-            setProviders(prov);
+            if (prov == null) {
+                return;
+            }
+            providers = prov;
+            for (SetProvidersListener listener : listeners) {
+                listener.setProviders(prov);
+            }
         }
     }
 }
