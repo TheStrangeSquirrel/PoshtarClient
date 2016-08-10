@@ -70,6 +70,11 @@ public class NewTrackingActivity extends Activity implements View.OnClickListene
 
     @Override
     public void onClick(View v) {
+        trackNumber = eTrackNumber.getText().toString();
+        if (trackNumber.isEmpty()) {
+            Toast.makeText(this, R.string.enter_track_number, Toast.LENGTH_SHORT).show();
+            return;
+        }
         switch (v.getId()) {
             case R.id.bTrack:
                 onClickTrack();
@@ -81,11 +86,6 @@ public class NewTrackingActivity extends Activity implements View.OnClickListene
     }
 
     public void onClickTrack() {
-        trackNumber = eTrackNumber.getText().toString();
-        if (trackNumber.isEmpty()) {
-            Toast.makeText(this, R.string.enter_track_number, Toast.LENGTH_SHORT).show();
-            return;
-        }
         String language = AppPoshtar.getLanguage();
         request = new Request(providerId, trackNumber, language);
         executeOrResumeTask(request);
@@ -95,10 +95,9 @@ public class NewTrackingActivity extends Activity implements View.OnClickListene
     private void onClickSavedTrack() {
         DialogReplaceSaveTrack dialogReplaceSaveTrack = new DialogReplaceSaveTrack();
         DialogFragment dialogSaveTrack = new DialogSaveTrack();
-        dialogSaveTrack.setStyle(DialogFragment.STYLE_NORMAL, 7);
-
-
+        dialogSaveTrack.setStyle(DialogFragment.STYLE_NORMAL, 0);
         dialogReplaceSaveTrack.setChildDialog(dialogSaveTrack);
+
         existInId = savedTrackDAO.isExistThere(providerId, eTrackNumber.getText().toString());
         if (existInId > -1) {
             dialogReplaceSaveTrack.show(getFragmentManager(), "DialogReplaceSaveTrack");

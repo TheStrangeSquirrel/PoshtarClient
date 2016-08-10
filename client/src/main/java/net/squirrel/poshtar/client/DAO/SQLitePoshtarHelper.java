@@ -61,7 +61,7 @@ public class SQLitePoshtarHelper extends SQLiteOpenHelper implements SavedTrackD
     @Override
     public int isExistThere(Integer providerId, String track_number) {
         SQLiteDatabase database = this.getReadableDatabase();
-        String where = KEY_T_ID_PROV + " = " + providerId + " and " + KEY_T_TRACK_NUMBER + " = " + track_number;
+        String where = KEY_T_ID_PROV + " = " + providerId + " and " + KEY_T_TRACK_NUMBER + " = '" + track_number + "'";
         Cursor c = database.query(TRACKS_TABLE, new String[]{KEY_T_ID}, where, null, null, null, null);
         if (c.moveToFirst()) {
             return c.getInt(c.getColumnIndex(KEY_T_ID));
