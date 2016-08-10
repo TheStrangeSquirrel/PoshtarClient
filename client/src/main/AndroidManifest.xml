@@ -19,9 +19,10 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name="net.squirrel.poshtar.client.activity.ProvidersActivity">
-        </activity>
+        <activity android:name="net.squirrel.poshtar.client.activity.ProvidersActivity"/>
         <activity android:name="net.squirrel.poshtar.client.activity.NewTrackingActivity"/>
+        <activity android:name="net.squirrel.poshtar.client.activity.SaveTracksActivity"/>
+        <activity android:name="net.squirrel.poshtar.client.activity.SaveTrackActivity"/>
     </application>
 
 </manifest>

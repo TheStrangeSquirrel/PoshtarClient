@@ -13,4 +13,13 @@
     <string name="header_providers">Доступные провайдеры</string>
     <string name="save_track">Cохранить отслеживание</string>
     <string name="stop_track">Перестать отслеживать</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
+    <string name="contin">Продолжить</string>
+    <string name="dialog_add_description">Можете добавить описание </string>
+    <string name="change_description">Такое отслеживание существует, заменить описание?</string>
+    <string name="refresh">Обновить</string>
+    <string name="track_number">Отслеживания № </string>
+    <string name="description">Описание</string>
+    <string name="provider">Постачальник</string>
 </resources>

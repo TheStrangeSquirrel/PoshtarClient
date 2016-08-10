@@ -2,29 +2,33 @@ package net.squirrel.poshtar.client.activity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.Editable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import net.squirrel.poshtar.client.AppPoshtar;
+import net.squirrel.poshtar.client.DAO.SQLitePoshtarHelper;
+import net.squirrel.poshtar.client.DAO.SavedTrackDAO;
+import net.squirrel.poshtar.client.entity.SavedTrack;
 import net.squirrel.poshtar.client.receiver.DataReceiver;
 import net.squirrel.poshtar.client.utils.LogUtil;
 import net.squirrel.poshtar.dto.Request;
 import net.squirrel.poshtar.dto.Response;
 import net.squirrel.postar.client.R;
 
-public class TrackingActivity extends Activity implements View.OnClickListener {
+public class SaveTrackActivity extends Activity implements View.OnClickListener {
     private ReceiverTask task;
-    private Button bTrack;
-    private EditText editText;
-    private TextView textResponse;
-    private String trackNumber;
+    private SavedTrackDAO savedTrackDAO;
+    private Button bRefresh;
+    private Button bStopTr;
+    private EditText eTrackNumber;
+    private TextView tResponse;
     private Request request;
-    private int providerId;
+
+    private SavedTrack track;
 
     @Override
     public Object onRetainNonConfigurationInstance() {
@@ -36,39 +40,53 @@ public class TrackingActivity extends Activity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tracking);
-        setProvider();
+        setContentView(R.layout.activity_saved_track);
+        savedTrackDAO = new SQLitePoshtarHelper(this);
+        String language = AppPoshtar.getLanguage();
+        getExtra();
         findViews();
-        bTrack.setOnClickListener(this);
-    }
+        setContentView();
 
-    private void setProvider() {
-        Intent intent = getIntent();
-        providerId = intent.getIntExtra(ProvidersActivity.PARAM_PROVIDER_ID, 42);
-    }
+        request = new Request(track.getProviderID(), track.getTrackNumber(), language);
+        executeOrResumeTask(request);
 
+        bRefresh.setOnClickListener(this);
+        bStopTr.setOnClickListener(this);
+    }
     private void findViews() {
-        bTrack = (Button) findViewById(R.id.bTrack);
-        editText = (EditText) findViewById(R.id.editRequest);
-        textResponse = (TextView) findViewById(R.id.textResponse);
+        bRefresh = (Button) findViewById(R.id.bTrack);
+        bStopTr = (Button) findViewById(R.id.bStopTr);
+        eTrackNumber = (EditText) findViewById(R.id.eTrackN);
+        tResponse = (TextView) findViewById(R.id.textResponse);
     }
+
+    private void getExtra() {
+        Intent intent = getIntent();
+        track = (SavedTrack) intent.getSerializableExtra(SaveTracksActivity.PARAM_SAVE_TRACK);
+    }
+
+    private void setContentView() {
+        eTrackNumber.setText(track.getTrackNumber());
+        tResponse.setText(track.getTrackResult());
+    }
+
 
     @Override
     public void onClick(View v) {
-        Editable editable = editText.getText();
-        if (editable.toString().isEmpty()) {
-            Toast.makeText(this, R.string.enter_track_number, Toast.LENGTH_SHORT).show();
-            return;
+        switch (v.getId()) {
+            case R.id.bTrack:
+                executeOrResumeTask(request);
+                break;
+            case R.id.bStopTr:
+                savedTrackDAO.removeTrack(track.getId());
+                finish();//TODO
+                break;
         }
-        trackNumber = editable.toString();
-        String language = Resources.getSystem().getConfiguration().locale.getLanguage();
-        request = new Request(providerId, trackNumber, language);
-        executeOrResumeTask(request);
     }
+
 
     private void executeOrResumeTask(Request request) {
         task = (ReceiverTask) getLastNonConfigurationInstance();
-
         if (task != null) {
             if (task.getStatus() != AsyncTask.Status.RUNNING) {
                 task.linkActivity(this);
@@ -77,11 +95,12 @@ public class TrackingActivity extends Activity implements View.OnClickListener {
         }
         task = new ReceiverTask();
         task.linkActivity(this);
-        task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, request);//TODO Передалать возможно
+        task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, request);
     }
 
+
     static class ReceiverTask extends AsyncTask<Request, Void, Response> {
-        private TrackingActivity activity;
+        private SaveTrackActivity activity;
         private DataReceiver dataReceiver;
 
         {
@@ -113,12 +132,12 @@ public class TrackingActivity extends Activity implements View.OnClickListener {
                 return;
             }
             String status = response.getStatus().replaceAll("№ewLine#", "\n");
-            activity.textResponse.setText(status);
+            activity.tResponse.setText(status);
         }
 
 
         public void linkActivity(Activity activity) {
-            this.activity = (TrackingActivity) activity;
+            this.activity = (SaveTrackActivity) activity;
         }
 
         public void unLinkActivity() {

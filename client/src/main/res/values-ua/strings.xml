@@ -13,4 +13,13 @@
     <string name="header_providers">Доступні провайдери</string>
     <string name="save_track">Зберегти відстеження</string>
     <string name="stop_track">Припинити відстежувати</string>
+    <string name="yes">Так</string>
+    <string name="no">Ні</string>
+    <string name="contin">Продовжити</string>
+    <string name="dialog_add_description">Можете додати опис</string>
+    <string name="change_description"> Таке відстеження існує, замінити опис?</string>
+    <string name="refresh">Обновить</string>
+    <string name="track_number">Відстеження № </string>
+    <string name="description">Опис</string>
+    <string name="provider">Поставщик</string>
 </resources>

@@ -24,6 +24,10 @@ public class ProviderAdapter extends BaseAdapter {
         inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
+    public Provider getProvider(int position) {
+        return providers.get(position);
+    }
+
     @Override
     public int getCount() {
         return providers.size();

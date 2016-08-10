@@ -61,11 +61,12 @@ public class HelloActivity extends BaseActivityIncludingAsyncTask implements Vie
         switch (v.getId()) {
             case R.id.newTrack:
                 intent = new Intent(this, ProvidersActivity.class);
-                startActivity(intent);
                 break;
             case R.id.savedTrack:
+                intent = new Intent(this, SaveTracksActivity.class);
                 break;
         }
+        startActivity(intent);
     }
 
     private static class StatusInternetTask extends AsyncTask<Void, Void, Void> implements TiedToActivityTask {
@@ -112,11 +113,11 @@ public class HelloActivity extends BaseActivityIncludingAsyncTask implements Vie
             if (isInternetConnect) {
                 activity.imgInternetStatus.setImageResource(R.drawable.internet_connected);
                 activity.txtInternetStatus.setText(R.string.internet_status_online);
-                activity.btnNewTrack.setEnabled(true);
+                activity.btnNewTrack.setClickable(true);
             } else {
                 activity.imgInternetStatus.setImageResource(R.drawable.internet_not_connected);
                 activity.txtInternetStatus.setText(R.string.internet_status_ofline);
-                activity.btnNewTrack.setEnabled(false);
+                activity.btnNewTrack.setClickable(false);
             }
             oldInternetStatus = isInternetConnect;
         }

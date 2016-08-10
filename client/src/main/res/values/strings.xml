@@ -3,16 +3,26 @@
 
     <string name="add_tracking">New tracking</string>
     <string name="save_tracking">Save tracking</string>
-    <string name="dialog_message">Loading list of providers</string>
+    <string name="dialog_message">Loading list of tracks</string>
     <string name="cancel">Cancel</string>
+    <string name="contin">Continue</string>
+    <string name="refresh">Refresh</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+
     <string name="internet_status_online">Internet connected</string>
     <string name="internet_status_ofline">Internet not connecting</string>
     <string name="failed">Failed, try again later</string>
     <string name="enter_track_number">Enter the track number</string>
     <string name="track">Track</string>
-    <string name="header_providers">Available providers</string>
+    <string name="header_providers">Available tracks</string>
     <string name="save_track">Save track</string>
     <string name="stop_track">Stop track</string>
+    <string name="dialog_add_description">You can add a description</string>
+    <string name="change_description">Such tracking exists, replace the description?</string>
+    <string name="track_number">Track № </string>
+    <string name="provider">Provider </string>
+    <string name="description">Description </string>
 
 
 </resources>

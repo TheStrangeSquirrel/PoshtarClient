@@ -5,11 +5,14 @@ import net.squirrel.poshtar.client.entity.SavedTrack;
 import java.util.List;
 
 public interface SavedTrackDAO {
-    public void addTrack(SavedTrack track);
 
-    public void removeTrack(Integer id);
+    int isExistThere(Integer providerId, String track_number);
 
-    public void updateTrack(Integer id, SavedTrack updatedTrack);
+    void addTrack(SavedTrack track);
 
-    public List<SavedTrack> getTracks();
+    void removeTrack(Integer id);
+
+    void updateTrack(Integer id, SavedTrack updatedTrack);
+
+    List<SavedTrack> getTracks();
 }

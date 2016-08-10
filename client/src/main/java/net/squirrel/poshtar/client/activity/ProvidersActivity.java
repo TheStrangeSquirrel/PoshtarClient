@@ -3,100 +3,70 @@ package net.squirrel.poshtar.client.activity;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
-import net.squirrel.poshtar.client.AppPoshtar;
 import net.squirrel.poshtar.client.ProviderAdapter;
+import net.squirrel.poshtar.client.ProviderManager;
 import net.squirrel.poshtar.dto.Provider;
 import net.squirrel.postar.client.R;
 
 import java.util.List;
 
-public class ProvidersActivity extends BaseActivityIncludingAsyncTask implements AdapterView.OnItemClickListener {
+public class ProvidersActivity extends Activity implements AdapterView.OnItemClickListener, ProviderManager.SetProvidersListener {
     public static final String PARAM_PROVIDER_ID = "providerId";
+    public static final String PARAM_PROVIDER_NAME = "providerName";
     private ListView listView;
+    private ProviderManager providerManager;
     private ProgressDialog progressDialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_providers);
         listView = (ListView) findViewById(R.id.list_providers);
-        progressDialogCreate();
-        taskInitAndExecute();
+        providerManager = ProviderManager.getInstance();
+        providerManager.addListeners(this);
+        List<Provider> providers = providerManager.getProviders();
+        if (providers == null) {
+            waitLoadProviders();
+        } else {
+            listView.setAdapter(new ProviderAdapter(providers, this));
+            listView.setOnItemClickListener(this);
+        }
     }
 
-    private void progressDialogCreate() {
+    private void waitLoadProviders() {
         progressDialog = new ProgressDialog(this);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setMessage(getString(R.string.dialog_message));
         progressDialog.setIndeterminate(true);
         progressDialog.show();
+        providerManager.updateProviders();
     }
 
-    @Override
-    protected TiedToActivityTask createConcreteTask() {
-        return new LoadProvidersTask();
-    }
+
 
     @Override
     public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
         ListView lv = (ListView) parent;
         ProviderAdapter adapter = (ProviderAdapter) lv.getAdapter();
         int providerId = (int) adapter.getItemId(position);
-        Intent intent = new Intent(this, TrackingActivity.class);
+        String providerName = adapter.getProvider(position).getName();
+        Intent intent = new Intent(this, NewTrackingActivity.class);
         intent.putExtra(PARAM_PROVIDER_ID, providerId);
+        intent.putExtra(PARAM_PROVIDER_NAME, providerName);
         startActivity(intent);
     }
 
-
-    private static class LoadProvidersTask extends AsyncTask<Void, Void, List<Provider>> implements TiedToActivityTask {
-        ProvidersActivity activity;
-
-        @Override
-        public void linkActivity(Activity activity) {
-            this.activity = (ProvidersActivity) activity;
-        }
-
-        @Override
-        public synchronized void unLinkActivity() {
-            this.activity = null;
-        }
-
-        @Override
-        public void execute() {
-            super.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        }
-
-        @Override
-        protected List<Provider> doInBackground(Void... params) {
-            List<Provider> providers = AppPoshtar.getProviders();
-            while (activity == null) {
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    //NOP
-                }
-            }
-            return providers;
-        }
-
-        @Override
-        protected void onPostExecute(List<Provider> providers) {
-            if (providers != null) {
-                activity.progressDialog.dismiss();
-                activity.listView.setAdapter(new ProviderAdapter(providers, activity));
-                activity.listView.setOnItemClickListener(activity);
-            } else {
-                Toast.makeText(activity, activity.getText(R.string.failed), Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(activity, HelloActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                activity.startActivity(intent);
-            }
-        }
+    @Override
+    public void setProviders(List<Provider> providers) {
+        listView.setAdapter(new ProviderAdapter(providers, this));
+        listView.setOnItemClickListener(this);
+        progressDialog.cancel();
     }
+
+
 }
