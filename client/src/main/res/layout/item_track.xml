@@ -42,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="Small Text"
-                android:id="@+id/description"
+                android:id="@+id/eDescription"
                 android:layout_below="@+id/track_n"
                 android:layout_alignLeft="@+id/track_n"
                 android:layout_alignStart="@+id/track_n"

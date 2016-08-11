@@ -55,7 +55,7 @@ public class TracksAdapter extends BaseAdapter {
 
         ((TextView) view.findViewById(R.id.provider)).setText(providerText);
         ((TextView) view.findViewById(R.id.track_n)).setText(trackNText);
-        ((TextView) view.findViewById(R.id.description)).setText(descriptionText);
+        ((TextView) view.findViewById(R.id.eDescription)).setText(descriptionText);
         return view;
     }
 }

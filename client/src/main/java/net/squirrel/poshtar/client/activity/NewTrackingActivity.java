@@ -95,7 +95,6 @@ public class NewTrackingActivity extends Activity implements View.OnClickListene
     private void onClickSavedTrack() {
         DialogReplaceSaveTrack dialogReplaceSaveTrack = new DialogReplaceSaveTrack();
         DialogFragment dialogSaveTrack = new DialogSaveTrack();
-        dialogSaveTrack.setStyle(DialogFragment.STYLE_NORMAL, 0);
         dialogReplaceSaveTrack.setChildDialog(dialogSaveTrack);
 
         existInId = savedTrackDAO.isExistThere(providerId, eTrackNumber.getText().toString());

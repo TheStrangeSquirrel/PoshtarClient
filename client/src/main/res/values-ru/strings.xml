@@ -17,7 +17,7 @@
     <string name="no">Нет</string>
     <string name="contin">Продолжить</string>
     <string name="dialog_add_description">Можете добавить описание </string>
-    <string name="change_description">Такое отслеживание существует, заменить описание?</string>
+    <string name="change_save_track">Такое отслеживание существует, заменить?</string>
     <string name="refresh">Обновить</string>
     <string name="track_number">Отслеживания № </string>
     <string name="description">Описание</string>
