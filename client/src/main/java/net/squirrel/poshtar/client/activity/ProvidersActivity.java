@@ -55,7 +55,7 @@ public class ProvidersActivity extends Activity implements AdapterView.OnItemCli
         ProviderAdapter adapter = (ProviderAdapter) lv.getAdapter();
         int providerId = (int) adapter.getItemId(position);
         String providerName = adapter.getProvider(position).getName();
-        Intent intent = new Intent(this, NewTrackingActivity.class);
+        Intent intent = new Intent(this, NewTrackActivity.class);
         intent.putExtra(PARAM_PROVIDER_ID, providerId);
         intent.putExtra(PARAM_PROVIDER_NAME, providerName);
         startActivity(intent);

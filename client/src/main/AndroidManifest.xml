@@ -20,7 +20,7 @@
             </intent-filter>
         </activity>
         <activity android:name="net.squirrel.poshtar.client.activity.ProvidersActivity"/>
-        <activity android:name="net.squirrel.poshtar.client.activity.NewTrackingActivity"/>
+        <activity android:name="net.squirrel.poshtar.client.activity.NewTrackActivity"/>
         <activity android:name="net.squirrel.poshtar.client.activity.SaveTracksActivity"/>
         <activity android:name="net.squirrel.poshtar.client.activity.SaveTrackActivity"/>
     </application>
