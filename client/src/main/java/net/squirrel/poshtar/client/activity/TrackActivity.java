@@ -13,13 +13,15 @@ import net.squirrel.poshtar.dto.Response;
 import net.squirrel.postar.client.R;
 
 public abstract class TrackActivity extends Activity implements View.OnClickListener {
-    TextView tResponse;
+    TextView tStatus;
     Request request;
     private ReceiverTask task;
 
     @Override
     public Object onRetainNonConfigurationInstance() {
-        task.unLinkActivity();
+        if (task != null) {
+            task.unLinkActivity();
+        }
         return task;
     }
 
@@ -71,7 +73,7 @@ public abstract class TrackActivity extends Activity implements View.OnClickList
                 return;
             }
             String status = response.getStatus().replaceAll("№ewLine#", "\n");
-            activity.tResponse.setText(status);
+            activity.tStatus.setText(status);
         }
 
 
@@ -82,7 +84,6 @@ public abstract class TrackActivity extends Activity implements View.OnClickList
         void unLinkActivity() {
             this.activity = null;
         }
-
 
     }
 

@@ -1,18 +1,20 @@
 package net.squirrel.poshtar.client.dialog;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.content.DialogInterface;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
+import net.squirrel.poshtar.client.utils.LogUtil;
 import net.squirrel.postar.client.R;
 
 /**
  * Activity causing dialog must be implement DialogueResultListener
  */
-public class DialogSaveTrack extends android.app.DialogFragment implements View.OnClickListener {
+public class DialogSaveTrack extends android.app.DialogFragment {
     private DialogueResultListener listener;
     private EditText eDescription;
 
@@ -22,30 +24,35 @@ public class DialogSaveTrack extends android.app.DialogFragment implements View.
         setStyle(DialogFragment.STYLE_NORMAL, R.style.PoshtarDialog);
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        listener = (DialogueResultListener) getActivity();
-
-        Dialog dialog = getDialog();
-        dialog.setTitle(getText(R.string.dialog_add_description));
-
-        View v = inflater.inflate(R.layout.dialog_add_description, null);
-        eDescription = (EditText) v.findViewById(R.id.eDescription);
-        v.findViewById(R.id.bContinue).setOnClickListener(this);
-        v.findViewById(R.id.bCancel).setOnClickListener(this);
-        return v;
-    }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.bCancel:
-                dismiss();
-                break;
-            case R.id.bContinue:
-                listener.onDialogResult(eDescription.getText().toString());
-                dismiss();
-                break;
-        }
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_add_description, null);
+        eDescription = (EditText) view.findViewById(R.id.eDescription);
+        AlertDialog.Builder adb = new AlertDialog.Builder(getActivity()).setTitle(R.string.dialog_add_description).setView(view)
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dismiss();
+                    }
+                })
+                .setPositiveButton(R.string.contin, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        listener = (DialogueResultListener) getActivity();
+                        listener.onDialogResult(eDescription.getText().toString());
+                        dismiss();
+                    }
+                });
+        return adb.create();
     }
+
+
+    @Override
+    public void onAttach(Activity activity) {
+        LogUtil.d("Attach");
+        super.onAttach(activity);
+    }
+
+
 }

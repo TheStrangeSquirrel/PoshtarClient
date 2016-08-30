@@ -52,16 +52,16 @@ public class ConnectManager {
 
         private void hasConnection() {
             NetworkInfo networkInfo = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-            if (networkInfo != null && networkInfo.isConnected()) {
-                wifiStatus = true;
+            if (networkInfo != null) {
+                wifiStatus = networkInfo.isConnected();
             }
             networkInfo = connManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-            if (networkInfo != null && networkInfo.isConnected()) {
-                mInternetStatus = true;
+            if (networkInfo != null) {
+                mInternetStatus = networkInfo.isConnected();
             }
             networkInfo = connManager.getActiveNetworkInfo();
-            if (networkInfo != null && networkInfo.isConnected()) {
-                mInternetStatus = true;
+            if (networkInfo != null) {
+                mInternetStatus = networkInfo.isConnected();
             }
         }
 

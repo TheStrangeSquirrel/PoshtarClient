@@ -45,8 +45,8 @@ public class HelloActivity extends BaseActivityIncludingAsyncTask implements Vie
         setListeners();
     }
     private void findViews() {
-        btnNewTrack = (Button) findViewById(R.id.savedTrack);
-        btnSavedTrack = (Button) findViewById(R.id.newTrack);
+        btnNewTrack = (Button) findViewById(R.id.newTrack);
+        btnSavedTrack = (Button) findViewById(R.id.savedTrack);
         imgInternetStatus = (ImageView) findViewById(R.id.imageConnection);
         txtInternetStatus = (TextView) findViewById(R.id.textConnection);
     }
@@ -113,11 +113,11 @@ public class HelloActivity extends BaseActivityIncludingAsyncTask implements Vie
             if (isInternetConnect) {
                 activity.imgInternetStatus.setImageResource(R.drawable.internet_connected);
                 activity.txtInternetStatus.setText(R.string.internet_status_online);
-                activity.btnNewTrack.setClickable(true);
+                activity.btnNewTrack.setEnabled(true);
             } else {
                 activity.imgInternetStatus.setImageResource(R.drawable.internet_not_connected);
                 activity.txtInternetStatus.setText(R.string.internet_status_ofline);
-                activity.btnNewTrack.setClickable(false);
+                activity.btnNewTrack.setEnabled(false);
             }
             oldInternetStatus = isInternetConnect;
         }

@@ -55,13 +55,16 @@ public class ProviderManager {
         timeLastUpdateProviders = providersDAO.getTimeLastUpdateProviders();
 
         if (internetStatus && isNeedUpdateFile) {
+            LogUtil.d("Download providers");
             task = new DownloadProvidersTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            return;
         }
         if (!isNeedUpdateFile || (!internetStatus && isFileExists())) {
+            LogUtil.d("Load providers ");
             task = new LoadProvidersTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        } else {
-            LogUtil.i("The list of providers is not available");
+            return;
         }
+        LogUtil.i("The list of providers is not available");
     }
 
 

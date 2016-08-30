@@ -38,7 +38,7 @@ public class SaveTrackActivity extends TrackActivity implements View.OnClickList
         bStopTr.setOnClickListener(this);
     }
     private void findViews() {
-        tResponse = (TextView) findViewById(R.id.textResponse);
+        tStatus = (TextView) findViewById(R.id.textResponse);
         bRefresh = (Button) findViewById(R.id.bTrack);
         bStopTr = (Button) findViewById(R.id.bStopTr);
         eTrackNumber = (EditText) findViewById(R.id.eTrackN);
@@ -51,7 +51,7 @@ public class SaveTrackActivity extends TrackActivity implements View.OnClickList
 
     private void setContentView() {
         eTrackNumber.setText(track.getTrackNumber());
-        tResponse.setText(track.getTrackResult());
+        tStatus.setText(track.getTrackResult());
     }
 
     @Override

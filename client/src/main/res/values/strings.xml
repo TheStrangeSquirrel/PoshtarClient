@@ -2,7 +2,7 @@
     <string name="app_name">Poshtar</string>
 
     <string name="add_tracking">New tracking</string>
-    <string name="save_tracking">Save tracking</string>
+    <string name="save_tracking">Saved tracking</string>
     <string name="dialog_message">Loading list of tracks</string>
     <string name="cancel">Cancel</string>
     <string name="contin">Continue</string>
@@ -23,6 +23,4 @@
     <string name="track_number">Track № </string>
     <string name="provider">Provider </string>
     <string name="description">Description </string>
-
-
 </resources>

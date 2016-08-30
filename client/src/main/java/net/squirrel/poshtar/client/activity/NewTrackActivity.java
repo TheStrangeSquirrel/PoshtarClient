@@ -25,11 +25,28 @@ public class NewTrackActivity extends TrackActivity implements View.OnClickListe
     private Button bSavedTrack;
     private EditText eTrackNumber;
 
+    private DialogReplaceSaveTrack dialogReplaceSaveTrack;
+    private DialogFragment dialogSaveTrack;
+
     private String trackNumber;
 
     private int providerId;
     private String providerName;
     private int existInId;
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putCharSequence("status", tStatus.getText());
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        if (savedInstanceState != null) {
+            tStatus.setText(savedInstanceState.getCharSequence("status"));
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +55,15 @@ public class NewTrackActivity extends TrackActivity implements View.OnClickListe
         savedTrackDAO = new SQLitePoshtarHelper(this);
         setProvider();
         findViews();
+        setDialog();
         bTrack.setOnClickListener(this);
         bSavedTrack.setOnClickListener(this);
+    }
+
+    private void setDialog() {
+        dialogReplaceSaveTrack = new DialogReplaceSaveTrack();
+        dialogSaveTrack = new DialogSaveTrack();
+        dialogReplaceSaveTrack.setChildDialog(dialogSaveTrack);
     }
 
     private void setProvider() {
@@ -53,7 +77,7 @@ public class NewTrackActivity extends TrackActivity implements View.OnClickListe
         bTrack = (Button) findViewById(R.id.bTrack);
         bSavedTrack = (Button) findViewById(R.id.bSaveTrack);
         eTrackNumber = (EditText) findViewById(R.id.eTrackN);
-        tResponse = (TextView) findViewById(R.id.textResponse);
+        tStatus = (TextView) findViewById(R.id.textResponse);
     }
 
     @Override
@@ -80,10 +104,6 @@ public class NewTrackActivity extends TrackActivity implements View.OnClickListe
     }
 
     private void onClickSavedTrack() {
-        DialogReplaceSaveTrack dialogReplaceSaveTrack = new DialogReplaceSaveTrack();
-        DialogFragment dialogSaveTrack = new DialogSaveTrack();
-        dialogReplaceSaveTrack.setChildDialog(dialogSaveTrack);
-
         existInId = savedTrackDAO.isExistThere(providerId, eTrackNumber.getText().toString());
         if (existInId > -1) {
             dialogReplaceSaveTrack.show(getFragmentManager(), "DialogReplaceSaveTrack");
@@ -102,13 +122,13 @@ public class NewTrackActivity extends TrackActivity implements View.OnClickListe
     }
 
     private void updateRows(String res) {
-        String trackResult = tResponse.getText().toString();
+        String trackResult = tStatus.getText().toString();
         SavedTrack savedTrack = new SavedTrack(existInId, providerId, providerName, trackNumber, trackResult, res);
         savedTrackDAO.updateTrack(existInId, savedTrack);
     }
 
     private void addRows(String res) {
-        String trackResult = tResponse.getText().toString();
+        String trackResult = tStatus.getText().toString();
         SavedTrack savedTrack = new SavedTrack(existInId, providerId, providerName, trackNumber, trackResult, res);
         savedTrackDAO.addTrack(savedTrack);
     }
