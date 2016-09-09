@@ -63,7 +63,6 @@ public class NewTrackActivity extends TrackActivity implements View.OnClickListe
     private void setDialog() {
         dialogReplaceSaveTrack = new DialogReplaceSaveTrack();
         dialogSaveTrack = new DialogSaveTrack();
-        dialogReplaceSaveTrack.setChildDialog(dialogSaveTrack);
     }
 
     private void setProvider() {
@@ -114,22 +113,14 @@ public class NewTrackActivity extends TrackActivity implements View.OnClickListe
 
     @Override
     public void onDialogResult(String res) {
+        existInId = savedTrackDAO.isExistThere(providerId, eTrackNumber.getText().toString());
+        trackNumber = eTrackNumber.getText().toString();
+        String trackResult = tStatus.getText().toString();
+        SavedTrack savedTrack = new SavedTrack(existInId, providerId, providerName, trackNumber, trackResult, res);
         if (existInId > -1) {
-            updateRows(res);
+            savedTrackDAO.updateTrack(existInId, savedTrack);
         } else {
-            addRows(res);
+            savedTrackDAO.addTrack(savedTrack);
         }
-    }
-
-    private void updateRows(String res) {
-        String trackResult = tStatus.getText().toString();
-        SavedTrack savedTrack = new SavedTrack(existInId, providerId, providerName, trackNumber, trackResult, res);
-        savedTrackDAO.updateTrack(existInId, savedTrack);
-    }
-
-    private void addRows(String res) {
-        String trackResult = tStatus.getText().toString();
-        SavedTrack savedTrack = new SavedTrack(existInId, providerId, providerName, trackNumber, trackResult, res);
-        savedTrackDAO.addTrack(savedTrack);
     }
 }

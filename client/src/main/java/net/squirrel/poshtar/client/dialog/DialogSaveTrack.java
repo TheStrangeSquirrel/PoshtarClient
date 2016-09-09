@@ -1,6 +1,5 @@
 package net.squirrel.poshtar.client.dialog;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
@@ -8,7 +7,6 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import net.squirrel.poshtar.client.utils.LogUtil;
 import net.squirrel.postar.client.R;
 
 /**
@@ -46,13 +44,4 @@ public class DialogSaveTrack extends android.app.DialogFragment {
                 });
         return adb.create();
     }
-
-
-    @Override
-    public void onAttach(Activity activity) {
-        LogUtil.d("Attach");
-        super.onAttach(activity);
-    }
-
-
 }

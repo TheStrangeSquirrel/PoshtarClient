@@ -12,11 +12,6 @@ import net.squirrel.postar.client.R;
 
 public class DialogReplaceSaveTrack extends DialogFragment implements DialogInterface.OnClickListener {
     private DialogFragment childDialog;
-
-    public void setChildDialog(DialogFragment childDialog) {
-        this.childDialog = childDialog;
-    }
-
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder adb = new AlertDialog.Builder(getActivity()).setPositiveButton(R.string.yes, this).setNegativeButton(R.string.no, this)
@@ -35,9 +30,7 @@ public class DialogReplaceSaveTrack extends DialogFragment implements DialogInte
     public void onClick(DialogInterface dialog, int which) {
         switch (which) {
             case Dialog.BUTTON_POSITIVE:
-                if (childDialog != null) {
-                    childDialog.show(getFragmentManager(), "DialogSaveTrack");
-                }
+                new DialogSaveTrack().show(getFragmentManager(), "DialogSaveTrackInReplace");
                 this.dismiss();
                 break;
             case Dialog.BUTTON_NEGATIVE:
