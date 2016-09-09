@@ -25,11 +25,14 @@
             android:id="@+id/scrollView" android:layout_below="@+id/bTrack" android:layout_centerHorizontal="true"
             android:background="@drawable/frame" android:layout_alignParentTop="false"
             android:layout_alignParentLeft="false" android:layout_alignParentRight="false"
-            android:layout_alignParentBottom="false" android:layout_alignWithParentIfMissing="false">
+            android:layout_alignParentBottom="false"
+            android:layout_alignWithParentIfMissing="false"
+            android:paddingLeft="4dp">
         <TextView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/textResponse"/>
+                android:layout_height="wrap_content"
+                android:id="@+id/textResponse"
+                android:textIsSelectable="true"/>
     </ScrollView>
 
     <Button

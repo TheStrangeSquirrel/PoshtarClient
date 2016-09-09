@@ -36,12 +36,14 @@
             android:layout_alignParentRight="false"
             android:layout_alignParentBottom="false"
             android:layout_alignWithParentIfMissing="false"
-            android:fillViewport="false">
+            android:fillViewport="false"
+            android:paddingLeft="4dp">
 
         <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/textResponse"/>
+                android:id="@+id/textResponse"
+                android:textIsSelectable="true"/>
     </ScrollView>
 
     <Button
