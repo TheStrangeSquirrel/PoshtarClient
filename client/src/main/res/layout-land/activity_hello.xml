@@ -1,0 +1,76 @@
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        style="@style/Base.Theme.AppCompat">
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/linearLayout"
+            android:layout_marginLeft="25dp"
+            android:layout_marginStart="68dp"
+            android:layout_marginTop="40dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true">
+
+        <Button
+                android:layout_width="200dp"
+                android:layout_height="100dp"
+                android:text="@string/add_tracking"
+                android:id="@+id/newTrack"
+                android:enabled="false"
+                android:clickable="true"
+                android:layout_above="@+id/textConnection"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"/>
+
+        <Button
+                android:layout_width="200dp"
+                android:layout_height="100dp"
+                android:text="@string/save_tracking"
+                android:id="@+id/savedTrack"
+                android:enabled="true"
+                android:clickable="true"
+                android:layout_below="@+id/newTrack"
+                android:layout_alignLeft="@+id/newTrack"
+                android:layout_alignStart="@+id/newTrack"/>
+    </LinearLayout>
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="350dp"
+            android:layout_height="200dp"
+            android:transitionGroup="true"
+            android:baselineAligned="false"
+            android:gravity="center_vertical|center"
+            android:layout_alignTop="@+id/linearLayout"
+            android:layout_toRightOf="@+id/linearLayout"
+            android:layout_toEndOf="@+id/linearLayout"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="34dp">
+
+        <ImageView
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:id="@+id/imageConnection"
+                android:src="@drawable/internet_not_connected"
+                android:layout_alignParentTop="true"
+                android:layout_alignLeft="@+id/textConnection"
+                android:layout_alignStart="@+id/textConnection"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/internet_status_ofline"
+                android:id="@+id/textConnection"
+                android:layout_below="@+id/imageConnection"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                />
+    </LinearLayout>
+
+</RelativeLayout>
