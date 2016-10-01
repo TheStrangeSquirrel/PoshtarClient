@@ -2,7 +2,11 @@ package net.squirrel.poshtar.client.activity;
 
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.text.Html;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -12,10 +16,24 @@ import net.squirrel.poshtar.dto.Request;
 import net.squirrel.poshtar.dto.Response;
 import net.squirrel.postar.client.R;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public abstract class TrackActivity extends Activity implements View.OnClickListener {
     TextView tStatus;
+    ProgressDialog progressDialog;
     Request request;
     private ReceiverTask task;
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setMessage(getString(R.string.package_tracking));
+        progressDialog.setIndeterminate(true);
+        progressDialog.setCanceledOnTouchOutside(false);
+    }
 
     @Override
     public Object onRetainNonConfigurationInstance() {
@@ -69,11 +87,19 @@ public abstract class TrackActivity extends Activity implements View.OnClickList
         @Override
         protected void onPostExecute(Response response) {
             if (response == null) {
+                activity.progressDialog.dismiss();
                 Toast.makeText(activity, R.string.failed, Toast.LENGTH_SHORT).show();
                 return;
             }
-            String status = response.getStatus().replaceAll("№ewLine#", "\n");
-            activity.tStatus.setText(status);
+            String cdata = response.getStatus();
+            Pattern pattern = Pattern.compile("<!\\[CDATA\\[(.*?)\\]\\]>");
+            Matcher matcher = pattern.matcher(cdata);
+            String status = "";
+            if (matcher.find()) {
+                status = matcher.group(1).trim();
+            }
+            activity.progressDialog.dismiss();
+            activity.tStatus.setText(Html.fromHtml(status));
         }
 
 

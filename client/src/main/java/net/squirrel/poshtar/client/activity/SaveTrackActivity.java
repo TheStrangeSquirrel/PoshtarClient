@@ -31,6 +31,7 @@ public class SaveTrackActivity extends TrackActivity implements View.OnClickList
         findViews();
         setContentView();
 
+        progressDialog.show();
         request = new Request(track.getProviderID(), track.getTrackNumber(), language);
         executeOrResumeTask(request);
 

@@ -97,6 +97,7 @@ public class NewTrackActivity extends TrackActivity implements View.OnClickListe
     }
 
     private void onClickTrack() {
+        progressDialog.show();
         String language = AppPoshtar.getLanguage();
         request = new Request(providerId, trackNumber, language);
         executeOrResumeTask(request);

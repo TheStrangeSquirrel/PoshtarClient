@@ -3,7 +3,7 @@
     <string name="app_name">Poshtar</string>
     <string name="add_tracking">Новое отслеживание</string>
     <string name="save_tracking">Сохраненные отслеживания</string>
-    <string name="dialog_message">Загрузка списка провайдеров</string>
+    <string name="loading_tracks">Загрузка списка провайдеров</string>
     <string name="cancel">Отмена</string>
     <string name="internet_status_online">Подключение к сети: активно</string>
     <string name="internet_status_ofline">Подключение к сети: не активно</string>
@@ -22,4 +22,5 @@
     <string name="track_number">Отслеживания № </string>
     <string name="description">Описание</string>
     <string name="provider">Поставщик</string>
+    <string name="package_tracking">Отслеживание посылки</string>
 </resources>

@@ -41,7 +41,7 @@ public class ProvidersActivity extends Activity implements AdapterView.OnItemCli
     private void waitLoadProviders() {
         progressDialog = new ProgressDialog(this);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDialog.setMessage(getString(R.string.dialog_message));
+        progressDialog.setMessage(getString(R.string.loading_tracks));
         progressDialog.setIndeterminate(true);
         progressDialog.show();
         providerManager.updateProviders();

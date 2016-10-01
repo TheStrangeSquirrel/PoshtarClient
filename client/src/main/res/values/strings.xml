@@ -3,7 +3,9 @@
 
     <string name="add_tracking">New tracking</string>
     <string name="save_tracking">Saved tracking</string>
-    <string name="dialog_message">Loading list of tracks</string>
+    <string name="loading_tracks">Loading list of tracks</string>
+    <string name="package_tracking">Package tracking</string>
+
     <string name="cancel">Cancel</string>
     <string name="contin">Continue</string>
     <string name="refresh">Refresh</string>
