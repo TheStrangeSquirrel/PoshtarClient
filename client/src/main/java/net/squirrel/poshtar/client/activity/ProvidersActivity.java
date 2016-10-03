@@ -21,7 +21,6 @@ public class ProvidersActivity extends Activity implements AdapterView.OnItemCli
     private ProviderManager providerManager;
     private ProgressDialog progressDialog;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,8 +46,6 @@ public class ProvidersActivity extends Activity implements AdapterView.OnItemCli
         providerManager.updateProviders();
     }
 
-
-
     @Override
     public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
         ListView lv = (ListView) parent;
@@ -67,6 +64,4 @@ public class ProvidersActivity extends Activity implements AdapterView.OnItemCli
         listView.setOnItemClickListener(this);
         progressDialog.cancel();
     }
-
-
 }

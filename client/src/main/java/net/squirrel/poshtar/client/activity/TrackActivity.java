@@ -16,9 +16,6 @@ import net.squirrel.poshtar.dto.Request;
 import net.squirrel.poshtar.dto.Response;
 import net.squirrel.postar.client.R;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 public abstract class TrackActivity extends Activity implements View.OnClickListener {
     TextView tStatus;
     ProgressDialog progressDialog;
@@ -91,15 +88,9 @@ public abstract class TrackActivity extends Activity implements View.OnClickList
                 Toast.makeText(activity, R.string.failed, Toast.LENGTH_SHORT).show();
                 return;
             }
-            String cdata = response.getStatus();
-            Pattern pattern = Pattern.compile("<!\\[CDATA\\[(.*?)\\]\\]>");
-            Matcher matcher = pattern.matcher(cdata);
-            String status = "";
-            if (matcher.find()) {
-                status = matcher.group(1).trim();
-            }
+
             activity.progressDialog.dismiss();
-            activity.tStatus.setText(Html.fromHtml(status));
+            activity.tStatus.setText(Html.fromHtml(response.getStatus()));
         }
 
 
