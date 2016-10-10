@@ -1,8 +1,8 @@
 package net.squirrel.poshtar.client.activity;
 
-import android.app.DialogFragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -106,9 +106,9 @@ public class NewTrackActivity extends TrackActivity implements View.OnClickListe
     private void onClickSavedTrack() {
         existInId = savedTrackDAO.isExistThere(providerId, eTrackNumber.getText().toString());
         if (existInId > -1) {
-            dialogReplaceSaveTrack.show(getFragmentManager(), "DialogReplaceSaveTrack");
+            dialogReplaceSaveTrack.show(getSupportFragmentManager(), "DialogReplaceSaveTrack");
         } else {
-            dialogSaveTrack.show(getFragmentManager(), "DialogSaveTrack");
+            dialogSaveTrack.show(getSupportFragmentManager(), "DialogSaveTrack");
         }
     }
 
