@@ -3,6 +3,7 @@ package net.squirrel.poshtar.client.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -17,7 +18,7 @@ import java.io.Serializable;
 import java.util.List;
 
 public class SaveTracksActivity extends BaseActivityIncludingAsyncTask implements AdapterView.OnItemClickListener, Serializable {
-    public static final String PARAM_SAVE_TRACK = "save_track";
+    static final String PARAM_SAVE_TRACK = "save_track";
     private ListView listView;
 
     @Override
@@ -66,8 +67,12 @@ public class SaveTracksActivity extends BaseActivityIncludingAsyncTask implement
         }
 
         @Override
-        public void execute() {
-            super.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        public void exe() {
+            if (Build.VERSION.SDK_INT >= 11) {
+                super.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            } else {
+                super.execute();
+            }
         }
 
         @Override

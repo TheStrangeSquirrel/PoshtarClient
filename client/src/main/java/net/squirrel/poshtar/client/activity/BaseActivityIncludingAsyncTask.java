@@ -1,12 +1,12 @@
 package net.squirrel.poshtar.client.activity;
 
-import android.app.Activity;
+import android.support.v4.app.FragmentActivity;
 
-public abstract class BaseActivityIncludingAsyncTask extends Activity {
-    protected TiedToActivityTask task;
+public abstract class BaseActivityIncludingAsyncTask extends FragmentActivity {
+    TiedToActivityTask task;
 
     @Override
-    public Object onRetainNonConfigurationInstance() {
+    public Object onRetainCustomNonConfigurationInstance() {
         task.unLinkActivity();
         return task;
     }
@@ -14,16 +14,15 @@ public abstract class BaseActivityIncludingAsyncTask extends Activity {
     /**
      * It creates and executes the task if the task is what keeps activity to task.
      */
-    protected void taskInitAndExecute() {
-        task = (TiedToActivityTask) getLastNonConfigurationInstance();
+    void taskInitAndExecute() {
+        task = (TiedToActivityTask) getLastCustomNonConfigurationInstance();
         if (task == null) {
             task = createConcreteTask();
             task.linkActivity(this);
-            task.execute();
+            task.exe();
         } else {
             task.linkActivity(this);
         }
-
     }
     protected abstract TiedToActivityTask createConcreteTask();
 }

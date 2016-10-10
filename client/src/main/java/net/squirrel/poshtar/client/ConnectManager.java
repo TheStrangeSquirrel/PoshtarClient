@@ -3,6 +3,7 @@ package net.squirrel.poshtar.client;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.os.Build;
 import net.squirrel.poshtar.client.utils.LogUtil;
 
 import static android.content.Context.CONNECTIVITY_SERVICE;
@@ -12,9 +13,9 @@ public class ConnectManager {
     private boolean wifiStatus;
     private boolean mInternetStatus;
 
-    public ConnectManager() {
-        StatusInternetTask internetTask = new StatusInternetTask();
-        internetTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+    ConnectManager() {
+        StatusInternetTask task = new StatusInternetTask();
+        task.exe();
     }
 
     public boolean isWifiStatus() {
@@ -32,6 +33,14 @@ public class ConnectManager {
 
     private class StatusInternetTask extends AsyncTask<Void, Boolean, Void> {
         private ConnectivityManager connManager;
+
+        void exe() {
+            if (Build.VERSION.SDK_INT >= 11) {
+                super.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            } else {
+                super.execute();
+            }
+        }
 
         @Override
         protected void onPreExecute() {
@@ -64,7 +73,5 @@ public class ConnectManager {
                 mInternetStatus = networkInfo.isConnected();
             }
         }
-
     }
-
 }

@@ -2,9 +2,10 @@ package net.squirrel.poshtar.client.dialog;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.DialogFragment;
 import android.view.View;
 import android.widget.EditText;
 import net.squirrel.postar.client.R;
@@ -12,7 +13,7 @@ import net.squirrel.postar.client.R;
 /**
  * Activity causing dialog must be implement DialogueResultListener
  */
-public class DialogSaveTrack extends android.app.DialogFragment {
+public class DialogSaveTrack extends DialogFragment {
     private DialogueResultListener listener;
     private EditText eDescription;
 
@@ -23,6 +24,7 @@ public class DialogSaveTrack extends android.app.DialogFragment {
     }
 
 
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_add_description, null);

@@ -1,6 +1,7 @@
 package net.squirrel.poshtar.client;
 
 import android.os.AsyncTask;
+import android.os.Build;
 import net.squirrel.poshtar.client.DAO.ProvidersDAO;
 import net.squirrel.poshtar.client.DAO.XMLProviderDAO;
 import net.squirrel.poshtar.client.receiver.DataReceiver;
@@ -16,15 +17,15 @@ import static net.squirrel.poshtar.client.AppPoshtar.getConnectManager;
  * Singleton and Observer
  */
 public class ProviderManager {
-    static final long TIME_VALID_PROVIDERS_WIFI = 86400000;  //1 Day
-    static final long TIME_VALID_PROVIDERS_M_INTERNET = 86400000 * 3; //3 Days
+    private static final long TIME_VALID_PROVIDERS_WIFI = 86400000;  //1 Day
+    private static final long TIME_VALID_PROVIDERS_M_INTERNET = 86400000 * 3; //3 Days
     private static ProviderManager instance;
     private ProvidersDAO providersDAO;
     private DataReceiver dataReceiver;
     private List<Provider> providers;
     private List<SetProvidersListener> listeners;
     private long timeLastUpdateProviders;
-    private AsyncTask task;
+    private BaseProvidersTask task;
 
     private ProviderManager() {
         listeners = new ArrayList<SetProvidersListener>();
@@ -56,23 +57,20 @@ public class ProviderManager {
 
         if (internetStatus && isNeedUpdateFile) {
             LogUtil.d("Download providers");
-            task = new DownloadProvidersTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            return;
-        }
-        if (!isNeedUpdateFile || (!internetStatus && isFileExists())) {
+            task = new DownloadProvidersTask();
+        } else if (!isNeedUpdateFile || (!internetStatus && isFileExists())) {
             LogUtil.d("Load providers ");
-            task = new LoadProvidersTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            task = new LoadProvidersTask();
+        } else {
+            LogUtil.i("The list of providers is not available");
             return;
         }
-        LogUtil.i("The list of providers is not available");
+        task.exe();
     }
 
 
     private boolean isNeedUpdateFile() {
-        if (timeLastUpdateProviders < timeToUpdate()) {
-            return true;
-        }
-        return false;
+        return timeLastUpdateProviders < timeToUpdate();
     }
 
     private long timeToUpdate() {
@@ -86,20 +84,28 @@ public class ProviderManager {
     }
 
     private boolean isFileExists() {
-        if (timeLastUpdateProviders == 0) {
-            return false;
-        }
-        return true;
+        return timeLastUpdateProviders != 0;
     }
 
     public interface SetProvidersListener {
-        public void setProviders(List<Provider> providers);
+        void setProviders(List<Provider> providers);
     }
 
-    private class DownloadProvidersTask extends AsyncTask<Void, Void, List<Provider>> {
+    private abstract class BaseProvidersTask extends AsyncTask<Void, Void, List<Provider>> {
+        void exe() {
+            if (Build.VERSION.SDK_INT >= 11) {
+                super.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            } else {
+                super.execute();
+            }
+        }
+    }
+
+    private class DownloadProvidersTask extends BaseProvidersTask {
 
         @Override
         protected List<Provider> doInBackground(Void... params) {
+
             List<Provider> prov = null;
             try {
                 String providersXML = dataReceiver.receiveProvidersXML();
@@ -123,7 +129,7 @@ public class ProviderManager {
         }
     }
 
-    private class LoadProvidersTask extends AsyncTask<Void, Void, List<Provider>> {
+    private class LoadProvidersTask extends BaseProvidersTask {
 
         @Override
         protected List<Provider> doInBackground(Void... params) {

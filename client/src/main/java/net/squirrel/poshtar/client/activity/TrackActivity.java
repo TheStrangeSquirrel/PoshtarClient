@@ -4,8 +4,10 @@ package net.squirrel.poshtar.client.activity;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentActivity;
 import android.text.Html;
 import android.view.View;
 import android.widget.TextView;
@@ -16,7 +18,7 @@ import net.squirrel.poshtar.dto.Request;
 import net.squirrel.poshtar.dto.Response;
 import net.squirrel.postar.client.R;
 
-public abstract class TrackActivity extends Activity implements View.OnClickListener {
+public abstract class TrackActivity extends FragmentActivity implements View.OnClickListener {
     TextView tStatus;
     ProgressDialog progressDialog;
     Request request;
@@ -33,7 +35,7 @@ public abstract class TrackActivity extends Activity implements View.OnClickList
     }
 
     @Override
-    public Object onRetainNonConfigurationInstance() {
+    public Object onRetainCustomNonConfigurationInstance() {
         if (task != null) {
             task.unLinkActivity();
         }
@@ -41,7 +43,7 @@ public abstract class TrackActivity extends Activity implements View.OnClickList
     }
 
     void executeOrResumeTask(Request request) {
-        task = (ReceiverTask) getLastNonConfigurationInstance();
+        task = (ReceiverTask) getLastCustomNonConfigurationInstance();
 
         if (task != null) {
             if (task.getStatus() != AsyncTask.Status.RUNNING) {
@@ -51,7 +53,13 @@ public abstract class TrackActivity extends Activity implements View.OnClickList
         }
         task = new ReceiverTask();
         task.linkActivity(this);
-        task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, request);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, request);
+        } else {
+            task.execute(request);
+        }
+
     }
 
 

@@ -2,10 +2,13 @@ package net.squirrel.poshtar.client.activity;
 
 import android.app.Activity;
 
-public interface TiedToActivityTask {
-    public void linkActivity(Activity activity);
-    public void unLinkActivity();
-    public void execute();
+interface TiedToActivityTask {
 
-    public boolean cancel(boolean mayInterruptIfRunning);
+    void linkActivity(Activity activity);
+
+    void unLinkActivity();
+
+    void exe();
+
+    boolean cancel(boolean mayInterruptIfRunning);
 }

@@ -3,6 +3,7 @@ package net.squirrel.poshtar.client.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,12 +13,10 @@ import net.squirrel.poshtar.client.AppPoshtar;
 import net.squirrel.postar.client.R;
 
 public class HelloActivity extends BaseActivityIncludingAsyncTask implements View.OnClickListener {
-
     private Intent intent;
     private Button btnNewTrack, btnSavedTrack;
     private ImageView imgInternetStatus;
     private TextView txtInternetStatus;
-
 
     @Override
     protected TiedToActivityTask createConcreteTask() {
@@ -84,8 +83,12 @@ public class HelloActivity extends BaseActivityIncludingAsyncTask implements Vie
         }
 
         @Override
-        public void execute() {
-            super.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        public void exe() {
+            if (Build.VERSION.SDK_INT >= 11) {
+                super.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            } else {
+                super.execute();
+            }
         }
 
         @Override
