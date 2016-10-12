@@ -1,10 +1,15 @@
 <resources>
     <string name="app_name">Poshtar</string>
+    <string name="version" translatable="false">1.0</string>
+    <string name="email" translatable="false">thestrangesquirrel@gmail.com</string>
 
-    <string name="add_tracking">New tracking</string>
+
+    <string name="new_tracking">New tracking</string>
     <string name="save_tracking">Saved tracking</string>
     <string name="loading_tracks">Loading list of tracks</string>
     <string name="package_tracking">Package tracking</string>
+    <string name="settings">Settings</string>
+    <string name="about">About</string>
 
     <string name="cancel">Cancel</string>
     <string name="contin">Continue</string>
@@ -22,7 +27,12 @@
     <string name="stop_track">Stop track</string>
     <string name="dialog_add_description">You can add a description</string>
     <string name="change_save_track">Such tracking exists, replace?</string>
-    <string name="track_number">Track № </string>
-    <string name="provider">Provider </string>
-    <string name="description">Description </string>
+    <string name="track_number">Track №</string>
+    <string name="provider">Provider</string>
+    <string name="description">Description</string>
+
+    <string name="questions">For questions, suggestions contact:</string>
+    <string name="developer">Developer:</string>
+
+
 </resources>

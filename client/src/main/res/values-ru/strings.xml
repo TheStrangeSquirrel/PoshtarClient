@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Poshtar</string>
-    <string name="add_tracking">Новое отслеживание</string>
+    <string name="new_tracking">Новое отслеживание</string>
     <string name="save_tracking">Сохраненные отслеживания</string>
     <string name="loading_tracks">Загрузка списка провайдеров</string>
     <string name="cancel">Отмена</string>
@@ -23,4 +23,8 @@
     <string name="description">Описание</string>
     <string name="provider">Поставщик</string>
     <string name="package_tracking">Отслеживание посылки</string>
+    <string name="settings">Настройки</string>
+    <string name="about">О программе</string>
+    <string name="developer">Разработчик:</string>
+    <string name="questions">С вопросами, предложениями обращаться:</string>
 </resources>

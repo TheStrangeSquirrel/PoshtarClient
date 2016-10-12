@@ -7,7 +7,7 @@
     <Button
             android:layout_width="200dp"
             android:layout_height="100dp"
-            android:text="@string/add_tracking"
+            android:text="@string/new_tracking"
             android:id="@+id/newTrack"
             android:layout_marginTop="10dp"
             android:layout_alignParentTop="true"

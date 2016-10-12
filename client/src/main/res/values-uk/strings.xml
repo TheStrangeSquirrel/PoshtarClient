@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Poshtar</string>
-    <string name="add_tracking">Нове відстеження</string>
+    <string name="new_tracking">Нове відстеження</string>
     <string name="save_tracking">Збереженне відстеження</string>
     <string name="loading_tracks">Завантаження переліку постачальніків</string>
     <string name="cancel">Cкасувати</string>
@@ -23,4 +23,8 @@
     <string name="description">Опис</string>
     <string name="provider">Постачальник</string>
     <string name="package_tracking">Відстежування посилки</string>
+    <string name="settings">Налаштування</string>
+    <string name="about">Про програму</string>
+    <string name="developer">Розробник:</string>
+    <string name="questions">З питаннями, пропозиціями звертатися:</string>
 </resources>

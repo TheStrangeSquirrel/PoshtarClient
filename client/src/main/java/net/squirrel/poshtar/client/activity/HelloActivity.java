@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -36,6 +39,13 @@ public class HelloActivity extends BaseActivityIncludingAsyncTask implements Vie
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = new MenuInflater(this);
+        inflater.inflate(R.menu.menu_hello, menu);
+        return true;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hello);
@@ -43,6 +53,7 @@ public class HelloActivity extends BaseActivityIncludingAsyncTask implements Vie
         findViews();
         setListeners();
     }
+
     private void findViews() {
         btnNewTrack = (Button) findViewById(R.id.newTrack);
         btnSavedTrack = (Button) findViewById(R.id.savedTrack);
@@ -66,6 +77,26 @@ public class HelloActivity extends BaseActivityIncludingAsyncTask implements Vie
                 break;
         }
         startActivity(intent);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_newTrack:
+                intent = new Intent(this, ProvidersActivity.class);
+                break;
+            case R.id.menu_savedTrack:
+                intent = new Intent(this, SaveTracksActivity.class);
+                break;
+            case R.id.menu_settings:
+                intent = new Intent(this, SettingsActivity.class);
+                break;
+            case R.id.menu_about:
+                intent = new Intent(this, AboutActivity.class);
+                break;
+        }
+        startActivity(intent);
+        return true;
     }
 
     private static class StatusInternetTask extends AsyncTask<Void, Void, Void> implements TiedToActivityTask {
