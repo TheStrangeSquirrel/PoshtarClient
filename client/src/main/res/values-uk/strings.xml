@@ -27,4 +27,8 @@
     <string name="about">Про програму</string>
     <string name="developer">Розробник:</string>
     <string name="questions">З питаннями, пропозиціями звертатися:</string>
+    <string name="lang_title">Мова</string>
+    <string name="lang_summary">Мова додатка. \ Необхідно перезапустити програму для прийняття змін.</string>
+    <string name="lang_dialog_title">Виберіть мову:</string>
+    <string name="clean_title">Вдалити відстеження</string>
 </resources>

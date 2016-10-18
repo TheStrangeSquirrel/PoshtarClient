@@ -92,6 +92,17 @@ public class SQLitePoshtarHelper extends SQLiteOpenHelper implements SavedTrackD
     }
 
     @Override
+    public void cleanTrack() {
+        SQLiteDatabase database = null;
+        try {
+            database = this.getWritableDatabase();
+            database.delete(TRACKS_TABLE, null, null);
+        } finally {
+            database.close();
+        }
+    }
+
+    @Override
     public void updateTrack(Integer id, SavedTrack updatedTrack) {
         SQLiteDatabase database = this.getWritableDatabase();
         ContentValues contentValues = setSTrackCV(updatedTrack);

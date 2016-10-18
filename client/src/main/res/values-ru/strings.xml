@@ -27,4 +27,8 @@
     <string name="about">О программе</string>
     <string name="developer">Разработчик:</string>
     <string name="questions">С вопросами, предложениями обращаться:</string>
+    <string name="lang_title">Язык</string>
+    <string name="lang_summary">Язык приложения.\nНеобходимо перезапустить приложение для принятия изменений.</string>
+    <string name="lang_dialog_title">Выберите язык:</string>
+    <string name="clean_title">Удалить отслеживания</string>
 </resources>

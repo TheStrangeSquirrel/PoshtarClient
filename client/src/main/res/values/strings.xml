@@ -34,5 +34,11 @@
     <string name="questions">For questions, suggestions contact:</string>
     <string name="developer">Developer:</string>
 
+    <string name="lang_title">Language</string>
+    <string name="lang_dialog_title">Choose language:</string>
+    <string name="lang_summary">Application language. You must restart the application to apply the changes.</string>
+
+    <string name="clean_title">Clean tracks</string>
+    <string name="clean_summary"></string>
 
 </resources>
