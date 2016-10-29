@@ -6,7 +6,9 @@ import net.squirrel.poshtar.client.DAO.ProvidersDAO;
 import net.squirrel.poshtar.client.DAO.XMLProviderDAO;
 import net.squirrel.poshtar.client.receiver.DataReceiver;
 import net.squirrel.poshtar.client.utils.LogUtil;
+import net.squirrel.poshtar.dto.ListProvider;
 import net.squirrel.poshtar.dto.Provider;
+import net.squirrel.poshtar.dto.ServerSettings;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,8 +19,7 @@ import static net.squirrel.poshtar.client.AppPoshtar.getConnectManager;
  * Singleton and Observer
  */
 public class ProviderManager {
-    private static final long TIME_VALID_PROVIDERS_WIFI = 86400000;  //1 Day
-    private static final long TIME_VALID_PROVIDERS_M_INTERNET = 86400000 * 3; //3 Days
+    private static final long TIME_TO_UPDATE = 86400000;  //1 Day
     private static ProviderManager instance;
     private ProvidersDAO providersDAO;
     private DataReceiver dataReceiver;
@@ -52,13 +53,13 @@ public class ProviderManager {
 
     public void updateProviders() {
         boolean internetStatus = getConnectManager().isInternetStatus();
-        boolean isNeedUpdateFile = isNeedUpdateFile();
-        timeLastUpdateProviders = providersDAO.getTimeLastUpdateProviders();
+        boolean isTimeCheckVersion = isTimeCheckVersion();
 
-        if (internetStatus && isNeedUpdateFile) {
+
+        if (internetStatus && isTimeCheckVersion) {
             LogUtil.d("Download providers");
-            task = new DownloadProvidersTask();
-        } else if (!isNeedUpdateFile || (!internetStatus && isFileExists())) {
+            task = new CheckVersionAndDownloadProvidersTask();
+        } else if (!isTimeCheckVersion || (!internetStatus && isFileExists())) {
             LogUtil.d("Load providers ");
             task = new LoadProvidersTask();
         } else {
@@ -69,19 +70,12 @@ public class ProviderManager {
     }
 
 
-    private boolean isNeedUpdateFile() {
-        return timeLastUpdateProviders < timeToUpdate();
+    private boolean isTimeCheckVersion() {
+        timeLastUpdateProviders = providersDAO.getTimeLastUpdateProvidersFile();
+        long delta = System.currentTimeMillis() - TIME_TO_UPDATE;
+        return timeLastUpdateProviders < delta;
     }
 
-    private long timeToUpdate() {
-        long deltaTime;
-        if (getConnectManager().isInternetStatus()) {
-            deltaTime = TIME_VALID_PROVIDERS_WIFI;
-        } else {
-            deltaTime = TIME_VALID_PROVIDERS_M_INTERNET;
-        }
-        return System.currentTimeMillis() - deltaTime;
-    }
 
     private boolean isFileExists() {
         return timeLastUpdateProviders != 0;
@@ -101,20 +95,35 @@ public class ProviderManager {
         }
     }
 
-    private class DownloadProvidersTask extends BaseProvidersTask {
+    private class CheckVersionAndDownloadProvidersTask extends BaseProvidersTask {
 
         @Override
         protected List<Provider> doInBackground(Void... params) {
-
             List<Provider> prov = null;
             try {
-                String providersXML = dataReceiver.receiveProvidersXML();
-                providersDAO.saveProviders(providersXML);
-                prov = dataReceiver.getProviderListFromXML(providersXML);
+                ServerSettings serverSettings = dataReceiver.receiveServerSettings();
+                if (providersDAO.getTimeLastUpdateProvidersFile() == 0) {
+                    return downloadProviders();
+                } else {
+                    ListProvider listProvider = providersDAO.loadProviders();
+                    String versionProviders = listProvider.getVersionProviders();
+                    if (serverSettings.getCurrentVersion().equals(versionProviders)) {
+                        providersDAO.setTimeLastUpdateProvidersFile(System.currentTimeMillis());
+                        prov = listProvider.getProviders();
+                    } else {
+                        prov = downloadProviders();
+                    }
+                }
             } catch (Exception e) {
-                LogUtil.w("DownloadProvidersTask", e);
+                LogUtil.w("Error CheckVersionAndDownloadProvidersTas", e);
             }
             return prov;
+        }
+
+        private List<Provider> downloadProviders() throws Exception {
+            String providersXML = dataReceiver.receiveProvidersXML();
+            providersDAO.saveProviders(providersXML);
+            return dataReceiver.getProviderListFromXML(providersXML);
         }
 
         @Override
@@ -135,7 +144,7 @@ public class ProviderManager {
         protected List<Provider> doInBackground(Void... params) {
             List<Provider> prov = null;
             try {
-                prov = providersDAO.loadProviders();
+                prov = providersDAO.loadProviders().getProviders();
             } catch (Exception e) {
                 LogUtil.w("Error load providers", e);
             }

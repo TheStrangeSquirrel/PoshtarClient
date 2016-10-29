@@ -3,13 +3,11 @@ package net.squirrel.poshtar.client.DAO;
 import net.squirrel.poshtar.client.utils.IOUtils;
 import net.squirrel.poshtar.client.utils.XmlTransforming;
 import net.squirrel.poshtar.dto.ListProvider;
-import net.squirrel.poshtar.dto.Provider;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.List;
 
 import static android.content.Context.MODE_PRIVATE;
 import static net.squirrel.poshtar.client.AppPoshtar.getContext;
@@ -33,16 +31,22 @@ public class XMLProviderDAO implements ProvidersDAO {
     }
 
     @Override
-    public List<Provider> loadProviders() throws Exception {
+    public ListProvider loadProviders() throws Exception {
         InputStream inputStream = getContext().openFileInput(FILENAME);
         String providersListXML = IOUtils.toString(inputStream);
-        ListProvider listProvider = XmlTransforming.unmarshalling(providersListXML, ListProvider.class);
-        return listProvider.getProviders();
+        return XmlTransforming.unmarshalling(providersListXML, ListProvider.class);
+    }
+
+
+    @Override
+    public long getTimeLastUpdateProvidersFile() {
+        File file = getContext().getFileStreamPath(FILENAME);
+        return file.lastModified();
     }
 
     @Override
-    public long getTimeLastUpdateProviders() {
+    public void setTimeLastUpdateProvidersFile(long time) {
         File file = getContext().getFileStreamPath(FILENAME);
-        return file.lastModified();
+        file.setLastModified(time);
     }
 }

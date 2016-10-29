@@ -33,7 +33,7 @@ public class AppPoshtar extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        context = (Context) this;
+        context = this;
         connectManager = new ConnectManager();
         providerManager = ProviderManager.getInstance();
         langConfig();
@@ -49,6 +49,6 @@ public class AppPoshtar extends Application {
         Locale.setDefault(locale);
         Configuration config = new Configuration();
         config.locale = locale;
-        getBaseContext().getResources().updateConfiguration(config, null);
+        getResources().updateConfiguration(config, null);
     }
 }

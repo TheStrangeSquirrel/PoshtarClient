@@ -1,25 +1,30 @@
 package net.squirrel.poshtar.client.receiver;
 
-import net.squirrel.poshtar.client.ConfigManager;
+import net.squirrel.poshtar.client.UrlConfigManager;
 import net.squirrel.poshtar.client.exception.AppException;
 import net.squirrel.poshtar.client.http_client.HttpClient;
 import net.squirrel.poshtar.client.utils.XmlTransforming;
-import net.squirrel.poshtar.dto.ListProvider;
-import net.squirrel.poshtar.dto.Provider;
-import net.squirrel.poshtar.dto.Request;
-import net.squirrel.poshtar.dto.Response;
+import net.squirrel.poshtar.dto.*;
 
+import java.io.IOException;
 import java.util.List;
 
 public class DataReceiver {
-    private ConfigManager config;
+    private UrlConfigManager config;
 
     public DataReceiver() {
-        config = new ConfigManager();
+        config = new UrlConfigManager();
     }
 
-    public String receiveProvidersXML() throws AppException {
-        String url = config.getBaseUrl() + config.getProvidersUrl();
+    public ServerSettings receiveServerSettings() throws Exception {
+        String response = HttpClient.get(config.getBaseUrl() + UrlConfigManager.SERVER_SETTINGS_URL_SUFFIX);
+        ServerSettings settings = XmlTransforming.unmarshalling(response, ServerSettings.class);
+        config.updateUrl(settings.getFutureUrl());
+        return settings;
+    }
+
+    public String receiveProvidersXML() throws AppException, IOException {
+        String url = config.getBaseUrl() + UrlConfigManager.PROVIDERS_URL_SUFFIX;
         return HttpClient.post(url, null);
     }
 
@@ -29,7 +34,7 @@ public class DataReceiver {
     }
 
     public Response track(Request request) throws Exception {
-        String url = config.getBaseUrl() + config.getTrackingUrl();
+        String url = config.getBaseUrl() + UrlConfigManager.TRACKING_URL_SUFFIX;
         String marshalling = XmlTransforming.marshalling(request);
         String response = HttpClient.post(url, marshalling);
         return XmlTransforming.unmarshalling(response, Response.class);

@@ -1,14 +1,18 @@
 package net.squirrel.poshtar.client.DAO;
 
-import net.squirrel.poshtar.dto.Provider;
+import net.squirrel.poshtar.dto.ListProvider;
 
 import java.io.IOException;
-import java.util.List;
 
 public interface ProvidersDAO {
-    List<Provider> loadProviders() throws Exception;
+    ListProvider loadProviders() throws Exception;
 
     void saveProviders(String providersXML) throws IOException;
 
-    long getTimeLastUpdateProviders();
+    /**
+     * @return Returns 0 if the file does not exist
+     */
+    long getTimeLastUpdateProvidersFile();
+
+    void setTimeLastUpdateProvidersFile(long time);
 }
