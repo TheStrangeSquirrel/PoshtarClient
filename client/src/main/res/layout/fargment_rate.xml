@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent" android:orientation="vertical"
+              android:background="@drawable/frame" android:padding="7dp">
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/rate_title"
+            android:id="@+id/textView9" android:gravity="center_vertical" android:textSize="15dp"/>
+    <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/write_author"
+            android:id="@+id/bWriteAut" android:layout_gravity="center_horizontal"
+            android:textColor="#181c6d" android:textSize="12dp"/>
+    <android.support.v7.widget.AppCompatCheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/not_remind"
+            android:id="@+id/cbNotRemind" android:gravity="center_vertical" android:layout_gravity="center_horizontal"
+            android:checked="false"/>
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="@string/rate_it"
+                android:id="@+id/bRate" android:layout_weight="1"/>
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="@string/no"
+                android:id="@+id/bNo" android:layout_weight="1"/>
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="@string/already_rate_it"
+                android:id="@+id/bAlready" android:layout_weight="1"/>
+    </LinearLayout>
+</LinearLayout>

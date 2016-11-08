@@ -31,4 +31,9 @@
     <string name="lang_summary">Язык приложения.\nНеобходимо перезапустить приложение для принятия изменений.</string>
     <string name="lang_dialog_title">Выберите язык:</string>
     <string name="clean_title">Удалить отслеживания</string>
+    <string name="already_rate_it">Уже оценил</string>
+    <string name="not_remind">Больше не напоминать</string>
+    <string name="rate_it">Оценить</string>
+    <string name="write_author">Написать автору программы \n предложения/вопросы/баги</string>
+    <string name="rate_title">Пожалуйста оцените приложение. Благодарю за поддержку.</string>
 </resources>

@@ -13,12 +13,11 @@ import net.squirrel.poshtar.client.DAO.SQLitePoshtarHelper;
 import net.squirrel.poshtar.client.DAO.SavedTrackDAO;
 import net.squirrel.poshtar.client.dialog.DialogReplaceSaveTrack;
 import net.squirrel.poshtar.client.dialog.DialogSaveTrack;
-import net.squirrel.poshtar.client.dialog.DialogueResultListener;
 import net.squirrel.poshtar.client.entity.SavedTrack;
 import net.squirrel.poshtar.dto.Request;
 import net.squirrel.postar.client.R;
 
-public class NewTrackActivity extends TrackActivity implements View.OnClickListener, DialogueResultListener {
+public class NewTrackActivity extends TrackActivity implements View.OnClickListener, DialogSaveTrack.DialogueResultListener {
 
     private SavedTrackDAO savedTrackDAO;
     private Button bTrack;

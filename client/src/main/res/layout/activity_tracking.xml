@@ -27,12 +27,22 @@
             android:layout_alignParentLeft="false" android:layout_alignParentRight="false"
             android:layout_alignParentBottom="false"
             android:layout_alignWithParentIfMissing="false"
-            android:paddingLeft="4dp">
-        <TextView
+            android:paddingLeft="4dp" android:fillViewport="false">
+        <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/textResponse"
-                android:textIsSelectable="true"/>
+                android:layout_height="match_parent">
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textResponse"
+                    android:textIsSelectable="true"/>
+            <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/rateContainer"
+                    android:layout_marginTop="40dp" android:layout_marginRight="7dp" android:layout_marginLeft="7dp">
+            </FrameLayout>
+        </LinearLayout>
     </ScrollView>
 
     <Button
@@ -42,6 +52,7 @@
             android:id="@+id/bSaveTrack"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"/>
+
 </RelativeLayout>
 
 

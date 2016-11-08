@@ -39,6 +39,13 @@
     <string name="lang_summary">Application language. You must restart the application to apply the changes.</string>
 
     <string name="clean_title">Clean tracks</string>
-    <string name="clean_summary"></string>
+
+    <string name="not_remind">Do not remind me</string>
+    <string name="rate_it">Rate it</string>
+    <string name="already_rate_it">Already rate it</string>
+    <string name="rate_title">Please if you have a moment of free time, rate the app. Thank you for your support.
+    </string>
+    <string name="write_author">Write to the author of the program: \n proposition/questions/bugs</string>
+
 
 </resources>

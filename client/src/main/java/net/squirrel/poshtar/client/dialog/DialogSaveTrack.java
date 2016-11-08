@@ -46,4 +46,8 @@ public class DialogSaveTrack extends DialogFragment {
                 });
         return adb.create();
     }
+
+    public interface DialogueResultListener {
+        void onDialogResult(String res);
+    }
 }

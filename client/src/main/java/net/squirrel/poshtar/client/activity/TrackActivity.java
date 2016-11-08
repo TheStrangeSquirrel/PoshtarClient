@@ -12,6 +12,7 @@ import android.text.Html;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+import net.squirrel.poshtar.client.RateManager;
 import net.squirrel.poshtar.client.receiver.DataReceiver;
 import net.squirrel.poshtar.client.utils.LogUtil;
 import net.squirrel.poshtar.dto.Request;
@@ -63,11 +64,11 @@ public abstract class TrackActivity extends FragmentActivity implements View.OnC
     }
 
 
-    private static class ReceiverTask extends AsyncTask<Request, Void, Response> {
+    private class ReceiverTask extends AsyncTask<Request, Void, Response> {
         private TrackActivity activity;
         private DataReceiver dataReceiver;
 
-        {
+        ReceiverTask() {
             dataReceiver = new DataReceiver();
         }
 
@@ -99,6 +100,7 @@ public abstract class TrackActivity extends FragmentActivity implements View.OnC
 
             activity.progressDialog.dismiss();
             activity.tStatus.setText(Html.fromHtml(response.getStatus()));
+            new RateManager().show(getSupportFragmentManager());
         }
 
 
@@ -111,5 +113,4 @@ public abstract class TrackActivity extends FragmentActivity implements View.OnC
         }
 
     }
-
 }

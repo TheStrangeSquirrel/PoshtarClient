@@ -31,4 +31,9 @@
     <string name="lang_summary">Мова додатка. \ Необхідно перезапустити програму для прийняття змін.</string>
     <string name="lang_dialog_title">Виберіть мову:</string>
     <string name="clean_title">Вдалити відстеження</string>
+    <string name="already_rate_it">Вже оцінив</string>
+    <string name="not_remind">Більше не нагадувати</string>
+    <string name="rate_it">Оцінити</string>
+    <string name="write_author">Написати автору програми \n пропозиції/питання/баги</string>
+    <string name="rate_title">Будь ласка оціните програму. Дякую за підтримку.</string>
 </resources>
