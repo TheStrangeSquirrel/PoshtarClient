@@ -50,13 +50,17 @@ public class NewTrackActivity extends TrackActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tracking);
+        setContentView(R.layout.activity_new_track);
         savedTrackDAO = new SQLitePoshtarHelper(this);
         setProvider();
         findViews();
         setDialog();
         bTrack.setOnClickListener(this);
         bSavedTrack.setOnClickListener(this);
+        eTrackNumber.setOnEditorActionListener((textView, i, keyEvent) -> {
+            onClickTrack();
+            return true;
+        });
     }
 
     private void setDialog() {

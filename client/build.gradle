@@ -4,9 +4,11 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.0.0'
+        classpath 'com.google.gms:google-services:3.0.0'
     }
 }
 apply plugin: 'com.android.application'
+//apply plugin: 'com.google.gms.google-services'
 
 repositories {
     jcenter()
@@ -42,4 +44,5 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:24.2.0'
+//    compile "com.google.firebase:firebase-database:9.8.0"
 }

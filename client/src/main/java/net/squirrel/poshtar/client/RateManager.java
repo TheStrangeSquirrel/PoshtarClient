@@ -1,5 +1,6 @@
 package net.squirrel.poshtar.client;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -7,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
@@ -20,13 +22,14 @@ interface RemoveFragmentListener {
     void doRemove();
 }
 
-public class RateManager implements RemoveFragmentListener {
-    private static final int DEFAULT_NUMBER_VISITS_TO_SHOW = 42;
+public class RateManager {
+    private static final int DEFAULT_NUMBER_VISITS_TO_SHOW = 3;
     private static final String KEY_RATE_PREFERENCES = "ratePreferences";
     private static final String KEY_IS_SHOW = "isShow";
     private static final String KEY_NUMBER_VISITS_TO_SHOW = "numberVisitsToShow";
+    private static final String TAG_FRAGMENT_RATE = "rateFragment";
+    static FragmentManager fragmentManager;
     private static SharedPreferences sharedPreferences;
-    private FragmentManager fragmentManager;
     private RateFragment rateFragment;
     private int numberVisitsToShow;
     private boolean isShow;
@@ -36,16 +39,15 @@ public class RateManager implements RemoveFragmentListener {
         isShow = sharedPreferences.getBoolean(KEY_IS_SHOW, true);
         numberVisitsToShow = sharedPreferences.getInt(KEY_NUMBER_VISITS_TO_SHOW, DEFAULT_NUMBER_VISITS_TO_SHOW);
         rateFragment = new RateFragment();
-        rateFragment.setRemoveFragmentListener(this);
     }
 
     public void show(FragmentManager fragmentManager) {
-        this.fragmentManager = fragmentManager;
+        RateManager.fragmentManager = fragmentManager;
         if (isShow) {
             if (numberVisitsToShow == 0) {
                 numberVisitsToShow = DEFAULT_NUMBER_VISITS_TO_SHOW;
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
-                transaction.add(R.id.rateContainer, rateFragment);
+                transaction.add(R.id.rateContainer, rateFragment, TAG_FRAGMENT_RATE);
                 transaction.commit();
             } else {
                 numberVisitsToShow--;
@@ -57,12 +59,6 @@ public class RateManager implements RemoveFragmentListener {
 
     }
 
-    @Override
-    public void doRemove() {
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.remove(rateFragment);
-        transaction.commit();
-    }
 
     public static class RateFragment extends Fragment {
         private RemoveFragmentListener listener;
@@ -91,7 +87,6 @@ public class RateManager implements RemoveFragmentListener {
                             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + context.getString(R.string.app_name)))
                                     .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             getActivity().startActivity(intent);
-//                            context.startActivity(intent);
                             editor.putBoolean(KEY_IS_SHOW, false);
                             editor.commit();
                             break;
@@ -99,10 +94,7 @@ public class RateManager implements RemoveFragmentListener {
                             //NOP
                             break;
                     }
-
-                    if (listener != null) {
-                        listener.doRemove();
-                    }
+                    doRemove();
                 }
             }
 
@@ -123,8 +115,21 @@ public class RateManager implements RemoveFragmentListener {
 
         }
 
-        void setRemoveFragmentListener(RemoveFragmentListener listener) {
-            this.listener = listener;
+        public void doRemove() {
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            Fragment fragment = fragmentManager.findFragmentByTag(TAG_FRAGMENT_RATE);
+            transaction.remove(fragment).commit();
+        }
+
+        @Override
+        public void onAttach(Activity activity) {
+            fragmentManager = ((FragmentActivity) activity).getSupportFragmentManager();
+            super.onAttach(activity);
+        }
+
+        @Override
+        public void onSaveInstanceState(Bundle outState) {
+            super.onSaveInstanceState(outState);
         }
     }
 }

@@ -20,6 +20,7 @@ import net.squirrel.poshtar.dto.Response;
 import net.squirrel.postar.client.R;
 
 public abstract class TrackActivity extends FragmentActivity implements View.OnClickListener {
+    private static final RateManager rateManager = new RateManager();
     TextView tStatus;
     ProgressDialog progressDialog;
     Request request;
@@ -100,7 +101,7 @@ public abstract class TrackActivity extends FragmentActivity implements View.OnC
 
             activity.progressDialog.dismiss();
             activity.tStatus.setText(Html.fromHtml(response.getStatus()));
-            new RateManager().show(getSupportFragmentManager());
+            rateManager.show(getSupportFragmentManager());
         }
 
 
