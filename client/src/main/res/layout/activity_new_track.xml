@@ -9,7 +9,8 @@
             android:layout_alignParentStart="true" android:layout_toLeftOf="@+id/bTrack"
             android:layout_toStartOf="@+id/bTrack" android:hint="@string/enter_track_number"
             android:textColorHint="#ff7c89"
-            android:singleLine="true"/>
+            android:singleLine="true"
+            android:imeOptions="actionSearch"/>
     <Button
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"

@@ -1,9 +1,11 @@
 package net.squirrel.poshtar.client.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -50,14 +52,30 @@ public class NewTrackActivity extends TrackActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tracking);
+        setContentView(R.layout.activity_new_track);
         savedTrackDAO = new SQLitePoshtarHelper(this);
         setProvider();
         findViews();
         setDialog();
         bTrack.setOnClickListener(this);
         bSavedTrack.setOnClickListener(this);
+        eTrackNumber.setOnEditorActionListener((textView, i, keyEvent) -> {
+            trackNumber = eTrackNumber.getText().toString();
+            if (trackNumber.isEmpty()) {
+                Toast.makeText(this, R.string.enter_track_number, Toast.LENGTH_SHORT).show();
+                return false;
+            }
+            hideKeyboard();
+            onClickTrack();
+            return true;
+        });
     }
+
+    private void hideKeyboard() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(eTrackNumber.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+    }
+
 
     private void setDialog() {
         dialogReplaceSaveTrack = new DialogReplaceSaveTrack();
