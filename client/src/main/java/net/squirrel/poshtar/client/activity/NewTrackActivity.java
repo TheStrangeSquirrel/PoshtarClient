@@ -105,6 +105,7 @@ public class NewTrackActivity extends TrackActivity implements View.OnClickListe
         }
         switch (v.getId()) {
             case R.id.bTrack:
+                hideKeyboard();
                 onClickTrack();
                 break;
             case R.id.bSaveTrack:
