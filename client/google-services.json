@@ -1,0 +1,38 @@
+{
+  "project_info": {
+    "project_number": "35770414733",
+    "project_id": "firebase-poshtar"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:35770414733:android:158ba3073bab6145",
+        "android_client_info": {
+          "package_name": "net.squirrel.postar.client"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD68WjZUYxU5ovTMDXn6GVS0icNYpIKJD0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 2,
+          "analytics_property": {
+            "tracking_id": "UA-87179473-1"
+          }
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
