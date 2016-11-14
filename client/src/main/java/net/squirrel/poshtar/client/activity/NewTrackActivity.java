@@ -8,6 +8,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import net.squirrel.poshtar.client.AppPoshtar;
 import net.squirrel.poshtar.client.DAO.SQLitePoshtarHelper;
 import net.squirrel.poshtar.client.DAO.SavedTrackDAO;
@@ -23,6 +25,7 @@ public class NewTrackActivity extends TrackActivity implements View.OnClickListe
     private Button bTrack;
     private Button bSavedTrack;
     private EditText eTrackNumber;
+    private AdView mAdView;
 
     private DialogReplaceSaveTrack dialogReplaceSaveTrack;
     private DialogFragment dialogSaveTrack;
@@ -32,6 +35,7 @@ public class NewTrackActivity extends TrackActivity implements View.OnClickListe
     private int providerId;
     private String providerName;
     private int existInId;
+
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -61,6 +65,9 @@ public class NewTrackActivity extends TrackActivity implements View.OnClickListe
             onClickTrack();
             return true;
         });
+
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
     }
 
     private void setDialog() {
@@ -80,6 +87,7 @@ public class NewTrackActivity extends TrackActivity implements View.OnClickListe
         bSavedTrack = (Button) findViewById(R.id.bSaveTrack);
         eTrackNumber = (EditText) findViewById(R.id.eTrackN);
         tStatus = (TextView) findViewById(R.id.textResponse);
+        mAdView = (AdView) findViewById(R.id.adView);
     }
 
     @Override
@@ -126,5 +134,29 @@ public class NewTrackActivity extends TrackActivity implements View.OnClickListe
         } else {
             savedTrackDAO.addTrack(savedTrack);
         }
+    }
+
+    @Override
+    public void onPause() {
+        if (mAdView != null) {
+            mAdView.pause();
+        }
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mAdView != null) {
+            mAdView.resume();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        if (mAdView != null) {
+            mAdView.destroy();
+        }
+        super.onDestroy();
     }
 }

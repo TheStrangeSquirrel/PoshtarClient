@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.google.android.gms.ads.MobileAds;
 import net.squirrel.poshtar.client.AppPoshtar;
 import net.squirrel.postar.client.R;
 
@@ -52,6 +53,7 @@ public class HelloActivity extends BaseActivityIncludingAsyncTask implements Vie
 
         findViews();
         setListeners();
+        MobileAds.initialize(getApplicationContext(), getString(R.string.ad_app_id));
     }
 
     private void findViews() {

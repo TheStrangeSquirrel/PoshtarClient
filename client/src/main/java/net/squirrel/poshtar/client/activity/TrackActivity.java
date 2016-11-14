@@ -34,6 +34,7 @@ public abstract class TrackActivity extends FragmentActivity implements View.OnC
         progressDialog.setMessage(getString(R.string.package_tracking));
         progressDialog.setIndeterminate(true);
         progressDialog.setCanceledOnTouchOutside(false);
+
     }
 
     @Override

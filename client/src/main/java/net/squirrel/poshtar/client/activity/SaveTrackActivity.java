@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import net.squirrel.poshtar.client.AppPoshtar;
 import net.squirrel.poshtar.client.DAO.SQLitePoshtarHelper;
 import net.squirrel.poshtar.client.DAO.SavedTrackDAO;
@@ -17,9 +19,11 @@ public class SaveTrackActivity extends TrackActivity implements View.OnClickList
     private Button bRefresh;
     private Button bStopTr;
     private EditText eTrackNumber;
+    private AdView mAdView;
 
     private SavedTrackDAO savedTrackDAO;
     private SavedTrack track;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,12 +41,16 @@ public class SaveTrackActivity extends TrackActivity implements View.OnClickList
 
         bRefresh.setOnClickListener(this);
         bStopTr.setOnClickListener(this);
+
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
     }
     private void findViews() {
         tStatus = (TextView) findViewById(R.id.textResponse);
         bRefresh = (Button) findViewById(R.id.bTrack);
         bStopTr = (Button) findViewById(R.id.bStopTr);
         eTrackNumber = (EditText) findViewById(R.id.eTrackN);
+        mAdView = (AdView) findViewById(R.id.adView);
     }
 
     private void getExtra() {
@@ -66,5 +74,29 @@ public class SaveTrackActivity extends TrackActivity implements View.OnClickList
                 finish();
                 break;
         }
+    }
+
+    @Override
+    public void onPause() {
+        if (mAdView != null) {
+            mAdView.pause();
+        }
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mAdView != null) {
+            mAdView.resume();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        if (mAdView != null) {
+            mAdView.destroy();
+        }
+        super.onDestroy();
     }
 }
