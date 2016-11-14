@@ -1,35 +1,39 @@
 {
   "project_info": {
-    "project_number": "35770414733",
-    "project_id": "firebase-poshtar"
+    "project_number": "895758650802",
+    "firebase_url": "https://poshtar-1f5f2.firebaseio.com",
+    "project_id": "poshtar-1f5f2",
+    "storage_bucket": "poshtar-1f5f2.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:35770414733:android:158ba3073bab6145",
+        "mobilesdk_app_id": "1:895758650802:android:7010a49939f3859b",
         "android_client_info": {
-          "package_name": "net.squirrel.postar.client"
+          "package_name": "net.squirrel.poshtar.client"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "895758650802-q769fb7c9j0frdvkat32910t6v0399le.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
-          "current_key": "AIzaSyD68WjZUYxU5ovTMDXn6GVS0icNYpIKJD0"
+          "current_key": "AIzaSyABCkb3vpio055EPP9P7yEM2JiTGZaRJJ4"
         }
       ],
       "services": {
         "analytics_service": {
-          "status": 2,
-          "analytics_property": {
-            "tracking_id": "UA-87179473-1"
-          }
+          "status": 1
         },
         "appinvite_service": {
           "status": 1,
           "other_platform_oauth_client": []
         },
         "ads_service": {
-          "status": 1
+          "status": 2
         }
       }
     }
