@@ -1,10 +1,16 @@
+/*
+ * Copyright © 2016, Malyshev Vladislav,  thestrangesquirrel@gmail.com. This work is licensed under the Creative Commons Attribution-NonCommercial-NoDerivs 3.0 Unported License. To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-nd/3.0/ or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+ */
+
 package net.squirrel.poshtar.client.utils;
 
-import java.io.*;
-import java.nio.CharBuffer;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.Reader;
 
 public class IOUtils {
-    public static final int DEFAULT_BUFFER_SIZE = 1024 * 8;// 8Kb
+    private static final int DEFAULT_BUFFER_SIZE = 1024 * 8;// 8Kb
 
     public static String toString(InputStream inputStream, String charsetName, int bufferSizeInByte) throws IOException {
 

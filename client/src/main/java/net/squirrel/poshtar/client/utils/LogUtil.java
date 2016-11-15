@@ -1,17 +1,21 @@
+/*
+ * Copyright © 2016, Malyshev Vladislav,  thestrangesquirrel@gmail.com. This work is licensed under the Creative Commons Attribution-NonCommercial-NoDerivs 3.0 Unported License. To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-nd/3.0/ or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+ */
+
 package net.squirrel.poshtar.client.utils;
 
 import android.util.Log;
 
 public class LogUtil {
-    public final static boolean DISABLE_ALL_LOG = false;
+    private final static boolean DISABLE_ALL_LOG = false;
 
-    public final static boolean ERROR_ENABLED = true;
-    public final static boolean WARING_ENABLED = true;
-    public final static boolean INFO_ENABLED = true;
-    public final static boolean DEBUG_ENABLED = true;
+    private final static boolean ERROR_ENABLED = true;
+    private final static boolean WARING_ENABLED = true;
+    private final static boolean INFO_ENABLED = true;
+    private final static boolean DEBUG_ENABLED = true;
 
 
-    public final static String TAG_SUFFIX = "-POSHTAR-";
+    private final static String TAG_SUFFIX = "-POSHTAR-";
 
 
     private static String getTag() {
