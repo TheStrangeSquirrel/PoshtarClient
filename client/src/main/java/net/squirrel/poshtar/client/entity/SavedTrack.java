@@ -7,6 +7,8 @@ public class SavedTrack implements Serializable {
     private int providerID;
     private String providerName;
     private String trackNumber;
+
+
     private String trackResult;
     private String description;
 
@@ -41,6 +43,10 @@ public class SavedTrack implements Serializable {
 
     public String getTrackResult() {
         return trackResult;
+    }
+
+    public void setTrackResult(String trackResult) {
+        this.trackResult = trackResult;
     }
 
     public String getDescription() {

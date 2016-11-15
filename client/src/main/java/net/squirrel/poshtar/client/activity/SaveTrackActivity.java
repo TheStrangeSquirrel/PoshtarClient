@@ -2,6 +2,7 @@ package net.squirrel.poshtar.client.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,13 +32,10 @@ public class SaveTrackActivity extends TrackActivity implements View.OnClickList
         setContentView(R.layout.activity_saved_track);
         savedTrackDAO = new SQLitePoshtarHelper(this);
         String language = AppPoshtar.getLanguage();
-        getExtra();
         findViews();
+        getExtra();
         setContentView();
-
-        progressDialog.show();
         request = new Request(track.getProviderID(), track.getTrackNumber(), language);
-        executeOrResumeTask(request);
 
         bRefresh.setOnClickListener(this);
         bStopTr.setOnClickListener(this);
@@ -45,6 +43,7 @@ public class SaveTrackActivity extends TrackActivity implements View.OnClickList
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
     }
+
     private void findViews() {
         tStatus = (TextView) findViewById(R.id.textResponse);
         bRefresh = (Button) findViewById(R.id.bTrack);
@@ -60,13 +59,14 @@ public class SaveTrackActivity extends TrackActivity implements View.OnClickList
 
     private void setContentView() {
         eTrackNumber.setText(track.getTrackNumber());
-        tStatus.setText(track.getTrackResult());
+        tStatus.setText(Html.fromHtml(track.getTrackResult()));
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bTrack:
+                progressDialog.show();
                 executeOrResumeTask(request);
                 break;
             case R.id.bStopTr:
@@ -74,6 +74,13 @@ public class SaveTrackActivity extends TrackActivity implements View.OnClickList
                 finish();
                 break;
         }
+    }
+
+    @Override
+    protected void updateFields(String status) {
+        track.setTrackResult(status);
+        savedTrackDAO.updateTrack(track.getId(), track);
+        super.updateFields(status);
     }
 
     @Override

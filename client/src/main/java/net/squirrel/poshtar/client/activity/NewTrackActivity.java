@@ -37,6 +37,7 @@ public class NewTrackActivity extends TrackActivity implements View.OnClickListe
     private int providerId;
     private String providerName;
     private int existInId;
+    private String status;
 
 
     @Override
@@ -69,7 +70,6 @@ public class NewTrackActivity extends TrackActivity implements View.OnClickListe
                 Toast.makeText(this, R.string.enter_track_number, Toast.LENGTH_SHORT).show();
                 return false;
             }
-            hideKeyboard();
             onClickTrack();
             return true;
         });
@@ -122,6 +122,7 @@ public class NewTrackActivity extends TrackActivity implements View.OnClickListe
     }
 
     private void onClickTrack() {
+        hideKeyboard();
         progressDialog.show();
         String language = AppPoshtar.getLanguage();
         request = new Request(providerId, trackNumber, language);
@@ -141,13 +142,19 @@ public class NewTrackActivity extends TrackActivity implements View.OnClickListe
     public void onDialogResult(String res) {
         existInId = savedTrackDAO.isExistThere(providerId, eTrackNumber.getText().toString());
         trackNumber = eTrackNumber.getText().toString();
-        String trackResult = tStatus.getText().toString();
+        String trackResult = status;
         SavedTrack savedTrack = new SavedTrack(existInId, providerId, providerName, trackNumber, trackResult, res);
         if (existInId > -1) {
             savedTrackDAO.updateTrack(existInId, savedTrack);
         } else {
             savedTrackDAO.addTrack(savedTrack);
         }
+    }
+
+    @Override
+    protected void updateFields(String status) {
+        super.updateFields(status);
+        this.status = status;
     }
 
     @Override

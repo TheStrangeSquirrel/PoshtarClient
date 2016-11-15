@@ -25,7 +25,6 @@ public abstract class TrackActivity extends FragmentActivity implements View.OnC
     ProgressDialog progressDialog;
     Request request;
     private ReceiverTask task;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +64,10 @@ public abstract class TrackActivity extends FragmentActivity implements View.OnC
 
     }
 
+    protected void updateFields(String status) {
+        progressDialog.dismiss();
+        tStatus.setText(Html.fromHtml(status));
+    }
 
     private class ReceiverTask extends AsyncTask<Request, Void, Response> {
         private TrackActivity activity;
@@ -99,9 +102,7 @@ public abstract class TrackActivity extends FragmentActivity implements View.OnC
                 Toast.makeText(activity, R.string.failed, Toast.LENGTH_SHORT).show();
                 return;
             }
-
-            activity.progressDialog.dismiss();
-            activity.tStatus.setText(Html.fromHtml(response.getStatus()));
+            updateFields(response.getStatus());
             rateManager.show(getSupportFragmentManager());
         }
 

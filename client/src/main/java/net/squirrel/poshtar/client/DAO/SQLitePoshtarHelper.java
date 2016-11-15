@@ -53,11 +53,7 @@ public class SQLitePoshtarHelper extends SQLiteOpenHelper implements SavedTrackD
         }
     }
 
-    /**
-     * @param providerId
-     * @param track_number
-     * @return -1 if not exit
-     */
+
     @Override
     public int isExistThere(Integer providerId, String track_number) {
         SQLiteDatabase database = this.getReadableDatabase();
@@ -98,12 +94,18 @@ public class SQLitePoshtarHelper extends SQLiteOpenHelper implements SavedTrackD
             database = this.getWritableDatabase();
             database.delete(TRACKS_TABLE, null, null);
         } finally {
-            database.close();
+            try {
+                database.close();
+            } catch (RuntimeException e) {
+                //nop
+            }
+
         }
     }
 
     @Override
     public void updateTrack(Integer id, SavedTrack updatedTrack) {
+        LogUtil.d("updateTrack id:" + id + " TrackResult:" + updatedTrack.getTrackResult());
         SQLiteDatabase database = this.getWritableDatabase();
         ContentValues contentValues = setSTrackCV(updatedTrack);
         database.update(TRACKS_TABLE, contentValues, KEY_T_ID + " = " + id, null);
@@ -117,7 +119,7 @@ public class SQLitePoshtarHelper extends SQLiteOpenHelper implements SavedTrackD
         Cursor c = database.query(TRACKS_TABLE, new String[]{KEY_T_ID, KEY_T_ID_PROV, KEY_T_NAME_PROV, KEY_T_TRACK_NUMBER,
                 KEY_T_TRACK_RESULT, KEY_T_DESCRIPTION}, null, null, null, null, null);
 
-        List<SavedTrack> list = new ArrayList<SavedTrack>();
+        List<SavedTrack> list = new ArrayList<>();
         if (c.moveToFirst()) {
             int iId = c.getColumnIndex(KEY_T_ID);
             int iProviderID = c.getColumnIndex(KEY_T_ID_PROV);
