@@ -14,21 +14,24 @@
             android:allowBackup="true"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme"
+            android:enabled="true">
         <activity
                 android:name="net.squirrel.poshtar.client.activity.HelloActivity"
-                android:label="@string/app_name">
+                android:label="@string/app_name"
+        >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name="net.squirrel.poshtar.client.activity.ProvidersActivity"/>
-        <activity android:name="net.squirrel.poshtar.client.activity.NewTrackActivity"/>
-        <activity android:name="net.squirrel.poshtar.client.activity.SaveTracksActivity"/>
-        <activity android:name="net.squirrel.poshtar.client.activity.SaveTrackActivity"/>
-        <activity android:name="net.squirrel.poshtar.client.activity.SettingsActivity">
+        <activity android:name="net.squirrel.poshtar.client.activity.ProvidersActivity" android:configChanges="locale"/>
+        <activity android:name="net.squirrel.poshtar.client.activity.NewTrackActivity" android:configChanges="locale"/>
+        <activity android:name="net.squirrel.poshtar.client.activity.SaveTracksActivity"
+                  android:configChanges="locale"/>
+        <activity android:name="net.squirrel.poshtar.client.activity.SaveTrackActivity" android:configChanges="locale"/>
+        <activity android:name="net.squirrel.poshtar.client.activity.SettingsActivity" android:configChanges="locale">
         </activity>
         <activity android:name="net.squirrel.poshtar.client.activity.AboutActivity">
         </activity>

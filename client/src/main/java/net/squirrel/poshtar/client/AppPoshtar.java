@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.preference.PreferenceManager;
+import net.squirrel.poshtar.client.utils.LogUtil;
 
 import java.util.Locale;
 
@@ -17,6 +18,7 @@ public class AppPoshtar extends Application {
     private static Context context;
     private static ConnectManager connectManager;
     private static ProviderManager providerManager;
+
     private static String language;
     private SharedPreferences preferences;
     private Locale locale;
@@ -32,6 +34,10 @@ public class AppPoshtar extends Application {
 
     public static String getLanguage() {
         return language;
+    }
+
+    public static void setLanguage(String language) {
+        AppPoshtar.language = language;
     }
 
     @Override
@@ -53,6 +59,17 @@ public class AppPoshtar extends Application {
         Locale.setDefault(locale);
         Configuration config = new Configuration();
         config.locale = locale;
-        getResources().updateConfiguration(config, null);
+        getBaseContext().getResources().updateConfiguration(config, getResources().getDisplayMetrics());
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        LogUtil.d("onConfigurationChanged | language = " + language);
+        locale = new Locale(language);
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        getBaseContext().getResources().updateConfiguration(config, getResources().getDisplayMetrics());
     }
 }

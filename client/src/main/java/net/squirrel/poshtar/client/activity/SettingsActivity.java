@@ -4,12 +4,14 @@
 
 package net.squirrel.poshtar.client.activity;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
+import net.squirrel.poshtar.client.AppPoshtar;
 import net.squirrel.poshtar.client.DAO.SQLitePoshtarHelper;
 import net.squirrel.postar.client.R;
 
@@ -25,36 +27,46 @@ public class SettingsActivity extends PreferenceActivity {
         addPreferencesFromResource(R.xml.preferences);
         Preference langPref = findPreference("lang");
         Preference cleaningPref = findPreference("clean");
-        cleaningPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                new SQLitePoshtarHelper(getApplicationContext()).cleanTrack();
-                return true;
-            }
+        cleaningPref.setOnPreferenceClickListener(preference -> {
+            new SQLitePoshtarHelper(getApplicationContext()).cleanTrack();
+            return true;
         });
-
-        langPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
-                updateLoc((String) newValue);
-                return true;
-            }
+        langPref.setOnPreferenceChangeListener((preference, newValue) -> {
+            updateLoc((String) newValue);
+            return true;
         });
-
     }
 
     private void updateLoc(String newValue) {
+        AppPoshtar.setLanguage(newValue);
         Locale locale = new Locale(newValue);
         Locale.setDefault(locale);
         Configuration config = new Configuration();
         config.locale = locale;
-        getBaseContext().getResources().updateConfiguration(config, null);
-        resetApp();
+        getBaseContext().getResources().updateConfiguration(config, getResources().getDisplayMetrics());
+        new ResetHandler().sendEmptyMessageDelayed(0, 300);
     }
 
     private void resetApp() {
-        Intent intent = getBaseContext().getPackageManager().getLaunchIntentForPackage(getBaseContext().getPackageName());
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
+//        Intent intent = getPackageManager().getLaunchIntentForPackage(getBaseContext().getPackageName());//TODO :   Anchor
+//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//        startActivity(intent);
+    }
+
+    static class ResetHandler extends Handler {
+//        private WeakReference<Context> contextWeakReference;//TODO :   Anchor
+//        public ResetHandler(Context context) {
+//            contextWeakReference = new WeakReference<Context>(context);
+//        }
+
+        @Override
+        public void handleMessage(Message msg) {
+//            Context context = contextWeakReference.get();//TODO :   Anchor
+//            Intent intent = new Intent(context,HelloActivity.class);
+//            PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
+//            AlarmManager mgr = (AlarmManager) contextWeakReference.get().getSystemService(Context.ALARM_SERVICE);
+//            mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 700, pendingIntent);
+            System.exit(0);
+        }
     }
 }
