@@ -13,94 +13,82 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
+import net.squirrel.poshtar.client.AppPoshtar;
 import net.squirrel.poshtar.client.DAO.SQLitePoshtarHelper;
 import net.squirrel.poshtar.client.TracksAdapter;
 import net.squirrel.poshtar.client.entity.SavedTrack;
 import net.squirrel.postar.client.R;
 
 import java.io.Serializable;
+import java.lang.ref.WeakReference;
 import java.util.List;
 
-public class SaveTracksActivity extends BaseActivityIncludingAsyncTask implements AdapterView.OnItemClickListener, Serializable {
+public class SaveTracksActivity extends Activity implements AdapterView.OnItemClickListener, Serializable {
     static final String PARAM_SAVE_TRACK = "save_track";
     private ListView listView;
+    private TracksAdapter tracksAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_saved_tracks);
         listView = (ListView) findViewById(R.id.list);
-
+        LoadTrackTask task = new LoadTrackTask();
+        task.linkActivity(this);
+        task.exe();
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        taskInitAndExecute();
-    }
 
-    @Override
-    protected TiedToActivityTask createConcreteTask() {
-        return new SaveTracksActivity.LoadTrackTask();
-    }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
         ListView listView = (ListView) parent;
-        TracksAdapter adapter = (TracksAdapter) listView.getAdapter();
-        SavedTrack track = adapter.getTrack(position);
+//        TracksAdapter adapter = (TracksAdapter) listView.getAdapter();
+//        SavedTrack track = adapter.getTrack(position);
+        SavedTrack track = tracksAdapter.getTrack(position);
 
         Intent intent = new Intent(this, SaveTrackActivity.class);
         intent.putExtra(PARAM_SAVE_TRACK, track);
         startActivity(intent);
     }
 
+    private void updateListView(List<SavedTrack> tracks) {
+        tracksAdapter = new TracksAdapter(tracks, getApplicationContext());
+        listView.setAdapter(tracksAdapter);
+        listView.setOnItemClickListener(this);
+    }
 
-    private static class LoadTrackTask extends AsyncTask<Void, Void, List<SavedTrack>> implements TiedToActivityTask {
-        SaveTracksActivity activity;
+    private static class LoadTrackTask extends AsyncTask<Void, Void, List<SavedTrack>> {
+        WeakReference<SaveTracksActivity> activityReference;
         List<SavedTrack> tracks;
 
-        @Override
-        public void linkActivity(Activity activity) {
-            this.activity = (SaveTracksActivity) activity;
+        public void linkActivity(SaveTracksActivity activity) {
+            this.activityReference = new WeakReference<>(activity);
         }
 
-        @Override
-        public synchronized void unLinkActivity() {
-            this.activity = null;
-        }
-
-        @Override
         public void exe() {
             if (Build.VERSION.SDK_INT >= 11) {
-                super.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             } else {
-                super.execute();
+                execute();
             }
         }
 
         @Override
         protected List<SavedTrack> doInBackground(Void... params) {
-            SQLitePoshtarHelper sqLitePoshtarHelper = new SQLitePoshtarHelper(activity);
-            tracks = sqLitePoshtarHelper.getTracks();
-
-            while (activity == null) {
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    //NOP
-                }
-            }
-            return tracks;
+            SQLitePoshtarHelper sqLitePoshtarHelper = new SQLitePoshtarHelper(AppPoshtar.getContext());
+            return sqLitePoshtarHelper.getTracks();
         }
 
         @Override
         protected void onPostExecute(List<SavedTrack> tracks) {
-            if (tracks != null) {
-                activity.listView.setAdapter(new TracksAdapter(tracks, activity));
-                activity.listView.setOnItemClickListener(activity);
-            } else {
-                Toast.makeText(activity, activity.getText(R.string.failed), Toast.LENGTH_LONG).show();
+            SaveTracksActivity activity = activityReference.get();
+            if (activity != null) {
+                if (tracks != null) {
+                    activity.updateListView(tracks);
+                } else {
+                    Toast.makeText(activity, activity.getText(R.string.failed), Toast.LENGTH_LONG).show();
+                }
             }
         }
     }

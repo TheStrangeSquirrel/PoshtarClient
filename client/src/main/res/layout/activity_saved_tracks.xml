@@ -19,12 +19,13 @@
             android:gravity="center_vertical|center"
             android:background="@drawable/mheader"
             android:singleLine="true"
-            android:textColor="@color/abc_input_method_navigation_guard"/>
+            android:textColor="#FF000000"/>
 
     <ListView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/list"
             android:clickable="true"
-            android:headerDividersEnabled="false"/>
+            android:headerDividersEnabled="false"
+            android:textColor="#FF000000"/>
 </LinearLayout>
