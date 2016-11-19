@@ -14,7 +14,7 @@ public class UrlConfigManager {
     public static final String TRACKING_URL_SUFFIX = "/track";
     public static final String SERVER_SETTINGS_URL_SUFFIX = "/settings";
     private static final String KEY_BASE_URL = "url";
-    private static final String DEFAULT_BASE_URL = "http://poshtar.us-west-2.elasticbeanstalk.com/";
+    private static final String DEFAULT_BASE_URL = "http://poshtar.us-east-1.elasticbeanstalk.com/";
     private String baseUrl;
     private SharedPreferences sPref;
 
