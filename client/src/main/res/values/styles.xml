@@ -3,11 +3,8 @@
   -->
 
 <resources>
-
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!--<item name="android:dialogTheme">@style/PoshtarDialog</item>-->
-        <!--<item name="android:alertDialogTheme">@style/PoshtarDialog</item>-->
+    <style name="AppTheme" parent="Theme.AppCompat.Light">
     </style>
 
     <style name="PoshtarDialog" parent="@style/Theme.AppCompat.DayNight.Dialog.Alert">
@@ -19,5 +16,4 @@
     <style name="DialogTitle" parent="Base.DialogWindowTitle.AppCompat">
         <item name="android:gravity">center</item>
     </style>
-
 </resources>

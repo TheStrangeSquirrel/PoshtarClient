@@ -4,9 +4,9 @@
 
 package net.squirrel.poshtar.client.activity;
 
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
 
-public abstract class BaseActivityIncludingAsyncTask extends FragmentActivity {
+public abstract class BaseActivityIncludingAsyncTask extends AppCompatActivity {
     TiedToActivityTask task;
 
     @Override

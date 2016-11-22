@@ -47,6 +47,7 @@ public class AppPoshtar extends Application {
         connectManager = new ConnectManager();
         providerManager = ProviderManager.getInstance();
         langConfig();
+
     }
 
     private void langConfig() {

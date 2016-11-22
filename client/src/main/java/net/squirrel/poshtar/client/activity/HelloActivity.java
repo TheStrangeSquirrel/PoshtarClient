@@ -27,6 +27,17 @@ public class HelloActivity extends BaseActivityIncludingAsyncTask implements Vie
     private TextView txtInternetStatus;
 
     @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_hello);
+
+        findViews();
+        setListeners();
+        getSupportActionBar().setHomeButtonEnabled(true);
+        MobileAds.initialize(getApplicationContext(), getString(R.string.ad_app_id));
+    }
+
+    @Override
     protected TiedToActivityTask createConcreteTask() {
         return new StatusInternetTask();
     }
@@ -48,16 +59,6 @@ public class HelloActivity extends BaseActivityIncludingAsyncTask implements Vie
         MenuInflater inflater = new MenuInflater(this);
         inflater.inflate(R.menu.menu_hello, menu);
         return true;
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_hello);
-
-        findViews();
-        setListeners();
-        MobileAds.initialize(getApplicationContext(), getString(R.string.ad_app_id));
     }
 
     private void findViews() {

@@ -10,9 +10,9 @@ public class LogUtil {
     private final static boolean DISABLE_ALL_LOG = false;
 
     private final static boolean ERROR_ENABLED = true;
-    private final static boolean WARING_ENABLED = true;
-    private final static boolean INFO_ENABLED = true;
-    private final static boolean DEBUG_ENABLED = true;
+    private final static boolean WARING_ENABLED = false;
+    private final static boolean INFO_ENABLED = false;
+    private final static boolean DEBUG_ENABLED = false;
 
 
     private final static String TAG_SUFFIX = "-POSHTAR-";

@@ -6,7 +6,7 @@
 <resources>
     <string name="app_name">Poshtar</string>
     <string name="new_tracking">Нове відстеження</string>
-    <string name="save_tracking">Збереженне відстеження</string>
+    <string name="save_tracking">Збереженні відстеження</string>
     <string name="loading_tracks">Завантаження переліку постачальніків</string>
     <string name="cancel">Cкасувати</string>
     <string name="internet_status_online">Інтернет увімкнено</string>
