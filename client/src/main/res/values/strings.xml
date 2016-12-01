@@ -51,8 +51,7 @@
     </string>
     <string name="write_author">Write to the author of the program: \n proposition/questions/bugs</string>
 
-    <string name="banner_new_track" translatable="false"></string>
-    <string name="banner_save_track" translatable="false"></string>
-    <string name="banner_ad_unit_id" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
-    <string name="ad_app_id" translatable="false">ca-app-pub-3940256099942544~3347511713</string>
+    <string name="banner_new_track" translatable="false">ca-app-pub-4415682139833620/8338431598</string>
+    <string name="banner_save_track" translatable="false">ca-app-pub-4415682139833620/6722097597</string>
+    <string name="ad_app_id" translatable="false">ca-app-pub-4415682139833620~1094366399</string>
 </resources>
