@@ -14,9 +14,7 @@ public class LogUtil {
     private final static boolean INFO_ENABLED = false;
     private final static boolean DEBUG_ENABLED = false;
 
-
     private final static String TAG_SUFFIX = "-POSHTAR-";
-
 
     private static String getTag() {
         return TAG_SUFFIX + "From class: " + getContextClass();

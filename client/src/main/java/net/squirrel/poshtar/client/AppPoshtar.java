@@ -16,7 +16,7 @@ import java.util.Locale;
 
 public class AppPoshtar extends Application {
     private static Context context;
-    private static ConnectManager connectManager;
+    private static InternetStatusManager internetStatusManager;
     private static ProviderManager providerManager;
 
     private static String language;
@@ -28,8 +28,8 @@ public class AppPoshtar extends Application {
         return context;
     }
 
-    public static ConnectManager getConnectManager() {
-        return connectManager;
+    public static InternetStatusManager getInternetStatusManager() {
+        return internetStatusManager;
     }
 
     public static String getLanguage() {
@@ -44,7 +44,7 @@ public class AppPoshtar extends Application {
     public void onCreate() {
         super.onCreate();
         context = this;
-        connectManager = new ConnectManager();
+        internetStatusManager = new InternetStatusManager();
         providerManager = ProviderManager.getInstance();
         langConfig();
 

@@ -4,11 +4,9 @@
 
 package net.squirrel.poshtar.client.activity;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -18,9 +16,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.google.android.gms.ads.MobileAds;
 import net.squirrel.poshtar.client.AppPoshtar;
+import net.squirrel.poshtar.client.InternetStatusManager;
 import net.squirrel.postar.client.R;
 
-public class HelloActivity extends BaseActivityIncludingAsyncTask implements View.OnClickListener {
+public class HelloActivity extends AppCompatActivity implements View.OnClickListener, InternetStatusManager.OnInternetStatusChangeListener {
     private Intent intent;
     private Button btnNewTrack, btnSavedTrack;
     private ImageView imgInternetStatus;
@@ -35,23 +34,6 @@ public class HelloActivity extends BaseActivityIncludingAsyncTask implements Vie
         setListeners();
         getSupportActionBar().setHomeButtonEnabled(true);
         MobileAds.initialize(getApplicationContext(), getString(R.string.ad_app_id));
-    }
-
-    @Override
-    protected TiedToActivityTask createConcreteTask() {
-        return new StatusInternetTask();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        taskInitAndExecute();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        task.cancel(false);
     }
 
     @Override
@@ -71,6 +53,7 @@ public class HelloActivity extends BaseActivityIncludingAsyncTask implements Vie
     private void setListeners() {
         btnSavedTrack.setOnClickListener(this);
         btnNewTrack.setOnClickListener(this);
+        AppPoshtar.getInternetStatusManager().setOnInternetStatusChangeListenerAndSetValue(this);
     }
 
     @Override
@@ -106,61 +89,16 @@ public class HelloActivity extends BaseActivityIncludingAsyncTask implements Vie
         return true;
     }
 
-    private static class StatusInternetTask extends AsyncTask<Void, Void, Void> implements TiedToActivityTask {
-        HelloActivity activity;
-        private boolean oldInternetStatus = false;
-
-        @Override
-        public void linkActivity(Activity activity) {
-            this.activity = (HelloActivity) activity;
-        }
-
-        @Override
-        public void unLinkActivity() {
-            this.activity = null;
-        }
-
-        @Override
-        public void exe() {
-            if (Build.VERSION.SDK_INT >= 11) {
-                super.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            } else {
-                super.execute();
-            }
-        }
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            while (true) {
-                try {
-                    if (isCancelled()) {
-                        return null;
-                    }
-                    publishProgress();
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-
-        @Override
-        protected void onProgressUpdate(Void... values) {
-            boolean isInternetConnect = AppPoshtar.getConnectManager().isInternetStatus();
-
-            if (oldInternetStatus == isInternetConnect) {
-                return;
-            }
-            if (isInternetConnect) {
-                activity.imgInternetStatus.setImageResource(R.drawable.internet_connected);
-                activity.txtInternetStatus.setText(R.string.internet_status_online);
-                activity.btnNewTrack.setEnabled(true);
-            } else {
-                activity.imgInternetStatus.setImageResource(R.drawable.internet_not_connected);
-                activity.txtInternetStatus.setText(R.string.internet_status_ofline);
-                activity.btnNewTrack.setEnabled(false);
-            }
-            oldInternetStatus = isInternetConnect;
+    @Override
+    public void onInternetStatusChange(boolean internetStatus) {
+        if (internetStatus) {
+            imgInternetStatus.setImageResource(R.drawable.internet_connected);
+            txtInternetStatus.setText(R.string.internet_status_online);
+            btnNewTrack.setEnabled(true);
+        } else {
+            imgInternetStatus.setImageResource(R.drawable.internet_not_connected);
+            txtInternetStatus.setText(R.string.internet_status_ofline);
+            btnNewTrack.setEnabled(false);
         }
     }
 }

@@ -17,13 +17,13 @@ import net.squirrel.poshtar.dto.ServerSettings;
 import java.util.ArrayList;
 import java.util.List;
 
-import static net.squirrel.poshtar.client.AppPoshtar.getConnectManager;
+import static net.squirrel.poshtar.client.AppPoshtar.getInternetStatusManager;
 
 /**
  * Singleton and Observer
  */
 public class ProviderManager {
-    private static final long TIME_TO_UPDATE = 86400000;  //1 Day
+    private static final long TIME_TO_UPDATE_MS = 1000 * 60 * 60 * 24;//1 Day
     private static ProviderManager instance;
     private ProvidersDAO providersDAO;
     private DataReceiver dataReceiver;
@@ -33,10 +33,9 @@ public class ProviderManager {
     private BaseProvidersTask task;
 
     private ProviderManager() {
-        listeners = new ArrayList<SetProvidersListener>();
+        listeners = new ArrayList<>();
         providersDAO = new XMLProviderDAO();
         dataReceiver = new DataReceiver();
-        updateProviders();
     }
 
     public static synchronized ProviderManager getInstance() {
@@ -56,9 +55,8 @@ public class ProviderManager {
 
 
     public void updateProviders() {
-        boolean internetStatus = getConnectManager().isInternetStatus();
+        boolean internetStatus = getInternetStatusManager().getInternetStatus();
         boolean isTimeCheckVersion = isTimeCheckVersion();
-
 
         if (internetStatus && isTimeCheckVersion) {
             LogUtil.d("Download providers");
@@ -76,8 +74,10 @@ public class ProviderManager {
 
     private boolean isTimeCheckVersion() {
         timeLastUpdateProviders = providersDAO.getTimeLastUpdateProvidersFile();
-        long delta = System.currentTimeMillis() - TIME_TO_UPDATE;
-        return timeLastUpdateProviders < delta;
+        long delta = System.currentTimeMillis() - TIME_TO_UPDATE_MS;
+        boolean isTimeCheckVersion = timeLastUpdateProviders < delta;
+        LogUtil.d("isTimeCheckVersion: " + isTimeCheckVersion);
+        return isTimeCheckVersion;
     }
 
 

@@ -25,8 +25,8 @@ public class HttpClient {
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded,text/xml,text/html; charset=UTF-8");
             connection.setDoOutput(true);
-            connection.setConnectTimeout(5000);
-            connection.setReadTimeout(10000);
+            connection.setConnectTimeout(50 * 1000);
+            connection.setReadTimeout(50 * 1000);
             connection.connect();
             outputStream = new BufferedOutputStream(connection.getOutputStream());
             if (massage != null) {
@@ -59,8 +59,8 @@ public class HttpClient {
             HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
             connection.setRequestMethod("GET");
             connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded,text/xml,text/html; charset=UTF-8");
-            connection.setConnectTimeout(5000);
-            connection.setReadTimeout(10000);
+            connection.setConnectTimeout(50 * 1000);
+            connection.setReadTimeout(50 * 1000);
             connection.connect();
             LogUtil.d("GET Code status: " + connection.getResponseCode());
             inputStream = connection.getInputStream();
