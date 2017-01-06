@@ -24,12 +24,12 @@ public class HelloActivity extends AppCompatActivity implements View.OnClickList
     private Button btnNewTrack, btnSavedTrack;
     private ImageView imgInternetStatus;
     private TextView txtInternetStatus;
+    private boolean isNewTrackEnabled = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hello);
-
         findViews();
         setListeners();
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -90,15 +90,22 @@ public class HelloActivity extends AppCompatActivity implements View.OnClickList
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        menu.setGroupEnabled(R.id.menu_groupNewTrack, isNewTrackEnabled);
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
     public void onInternetStatusChange(boolean internetStatus) {
         if (internetStatus) {
             imgInternetStatus.setImageResource(R.drawable.internet_connected);
             txtInternetStatus.setText(R.string.internet_status_online);
-            btnNewTrack.setEnabled(true);
+            isNewTrackEnabled = true;
         } else {
             imgInternetStatus.setImageResource(R.drawable.internet_not_connected);
             txtInternetStatus.setText(R.string.internet_status_ofline);
-            btnNewTrack.setEnabled(false);
+            isNewTrackEnabled = false;
         }
+        btnNewTrack.setEnabled(isNewTrackEnabled);
     }
 }

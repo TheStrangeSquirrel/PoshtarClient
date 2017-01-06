@@ -27,6 +27,7 @@ interface RemoveFragmentListener {
 }
 
 public class RateManager {
+    private static final String MARKET_URL = "market://details?id=net.squirrel.poshtar.client";
     private static final int DEFAULT_NUMBER_VISITS_TO_SHOW = 22;
     private static final String KEY_RATE_PREFERENCES = "ratePreferences";
     private static final String KEY_IS_SHOW = "isShow";
@@ -88,7 +89,7 @@ public class RateManager {
                     switch (id) {
                         case R.id.bRate:
                             Context context = AppPoshtar.getContext();
-                            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + context.getString(R.string.app_name)))
+                            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(MARKET_URL))
                                     .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             getActivity().startActivity(intent);
                             editor.putBoolean(KEY_IS_SHOW, false);

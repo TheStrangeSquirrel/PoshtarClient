@@ -6,11 +6,10 @@ package net.squirrel.poshtar.client.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Html;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import net.squirrel.poshtar.client.AppPoshtar;
@@ -35,11 +34,10 @@ public class SaveTrackActivity extends TrackActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_saved_track);
         savedTrackDAO = new SQLitePoshtarHelper(this);
-        String language = AppPoshtar.getLanguage();
         findViews();
         getExtra();
         setContentView();
-        request = new Request(track.getProviderID(), track.getTrackNumber(), language);
+        request = new Request(track.getProviderID(), track.getTrackNumber(), AppPoshtar.getLanguage());
 
         bRefresh.setOnClickListener(this);
         bStopTr.setOnClickListener(this);
@@ -49,7 +47,7 @@ public class SaveTrackActivity extends TrackActivity implements View.OnClickList
     }
 
     private void findViews() {
-        tStatus = (TextView) findViewById(R.id.textResponse);
+        wStatus = (WebView) findViewById(R.id.textResponse);
         bRefresh = (Button) findViewById(R.id.bTrack);
         bStopTr = (Button) findViewById(R.id.bStopTr);
         eTrackNumber = (EditText) findViewById(R.id.eTrackN);
@@ -63,7 +61,7 @@ public class SaveTrackActivity extends TrackActivity implements View.OnClickList
 
     private void setContentView() {
         eTrackNumber.setText(track.getTrackNumber());
-        tStatus.setText(Html.fromHtml(track.getTrackResult()));
+        updateFields(track.getTrackResult());
     }
 
     @Override

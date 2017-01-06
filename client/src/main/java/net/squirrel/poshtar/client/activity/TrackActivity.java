@@ -12,9 +12,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
-import android.text.Html;
 import android.view.View;
-import android.widget.TextView;
+import android.webkit.WebView;
 import android.widget.Toast;
 import net.squirrel.poshtar.client.RateManager;
 import net.squirrel.poshtar.client.receiver.DataReceiver;
@@ -25,7 +24,7 @@ import net.squirrel.postar.client.R;
 
 public abstract class TrackActivity extends FragmentActivity implements View.OnClickListener {
     private static final RateManager rateManager = new RateManager();
-    TextView tStatus;
+    WebView wStatus;
     ProgressDialog progressDialog;
     Request request;
     private ReceiverTask task;
@@ -70,7 +69,7 @@ public abstract class TrackActivity extends FragmentActivity implements View.OnC
 
     protected void updateFields(String status) {
         progressDialog.dismiss();
-        tStatus.setText(Html.fromHtml(status));
+        wStatus.loadDataWithBaseURL(null, status, "text/html", "UTF-8", null);
     }
 
     private class ReceiverTask extends AsyncTask<Request, Void, Response> {

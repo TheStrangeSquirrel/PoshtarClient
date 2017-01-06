@@ -10,9 +10,9 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -43,18 +43,18 @@ public class NewTrackActivity extends TrackActivity implements View.OnClickListe
     private int existInId;
     private String status;
 
-
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putCharSequence("status", tStatus.getText());
+        outState.putCharSequence("status", status);
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         if (savedInstanceState != null) {
-            tStatus.setText(savedInstanceState.getCharSequence("status"));
+            String status = savedInstanceState.getCharSequence("status").toString();
+            updateFields(status);
         }
     }
 
@@ -104,7 +104,7 @@ public class NewTrackActivity extends TrackActivity implements View.OnClickListe
         bTrack = (Button) findViewById(R.id.bTrack);
         bSavedTrack = (Button) findViewById(R.id.bSaveTrack);
         eTrackNumber = (EditText) findViewById(R.id.eTrackN);
-        tStatus = (TextView) findViewById(R.id.textResponse);
+        wStatus = (WebView) findViewById(R.id.textResponse);
         mAdView = (AdView) findViewById(R.id.adView);
     }
 

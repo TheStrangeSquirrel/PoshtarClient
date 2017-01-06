@@ -6,16 +6,17 @@
       xmlns:tools="http://schemas.android.com/tools"
       xmlns:app="http://schemas.android.com/apk/res-auto"
       tools:context=".HelloActivity">
-
-    <item
-            android:id="@+id/menu_newTrack"
-            android:title="@string/new_tracking"
-            app:showAsAction="always"/>
-
+    <group android:id="@+id/menu_groupNewTrack">
+        <item
+                android:id="@+id/menu_newTrack"
+                android:title="@string/new_tracking"
+                app:showAsAction="never"/>
+    </group>
     <item
             android:id="@+id/menu_savedTrack"
             android:title="@string/save_tracking"
             app:showAsAction="never"/>
+
     <item
             android:id="@+id/menu_settings"
             android:title="@string/settings"
