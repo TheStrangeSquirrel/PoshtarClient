@@ -41,7 +41,7 @@ public class NewTrackActivity extends TrackActivity implements View.OnClickListe
     private int providerId;
     private String providerName;
     private int existInId;
-    private String status;
+    private String status = "";
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
