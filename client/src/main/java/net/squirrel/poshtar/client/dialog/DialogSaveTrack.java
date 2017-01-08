@@ -12,6 +12,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 import net.squirrel.postar.client.R;
 
 /**
@@ -46,6 +47,7 @@ public class DialogSaveTrack extends DialogFragment {
                         listener = (DialogueResultListener) getActivity();
                         listener.onDialogResult(eDescription.getText().toString());
                         dismiss();
+                        Toast.makeText(getContext(), R.string.tracking_saved, Toast.LENGTH_LONG).show();
                     }
                 });
         return adb.create();

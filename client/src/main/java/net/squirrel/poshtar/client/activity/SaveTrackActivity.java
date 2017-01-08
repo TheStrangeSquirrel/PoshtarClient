@@ -73,7 +73,9 @@ public class SaveTrackActivity extends TrackActivity implements View.OnClickList
                 break;
             case R.id.bStopTr:
                 savedTrackDAO.removeTrack(track.getId());
-                finish();
+                Intent intent = new Intent(getBaseContext(), HelloActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
                 break;
         }
     }

@@ -55,4 +55,5 @@
     <string name="banner_save_track" translatable="false">ca-app-pub-4415682139833620/6722097597</string>
     <string name="ad_app_id" translatable="false">ca-app-pub-4415682139833620~1094366399</string>
     <string name="author" translatable="false">TheSquirrel</string>
+    <string name="tracking_saved">Tracking saved</string>
 </resources>

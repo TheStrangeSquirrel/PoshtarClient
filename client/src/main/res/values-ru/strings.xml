@@ -40,4 +40,5 @@
     <string name="rate_it">Оценить</string>
     <string name="write_author">Написать автору программы \n предложения/вопросы/баги</string>
     <string name="rate_title">Пожалуйста оцените приложение. Благодарю за поддержку.</string>
+    <string name="tracking_saved">Отслеживание сохранено</string>
 </resources>
