@@ -4,7 +4,6 @@
 
 package net.squirrel.poshtar.client.activity;
 
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,8 +17,6 @@ import net.squirrel.postar.client.R;
 import java.util.Locale;
 
 public class SettingsActivity extends PreferenceActivity {
-
-    private SharedPreferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,25 +44,9 @@ public class SettingsActivity extends PreferenceActivity {
         new ResetHandler().sendEmptyMessageDelayed(0, 300);
     }
 
-    private void resetApp() {
-//        Intent intent = getPackageManager().getLaunchIntentForPackage(getBaseContext().getPackageName());//TODO :   Anchor
-//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//        startActivity(intent);
-    }
-
     static class ResetHandler extends Handler {
-//        private WeakReference<Context> contextWeakReference;//TODO :   Anchor
-//        public ResetHandler(Context context) {
-//            contextWeakReference = new WeakReference<Context>(context);
-//        }
-
         @Override
         public void handleMessage(Message msg) {
-//            Context context = contextWeakReference.get();//TODO :   Anchor
-//            Intent intent = new Intent(context,HelloActivity.class);
-//            PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
-//            AlarmManager mgr = (AlarmManager) contextWeakReference.get().getSystemService(Context.ALARM_SERVICE);
-//            mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 700, pendingIntent);
             System.exit(0);
         }
     }

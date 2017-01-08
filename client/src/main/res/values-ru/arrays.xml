@@ -5,7 +5,7 @@
 
 <resources>
     <string-array name="entriesLangArr">
-        <item>System Language</item>
+        <item>Системный язык</item>
         <item>Український</item>
         <item>English</item>
         <item>Русский</item>
