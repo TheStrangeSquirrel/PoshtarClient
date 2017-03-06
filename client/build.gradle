@@ -29,7 +29,7 @@ android {
         minSdkVersion 9
         targetSdkVersion 25
         versionCode 3
-        versionName "1.1"
+        versionName "1.2"
         jackOptions {
             enabled true
         }
@@ -46,7 +46,6 @@ android {
         }
     }
     dexOptions {
-        incremental true
         javaMaxHeapSize "8g"
     }
 }

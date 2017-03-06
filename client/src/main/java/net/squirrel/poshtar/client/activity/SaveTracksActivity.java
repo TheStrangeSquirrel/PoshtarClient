@@ -43,8 +43,6 @@ public class SaveTracksActivity extends Activity implements AdapterView.OnItemCl
     @Override
     public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
         ListView listView = (ListView) parent;
-//        TracksAdapter adapter = (TracksAdapter) listView.getAdapter();
-//        SavedTrack track = adapter.getTrack(position);
         SavedTrack track = tracksAdapter.getTrack(position);
 
         Intent intent = new Intent(this, SaveTrackActivity.class);
